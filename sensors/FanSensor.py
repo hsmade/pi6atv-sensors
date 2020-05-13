@@ -27,7 +27,7 @@ class FanSensor:
         GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
         GPIO.add_event_detect(self.gpio_pin, GPIO.FALLING, self._handle_event, 5)
 
-    def read(self):
+    def read(self) -> int:
         """
         samples the GPIO for the given amount of seconds and returns the RPM
         :return: int

@@ -2,6 +2,7 @@ import re
 import logging
 from time import sleep
 from typing import Union
+import Adafruit_DHT
 
 
 class DS18B20TemperatureSensor:
@@ -43,3 +44,24 @@ class DS18B20TemperatureSensor:
         except Exception as e:
             logging.error("caught exception when reading from sensor {}: {}".format(self.path, e))
             return None
+
+
+class DHT22TemperatureSensor:
+    """
+        DHT22 temperature sensor
+
+        :param gpio_pin: the pin to read from
+    """
+    def __init__(self, gpio_pin: int):
+        self.gpio_pin = gpio_pin
+
+    def read(self) -> Union[dict, None]:
+        """
+        returns a dict with the keys temperature and humidity and floats as values or None in case of failure
+        :return:
+        """
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, self.gpio_pin)
+        if not humidity or not temperature:
+            logging.error("failed to read data from DHT22 on pin {}".format(self.gpio_pin))
+            return None
+        return {"temperature": temperature, "humidity": humidity}
