@@ -1,4 +1,7 @@
-from . sensors import *
+from .BooleanSensor import BooleanSensor
+from .FanSensor import FanSensor
+from .PowerSensor import INA260Sensor
+from .TemperatureSensor import DHT22TemperatureSensor, DS18B20TemperatureSensor
 
 sensor_config = [
     {

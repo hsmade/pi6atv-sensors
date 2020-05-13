@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, send_from_directory
-from . sensorsConfig import sensor_config
+from sensors import sensor_config
 app = Flask(__name__, static_url_path='static')
 
 
