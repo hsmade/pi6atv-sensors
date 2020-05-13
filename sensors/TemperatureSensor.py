@@ -7,13 +7,12 @@ from typing import Union
 class DS18B20TemperatureSensor:
     """
     DS18B20 temperature sensor
+
+    :param path: example: 28-00348a000019
+    :param retries: how many times to try to read the sensor before giving up
     """
 
     def __init__(self, path: str, retries=10):
-        """
-        :param path: example: 28-00348a000019
-        :param retries: how many times to try to read the sensor before giving up
-        """
         self.path = path
         self.retries = retries
 
