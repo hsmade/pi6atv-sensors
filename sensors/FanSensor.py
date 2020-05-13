@@ -5,6 +5,10 @@ import time
 class FanSensor:
     """
     Calculates Fan RPM from pulses on GPIO
+
+    :param gpio_pin: the GPIO pin to read from
+    :param samples: the amount of samples to average over
+    :param timeout: the maximum time to wait for the amount of samples to come in
     """
     TACH = 24       # Fan's tachometer output pin
     PULSE = 2       # Noctua fans puts out two pluses per revolution
