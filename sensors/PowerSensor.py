@@ -1,15 +1,20 @@
 import adafruit_ina260
 import board
+from .BaseSensor import BaseSensor
 
 
-class INA260Sensor:
+class INA260Sensor(BaseSensor):
     """
     INA260 voltage, current and power sensor
-    """
 
-    def __init__(self):
+    :param address: the i2c addres (default: 0x40)
+    """
+    type = "power"
+
+    def __init__(self, name, address=0x040):
+        super().__init__(name)
         i2c = board.I2C()
-        self.ina260 = adafruit_ina260.INA260(i2c)
+        self.ina260 = adafruit_ina260.INA260(i2c, address=address)
         self.ina260.mode = adafruit_ina260.Mode.CONTINUOUS
         self.ina260.averaging_count = adafruit_ina260.AveragingCount.COUNT_4
 

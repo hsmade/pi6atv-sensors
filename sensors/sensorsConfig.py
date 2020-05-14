@@ -1,57 +1,27 @@
 from .BooleanSensor import BooleanSensor
 from .FanSensor import FanSensor
 from .PowerSensor import INA260Sensor
-from .TemperatureSensor import DHT22TemperatureSensor, DS18B20TemperatureSensor
+from .TemperatureSensor import DS18B20TemperatureSensor, DHT22TemperatureSensor
+from .RandomSensor import RandomSensor
 
+# all gpio_pin numbers are the GPIO numbers, not the board pin numbers
 sensor_config = [
-    {
-        "object": BooleanSensor(17),
-        "name": "Main power supply status",
-        "type": "bool",
-    },
-    {
-        "object": BooleanSensor(27),
-        "name": "PA power supply status",
-        "type": "bool",
-    },
-    {
-        "object": BooleanSensor(22),
-        "name": "Fluid pump status",
-        "type": "bool",
-    },
-    {
-        "object": FanSensor(13),
-        "name": "Fan1 RPM",
-        "type": "RPM",
-    },
-    {
-        "object": FanSensor(19),
-        "name": "Fan2 RPM",
-        "type": "RPM",
-    },
-    {
-        "object": FanSensor(26),
-        "name": "Fan3 RPM",
-        "type": "RPM",
-    },
-    {
-        "object": DS18B20TemperatureSensor("28-0417013af9ff"),
-        "name": "PA temperature",
-        "type": "temperature",
-    },
-    {
-        "object": DS18B20TemperatureSensor("28-00348a000019"),
-        "name": "Mounting plate temperature",
-        "type": "temperature",
-    },
-    {
-        "object": DS18B20TemperatureSensor("28-0417c475edff"),
-        "name": "Room temperature (DS18B20)",
-        "type": "temperature",
-    },
-    {
-        "object": DHT22TemperatureSensor(16),
-        "name": "Room",
-        "type": "dht22",
-    },
+    BooleanSensor("Main power supply status", 6),
+    BooleanSensor("PA power supply status", 13),
+    BooleanSensor("Fluid pump status", 19),
+    BooleanSensor("Fan1 status", 23),
+    BooleanSensor("Fan2 status", 24),
+    BooleanSensor("Fan3 status", 25),
+    FanSensor("Fan1 RPM", 17, minimum=0, maximum=2500),
+    FanSensor("Fan2 RPM", 27, minimum=0, maximum=2500),
+    FanSensor("Fan3 RPM", 22, minimum=0, maximum=2500),
+    DS18B20TemperatureSensor("PA temperature", "28-0173ca070002"),
+    DS18B20TemperatureSensor("Mounting plate temperature", "28-0417013af9ff"),
+    DS18B20TemperatureSensor("Room temperature", "28-0417c475edff"),
+    DS18B20TemperatureSensor("Outside temperature", "28-0417c4897aff"),
+    DHT22TemperatureSensor("Room", 16),
+    INA260Sensor("Main power supply", 0x40),
+    INA260Sensor("PA power supply", 0x41),
+    INA260Sensor("Fluid pump supply", 0x45),
+    RandomSensor("test sensor", 0, 100),
 ]

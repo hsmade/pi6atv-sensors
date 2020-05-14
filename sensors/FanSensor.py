@@ -1,8 +1,12 @@
 import RPi.GPIO as GPIO
 import time
+from .BaseSensor import BaseSensor
+import logging
+
+logging.basicConfig(level="DEBUG")
 
 
-class FanSensor:
+class FanSensor(BaseSensor):
     """
     Calculates Fan RPM from pulses on GPIO
 
@@ -12,38 +16,65 @@ class FanSensor:
     """
     TACH = 24       # Fan's tachometer output pin
     PULSE = 2       # Noctua fans puts out two pluses per revolution
-    WAIT_TIME = 1   # [s] Time to wait between each refresh
+    type = "rpm"
 
-    def __init__(self, gpio_pin: int, samples=10, timeout=1):
+    def __init__(self, name, gpio_pin: int, samples=10, timeout=2, minimum=0, maximum=65535, red_from=None):
+        super().__init__(name)
         self.gpio_pin = gpio_pin
         self.samples = samples
         self.timeout = timeout
-
+        self.minimum = minimum
+        self.maximum = maximum
+        self.red_from = red_from
         self.timer = time.time()
-        self.rpms = list()
-
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
-        GPIO.add_event_detect(self.gpio_pin, GPIO.FALLING, self._handle_event, 5)
+        self.rpms = []
 
     def read(self) -> int:
         """
         samples the GPIO for the given amount of seconds and returns the RPM
         :return: int
         """
-        # reset the timer and list of known rpms
-        self.rpms = list()
-        self.timer = time.time()
-
         start = time.time()
-        while len(self.rpms) < self.samples and time.time() - start < self.timeout:
-            time.sleep(0.1)
+        self.rpms = []
+        self.timer = start
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
+        GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
 
-        return sum(self.rpms) / len(self.rpms)
+        time.sleep(self.timeout)
+
+        GPIO.cleanup()
+
+        if len(self.rpms) < 1:
+            logging.error("Did not get any data from fan {}".format(self.name))
+            return -1
+
+        try:
+            average = sum(self.rpms) / len(self.rpms)
+            return int(average)
+        except Exception as e:
+            logging.error("Failed to calculate average for fan {}: {}".format(self.name, e))
+            return -1
 
     def _handle_event(self, _):
         time_delta = time.time() - self.timer
+        # if time_delta < 0.005:
+        #     return  # Reject spuriously short pulses
+
         frequency = 1 / time_delta
-        self.rpms.append((frequency / self.PULSE) * 60)
+        rpm = (frequency / self.PULSE) * 60
+        # logging.debug("got event for fan: {}, td={} rpm={}".format(self.name, time_delta, rpm))
+        self.rpms.append(rpm)
+        # logging.debug("fan: {} _handle_event: rpms: {}".format(self.name, len(self.rpms)))
         self.timer = time.time()
+
+    def toDict(self):
+        return {
+            "name": self.name,
+            "type": self.type,
+            "min": self.minimum,
+            "max": self.maximum,
+            "redFrom": self.red_from,
+            "value": self.read(),
+        }

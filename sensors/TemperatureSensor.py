@@ -3,17 +3,21 @@ import logging
 from time import sleep
 from typing import Union
 import Adafruit_DHT
+from .BaseSensor import BaseSensor
 
 
-class DS18B20TemperatureSensor:
+class DS18B20TemperatureSensor(BaseSensor):
     """
     DS18B20 temperature sensor
 
     :param path: example: 28-00348a000019
     :param retries: how many times to try to read the sensor before giving up
     """
+    type = "temperature"
+    PATH = "/sys/bus/w1/devices/{}/w1_slave"
 
-    def __init__(self, path: str, retries=10):
+    def __init__(self, name, path: str, retries=10):
+        super().__init__(name)
         self.path = path
         self.retries = retries
 
@@ -21,10 +25,12 @@ class DS18B20TemperatureSensor:
         tries = 0
         while tries < self.retries:
             tries -= 1
-            with open("/sys/bus/w1/devices/{}}/w1_slave".format(self.path), "r") as w1:
+            with open(self.PATH.format(self.path), "r") as w1:
                 data = w1.read()
-            if re.match("YES", data):
+                logging.info("Got data: {} from sensor {}".format(data, self.path))
+            if "YES" in data:
                 return data
+            logging.debug("waiting for valid data from sensor {}".format(self.path))
             sleep(0.2)
         logging.error("failed to read from sensor {}, tried {} times".format(self.path, self.retries))
         return None
@@ -46,13 +52,17 @@ class DS18B20TemperatureSensor:
             return None
 
 
-class DHT22TemperatureSensor:
+class DHT22TemperatureSensor(BaseSensor):
     """
         DHT22 temperature sensor
 
         :param gpio_pin: the pin to read from
     """
-    def __init__(self, gpio_pin: int):
+
+    type = "dht22"
+
+    def __init__(self, name, gpio_pin: int):
+        super().__init__(name)
         self.gpio_pin = gpio_pin
 
     def read(self) -> Union[dict, None]:
