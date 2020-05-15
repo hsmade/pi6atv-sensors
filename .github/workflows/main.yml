@@ -1,9 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -14,12 +9,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: yarn install
     - run: yarn build
-      working-directory: react-web  
+      working-directory: react-web
 
-  build-deb-pkg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build debian package
-        run: echo not implemented
+    - name: build debian package
+      run: echo not implemented
         
