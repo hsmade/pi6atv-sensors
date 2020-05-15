@@ -15,17 +15,19 @@ sensor_type_to_data_type = {
 }
 
 processes = list()
-COMPLEX_TYPES = ["dht22"]
 
 logging.basicConfig(level="DEBUG")
 
 
 def scraper(sensor, storage):
     while True:
-        data = sensor.toDict()
-        print("found value {} for {}".format(data["value"], data["name"]))
-        for key, value in data.items():
-            storage[key] = value
+        try:
+            data = sensor.toDict()
+            logging.debug("found value {} for {}".format(data["value"], data["name"]))
+            for key, value in data.items():
+                storage[key] = value
+        except Exception as e:
+            logging.error("Failed to load data for sensor {}: {}".format(sensor.name, e))
         sleep(1)
 
 
@@ -42,10 +44,10 @@ def main():
         result = list()
         for sensor_value in sensor_values:
             result.append(sensor_value.copy())
-        with open("web/sensors.json.new", "w") as json_file:
+        with open("/dev/shm/sensors.json.new", "w") as json_file:
             json.dump(result, json_file)
-            print(result)
-        move("web/sensors.json.new", "web/sensors.json")
+            logging.debug(result)
+        move("/dev/shm/sensors.json.new", "/dev/shm/sensors.json")
         sleep(1)
 
 
