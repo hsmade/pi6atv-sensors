@@ -28,7 +28,7 @@ class DS18B20TemperatureSensor(BaseSensor):
             with open(self.PATH.format(self.path), "r") as w1:
                 data = w1.read()
                 logging.info("Got data: {} from sensor {}".format(data, self.path))
-            if "YES" in data:
+            if "YES" in data and not data.endswith("t=0\n"):
                 return data
             logging.debug("waiting for valid data from sensor {}".format(self.path))
             sleep(0.2)

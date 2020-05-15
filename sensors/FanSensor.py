@@ -59,8 +59,8 @@ class FanSensor(BaseSensor):
 
     def _handle_event(self, _):
         time_delta = time.time() - self.timer
-        # if time_delta < 0.005:
-        #     return  # Reject spuriously short pulses
+        if time_delta < 0.005:
+            return  # Reject spuriously short pulses
 
         frequency = 1 / time_delta
         rpm = (frequency / self.PULSE) * 60
