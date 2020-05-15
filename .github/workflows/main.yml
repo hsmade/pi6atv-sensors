@@ -12,7 +12,7 @@ jobs:
       with:
         node-version: '10.x'
     - run: yarn install
-    - run: npm install react-scripts
+      working-directory: react-web
     - run: yarn build
       working-directory: react-web
 
