@@ -24,3 +24,9 @@ class INA260Sensor(BaseSensor):
         :return: dict
         """
         return {"power": self.ina260.power, "current": self.ina260.current, "voltage": self.ina260.voltage}
+
+    def to_openmetrics(self):
+        result = 'power{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=self.ina260.power)
+        result += 'voltage{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=self.ina260.voltage)
+        result += 'current{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=self.ina260.current)
+        return result

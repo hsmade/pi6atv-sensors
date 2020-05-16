@@ -31,7 +31,7 @@ class App extends Component {
         const { sensors } = this.state
         const components = sensors.map(sensor => {
             switch (sensor.type) {
-                case "bool":
+                case "status":
                     return {name: sensor.name, component: <BooleanSensor sensor={sensor}/>}
                 case "rpm":
                     return {name: sensor.name, component: <GaugeSensor sensor={sensor}/>}

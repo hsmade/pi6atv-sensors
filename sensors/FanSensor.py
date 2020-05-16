@@ -69,7 +69,7 @@ class FanSensor(BaseSensor):
         # logging.debug("fan: {} _handle_event: rpms: {}".format(self.name, len(self.rpms)))
         self.timer = time.time()
 
-    def toDict(self):
+    def to_dict(self):
         return {
             "name": self.name,
             "type": self.type,
@@ -77,4 +77,5 @@ class FanSensor(BaseSensor):
             "max": self.maximum,
             "redFrom": self.red_from,
             "value": self.read(),
+            "prometheus_data": self.to_openmetrics(),
         }

@@ -75,3 +75,11 @@ class DHT22TemperatureSensor(BaseSensor):
             logging.error("failed to read data from DHT22 on pin {}".format(self.gpio_pin))
             return None
         return {"temperature": temperature, "humidity": humidity}
+
+    def to_openmetrics(self):
+        data = self.read()
+        if not data:
+            return ""
+        result = 'temperature{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data.get("temperature"))
+        result += 'humidity{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data.get("humidity"))
+        return result

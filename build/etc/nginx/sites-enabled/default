@@ -4,6 +4,8 @@ server {
     root /opt/repeater-sensors/web/;
     index index.html index.htm index.nginx-debian.html;
     server_name _;
+    location /sensors.json { alias /dev/shm/sensors.json; }
+    location /metrics { alias /dev/shm/sensors.prometheus; }
     location / {
         try_files $uri $uri/ =404;
     }

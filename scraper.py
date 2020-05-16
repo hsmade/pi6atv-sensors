@@ -19,13 +19,13 @@ processes = list()
 logging.basicConfig(level="DEBUG")
 
 
-def scraper(sensor, storage):
+def scraper(sensor, dict_storage):
     while True:
         try:
-            data = sensor.toDict()
+            data = sensor.to_dict()
             logging.debug("found value {} for {}".format(data["value"], data["name"]))
             for key, value in data.items():
-                storage[key] = value
+                dict_storage[key] = value
         except Exception as e:
             logging.error("Failed to load data for sensor {}: {}".format(sensor.name, e))
         sleep(1)
@@ -42,12 +42,23 @@ def main():
 
     while True:
         result = list()
+        prom_data = ""
         for sensor_value in sensor_values:
             result.append(sensor_value.copy())
+            try:
+                prom_data += sensor_value.get("prometheus_data", "")
+            except Exception as e:
+                logging.error("failed to add prometheus data: {} with error: {}", sensor_value.get("prometheus_data"), e)
+
         with open("/dev/shm/sensors.json.new", "w") as json_file:
             json.dump(result, json_file)
             logging.debug(result)
         move("/dev/shm/sensors.json.new", "/dev/shm/sensors.json")
+
+        with open("/dev/shm/sensors.prometheus.new", "w") as prom_file:
+            prom_file.write(prom_data)
+        move("/dev/shm/sensors.prometheus.new", "/dev/shm/sensors.prometheus")
+
         sleep(1)
 
 
