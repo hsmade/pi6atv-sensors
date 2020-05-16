@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-react:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,4 +17,4 @@ jobs:
       working-directory: react-web
 
     - name: build debian package
-      run: make build-deps build-package
+      run: make build-package
