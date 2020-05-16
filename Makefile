@@ -1,4 +1,4 @@
-GIT_COMMIT := $(shell git describe --tags)
+GIT_COMMIT := $(shell git describe --tags | tr -d v)
 GIT_DIRTY := $(if $(shell git status --porcelain),~$(shell git rev-parse --short HEAD))
 VERSION := $(GIT_COMMIT)$(GIT_DIRTY)
 DEBEMAIL="debian@fournier.nl"
