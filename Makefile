@@ -35,7 +35,7 @@ prepare-package: react-web/build build/debian/changelog
 
 build-package: prepare-package
 	cd build; dpkg-deb -b . ../repeater-sensors-$(VERSION).deb
-    cp repeater-sensors-$(VERSION).deb repeater-sensors.deb
+	cp repeater-sensors-$(VERSION).deb repeater-sensors.deb
 
 clean:
 	rm -r build/debian/changelog build/opt react-web/build
