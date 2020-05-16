@@ -12,18 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - run: git fetch --prune --unshallow
+
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - run: yarn install
-        working-directory: react-web
-      - run: yarn build
-        name: build web
-        working-directory: react-web
 
       - name: build debian package
-        run: make build-package
+        run: make build-deps build-package
 
       - name: Create Release
         id: create_release

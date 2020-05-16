@@ -8,14 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+    - run: git fetch --prune --unshallow
+
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - run: yarn install
-      working-directory: react-web
-    - run: yarn build
-      working-directory: react-web
 
-    - name: build debian package
-      run: make build-package
+    - name: build  debian package
+      run: make build-deps build-package

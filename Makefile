@@ -6,7 +6,7 @@ DEBFULLNAME="Wim Fournier"
 
 build-deps:
 	apt update
-	apt install -y moreutils git-buildpackage build-essential
+	sudo apt install -y moreutils git-buildpackage build-essential
 
 react-web/build:
 	cd react-web; \
