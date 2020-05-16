@@ -3,12 +3,12 @@ Section: unknown
 Priority: optional
 Maintainer: root <debian@fournier.nl>
 Build-Depends: debhelper (>= 10)
-Standards-Version: 0.0.0~5aecad8
+Standards-Version: 0.0.0-2-ge3fb66f~e3fb66f
 Homepage: <insert the upstream URL, if relevant>
 #Vcs-Git: https://https://github.com/hsmade/pi6atv-sensors.git
 #Vcs-Browser: https://https://github.com/hsmade/pi6atv-sensors.git
 Package: repeater-sensors
-Version: 0.0.0~5aecad8
+Version: 0.0.0-2-ge3fb66f~e3fb66f
 Architecture: any
 Depends: nginx, snmpd
 Description: Handles sensors for the pi6atv repeater

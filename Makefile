@@ -9,7 +9,7 @@ build-deps:
 	apt install -y moreutils git-buildpackage build-essential
 
 react-web/build:
-	cd react-web
+	cd react-web; \
 	yarn build
 
 build/debian/changelog:
