@@ -13,26 +13,26 @@ react-web/build:
 	yarn install; \
 	yarn build
 
-build/debian/changelog:
+build/DEBIAN/changelog:
 	cd build; \
-	echo >debian/changelog; \
+	echo >DEBIAN/changelog; \
 	prevtag=initial; \
-	pkgname=`cat debian/control | grep '^Package: ' | sed 's/^Package: //'`; \
+	pkgname=`cat DEBIAN/control | grep '^Package: ' | sed 's/^Package: //'`; \
 	git tag -l v* | sort -V | while read tag; do \
 	(echo "$$pkgname ($${tag#v}) unstable; urgency=low\n"; git log --pretty=format:'  * %s' $$prevtag..$$tag; \
-	  git log --pretty='format:%n%n -- %aN <%aE>  %aD%n%n' $$tag^..$$tag) | cat - debian/changelog | sponge debian/changelog; \
+	  git log --pretty='format:%n%n -- %aN <%aE>  %aD%n%n' $$tag^..$$tag) | cat - DEBIAN/changelog | sponge DEBIAN/changelog; \
 	prevtag=$$tag; \
 	done; \
 	tag=`git tag -l v* | sort -V | tail -1`; \
-	[ `git log --exit-code $$tag..HEAD | wc -l` -ne 0 ] && git-dch -s $$tag -S --no-multimaint --nmu --ignore-branch \
+	[ `git log --exit-code $$tag..HEAD | wc -l` -ne 0 ] && gbp dch -s $$tag -S --no-multimaint --nmu --ignore-branch \
 	  --snapshot-number="'{:%Y%m%d%H%M%S}'.format(__import__('datetime').datetime.fromtimestamp(`git log -1 --pretty=format:%at`))"; \
-	sed -i 's/UNRELEASED/unstable/' debian/changelog
+	sed -i 's/UNRELEASED/unstable/' DEBIAN/changelog
 
-prepare-package: react-web/build build/debian/changelog
+prepare-package: react-web/build build/DEBIAN
 	mkdir -p build/opt/repeater-sensors
 	cp -r sensors *.py README.md build/opt/repeater-sensors/
 	cp -r react-web/build build/opt/repeater-sensors/web
-	sed -e "s/Version:.*/Version: $(VERSION)/" -i build/debian/control
+	sed -e "s/Version:.*/Version: $(VERSION)/" -i build/DEBIAN/control
 
 build-package: prepare-package
 	find build
@@ -40,4 +40,4 @@ build-package: prepare-package
 	cp repeater-sensors-$(VERSION).deb repeater-sensors.deb
 
 clean:
-	rm -r build/debian/changelog build/opt react-web/build
+	rm -r build/DEBIAN/changelog build/opt react-web/build
