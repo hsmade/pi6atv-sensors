@@ -10,6 +10,7 @@ build-deps:
 
 react-web/build:
 	cd react-web; \
+	yarn install; \
 	yarn build
 
 build/debian/changelog:
