@@ -17,5 +17,4 @@ jobs:
       working-directory: react-web
 
     - name: build debian package
-      run: echo not implemented
-        
+      run: make build-package

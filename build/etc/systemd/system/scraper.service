@@ -1,0 +1,9 @@
+[Unit]
+Description=repeater sensors scraper
+
+[Service]
+ExecStart=/opt/repeater-sensors/venv/bin/python scraper.py
+WorkingDirectory=/opt/repeater-sensors
+
+[Install]
+WantedBy=multi-user.target

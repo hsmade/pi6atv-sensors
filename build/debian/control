@@ -1,0 +1,18 @@
+Source: repeater-sensors
+Section: unknown
+Priority: optional
+Maintainer: root <debian@fournier.nl>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 0.0.0~5aecad8
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: https://https://github.com/hsmade/pi6atv-sensors.git
+#Vcs-Browser: https://https://github.com/hsmade/pi6atv-sensors.git
+Package: repeater-sensors
+Version: 0.0.0~5aecad8
+Architecture: any
+Depends: nginx, snmpd
+Description: Handles sensors for the pi6atv repeater
+ Consists of 3 parts:
+ - a scraper script that reads all the sensors and dumps a json file in /dev/shm/sensors.json
+ - a web page that reads from the sensors.json and presents it to the user
+ - a pass script for snmp, that reads from the sensors.json and exposes all metrics

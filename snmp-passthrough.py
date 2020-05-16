@@ -4,20 +4,16 @@ This is then converted in to a format that the SNMP agent expects
 """
 import snmp_passpersist as snmp
 import json
-# import logging
 
-# logging.basicConfig(level="DEBUG")
 PP = snmp.PassPersist(".1.3.6.1.4.1.8072.2.255")
 
 
 def update():
-    with open("/home/pi/wim/web/sensors.json", "r") as sensors_file:
-    # with open("web/sensors.json", "r") as sensors_file:
+    with open("/dev/shm/sensors.json", "r") as sensors_file:
         data = json.load(sensors_file)
     index = 0
     for sensor in data:
         index += 1
-        # logging.debug("Adding sensor({}): {}".format(index, sensor))
         if sensor.get("type") == "bool":
             PP.add_int("0.{}".format(index), 1 if sensor.get("value") else 0, sensor.get("name"))
             PP.add_str("1.{}".format(index), sensor.get("name"))
