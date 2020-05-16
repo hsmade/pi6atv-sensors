@@ -5,7 +5,7 @@ DEBEMAIL="debian@fournier.nl"
 DEBFULLNAME="Wim Fournier"
 
 build-deps:
-	apt update
+	sudo apt update
 	sudo apt install -y moreutils git-buildpackage build-essential
 
 react-web/build:
