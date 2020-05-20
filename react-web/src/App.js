@@ -42,6 +42,8 @@ class App extends Component {
                     return {name: sensor.name, type: sensor.type, component: <PowerSensor sensor={sensor}/>}
                 case "dht22":
                     return {name: sensor.name, type: sensor.type, component: <DHTSensor sensor={sensor}/>}
+                case "flow":
+                    return {name: sensor.name, type: sensor.type, component: <GaugeSensor sensor={sensor}/>}
                 default:
                     return {name: sensor.name, type: sensor.type, component: <p>{sensor.name} ({sensor.type})</p>}
             }
@@ -92,7 +94,7 @@ class App extends Component {
                           {
                               components.filter((value, index, array) => {
                                   console.log(value)
-                              return value.type === "power" && !["PA power supply","Main power supply"].includes(value.name)
+                              return value.type === "flow" || (value.type === "power" && !["PA power supply","Main power supply"].includes(value.name))
                           }).map(sensor => sensor.component)
                           }
                       </div>

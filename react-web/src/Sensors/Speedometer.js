@@ -23,7 +23,8 @@ class Speedometer extends Component {
                 width={900}
                 // fluidWidth={true}
                 height={600}
-                currentValueText="PA: ${value}W"
+                currentValueText={"PA: #{value}W"}
+                currentValuePlaceholderStyle={"#{value}W"}
             />
             </div>
         )

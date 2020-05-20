@@ -49,12 +49,16 @@ class GaugeSensor extends Component {
             case "rpm": icon = "fan.png"; sign = "rpm"; break
             default: break
         }
+        let value = this.props.sensor.value
+        if (value > 0) {
+            value = value.toFixed(1)
+        }
         return (
             <div>
                 <p style={{fontFamily: 'digital-7-italic', color: "blue"}}>
                     <img src={icon} height={32} color={"blue"} alt={icon}/>
                     &nbsp;
-                    <b>{this.props.sensor.value.toFixed(1)}</b>
+                    <b>{value}</b>
                     &nbsp;
                     {sign}
                     &nbsp;
