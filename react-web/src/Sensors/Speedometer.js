@@ -7,8 +7,9 @@ class Speedometer extends Component {
         return (
             <div style={{width: "100%", height: "600px"}}>
             <ReactSpeedometer
-                maxValue={500}
-                value={473}
+                maxValue={this.props.sensor.max}
+                minValue={this.props.sensor.min}
+                value={this.props.sensor.value}
                 needleColor="blue"
                 startColor="green"
                 endColor="red"

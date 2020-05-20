@@ -1,46 +1,6 @@
 import React, {Component} from 'react';
-// import Chart from "react-google-charts";
-// import {blue} from "@material-ui/core/colors";
 
 class GaugeSensor extends Component {
-    state = {
-        value: 1,
-    };
-
-    intervalID = null;
-
-    options = {
-        width: 120,
-        height: 120,
-        max: this.props.sensor.max,
-        redFrom: this.props.sensor.redFrom,
-        redTo: this.props.sensor.max,
-        greenFrom: this.props.sensor.min,
-        greenTo: this.props.sensor.max,
-        minorTicks: 5
-    };
-
-    getData = () => {
-        return [
-            ["Label", "Value"],
-            [this.props.sensor.name, this.props.sensor.value]
-        ];
-    };
-    componentWillUnmount() {
-        if (this.intervalID === null) return;
-        clearInterval(this.intervalID);
-    }
-    componentDidMount() {
-        this.intervalID = setInterval(() => {
-            this.setState(state => {
-                return {
-                    ...state,
-                value: 0
-                };
-            });
-        }, 3000);
-    }
-
     render() {
         let icon = "";
         let sign = "";
@@ -55,22 +15,21 @@ class GaugeSensor extends Component {
         }
         return (
             <div>
-                <p style={{fontFamily: 'digital-7-italic', color: "blue"}}>
-                    <img src={icon} height={32} color={"blue"} alt={icon}/>
+                <p>
+                    <img src={icon} height={32} alt={icon}/>
                     &nbsp;
-                    <b>{value}</b>
+                    <span class="digit">
+                        <b>{value}</b>
+                    </span>
                     &nbsp;
-                    {sign}
+                    <span class="label">
+                        {sign}
+                    </span>
                     &nbsp;
-                    {this.props.sensor.name}
+                    <span className="label">
+                        {this.props.sensor.name}
+                    </span>
                 </p>
-                {/*<Chart*/}
-                {/*    chartType="Gauge"*/}
-                {/*    width="100%"*/}
-                {/*    height="{this.options.height}px"*/}
-                {/*    data={this.getData()}*/}
-                {/*    options={this.options}*/}
-                {/*/>*/}
             </div>
         );
     }

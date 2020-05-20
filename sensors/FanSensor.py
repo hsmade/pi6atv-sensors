@@ -17,14 +17,13 @@ class FanSensor(BaseSensor):
     PULSE = 2       # Noctua fans puts out two pluses per revolution
     type = "rpm"
 
-    def __init__(self, name, gpio_pin: int, samples=10, timeout=2, minimum=0, maximum=65535, red_from=None):
+    def __init__(self, name, gpio_pin: int, samples=10, timeout=2, minimum=0, maximum=65535):
         super().__init__(name)
         self.gpio_pin = gpio_pin
         self.samples = samples
         self.timeout = timeout
         self.minimum = minimum
         self.maximum = maximum
-        self.red_from = red_from
         self.timer = time.time()
         self.rpms = []
 

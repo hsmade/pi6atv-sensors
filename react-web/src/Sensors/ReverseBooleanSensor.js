@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
-class BooleanSensor extends Component {
+class ReverseBooleanSensor extends Component {
     render() {
         let icon = ""
         switch (this.props.sensor.value) {
-            case true: icon = "switch-on.png"; break
-            case false: icon = "switch-off.png"; break
+            case true: icon = "switch-off.png"; break
+            case false: icon = "switch-on.png"; break
             default: break
         }
         return (
@@ -13,7 +13,7 @@ class BooleanSensor extends Component {
                 <p>
                     <img src={icon} height={32} alt={icon}/>
                     &nbsp;
-                    <span class="label">
+                    <span className="label">
                         <b>{this.props.sensor.name}</b>
                     </span>
                     &nbsp;
@@ -23,4 +23,4 @@ class BooleanSensor extends Component {
     }
 }
 
-export default BooleanSensor;
+export default ReverseBooleanSensor;

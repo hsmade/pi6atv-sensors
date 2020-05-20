@@ -1,50 +1,6 @@
 import React, {Component} from 'react';
-// import Chart from "react-google-charts";
 
 class PowerSensor extends Component {
-    state = {
-        // voltage: 0,
-        // current: 0,
-        // power: 0,
-    };
-
-    // intervalID = null;
-    //
-    // options = {
-    //     width: 400,
-    //     height: 120,
-    //     max: this.props.sensor.max,
-    //     redFrom: this.props.sensor.redFrom,
-    //     redTo: this.props.sensor.max,
-    //     greenFrom: this.props.sensor.min,
-    //     greenTo: this.props.sensor.max,
-    //     minorTicks: 5
-    // };
-    //
-    // getData = () => {
-    //     return [
-    //         ["Label", "Value"],
-    //         ["voltage", this.props.sensor.value.voltage],
-    //         ["current", this.props.sensor.value.current],
-    //         ["power", this.props.sensor.value.power],
-    //     ];
-    // };
-    // componentWillUnmount() {
-    //     if (this.intervalID === null) return;
-    //     clearInterval(this.intervalID);
-    // }
-    // componentDidMount() {
-    //     this.intervalID = setInterval(() => {
-    //         this.setState(state => {
-    //             return {
-    //                 ...state,
-    //             voltage: this.props.sensor.value.voltage,
-    //             current: this.props.sensor.value.current,
-    //             power: this.props.sensor.value.power,
-    //             };
-    //         });
-    //     }, 3000);
-    // }
     render() {
         let current_value = this.props.sensor.value.current
         let current_sign = "A"
@@ -64,29 +20,33 @@ class PowerSensor extends Component {
         }
         return (
             <div>
-                <p style={{fontFamily: 'digital-7-italic', color: "blue"}}>
-                    <img src={"electricity.png"} height={32} color={"blue"} alt={"electricity"}/>
+                <p>
+                    <img src={"electricity.png"} height={32} alt={"electricity"}/>
                     &nbsp;
-                    <b>{this.props.sensor.value.voltage.toFixed(1)}</b>
+                    <span class="digit">
+                        <b>{this.props.sensor.value.voltage.toFixed(1)}</b>
+                    </span>
                     &nbsp;
-                    V
+                    <span class="label">
+                        V
+                    </span>
                     &nbsp;
+                    <span className="digit">
                     <b>{current_value.toFixed(1)}</b>
+                    </span>
                     &nbsp;
-                    {current_sign}
+                    <span class="label">
+                        {current_sign}
+                    </span>
                     &nbsp;
-                    <b>{power_value}</b>
-                    &nbsp;
-                    {power_sign}
+                    <span className="digit">
+                        <b>{power_value}</b>
+                    </span>
+                        &nbsp;
+                    <span class="label">
+                        {power_sign}
+                    </span>
                 </p>
-                {/*<h3>{this.props.sensor.name}</h3>*/}
-                {/*<Chart*/}
-                {/*    chartType="Gauge"*/}
-                {/*    width="100%"*/}
-                {/*    height="{this.options.height}px"*/}
-                {/*    data={this.getData()}*/}
-                {/*    options={this.options}*/}
-                {/*/>*/}
             </div>
         );
     }

@@ -1,34 +1,53 @@
-.App {
-  text-align: center;
-  font-family: digital-7-italic;
-  color: blue;
-  font-weight: bold;
-}
-
-.App-header {
+body {
+  text-align: left;
   background-color: black;
-  /*min-height: 100vh;*/
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /*font-size: calc(10px + 2vmin);*/
-  color: white;
+  font-size: 24px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-/* -------- */
 
 @font-face {
   font-family: 'digital-7-italic';
   font-style: italic;
   font-weight: 400;
-  src: url('digital-7.italic.ttf') format('truetype') /* Safari, Android, iOS */
+  src: url('digital-7.italic.ttf') format('truetype')
+}
+
+@font-face {
+  font-family: 'digital-7-monoitalic';
+  font-style: italic;
+  font-weight: 400;
+  src: url('digital-7.monoitalic.ttf') format('truetype')
 }
 
 svg:not(:root) {
   overflow: visible;
+}
+
+.digit {
+  font-family: 'digital-7-monoitalic', monospace;
+  color: blue;
+  font-weight: bold;
+}
+
+.label {
+  font-family: 'digital-7-italic', cursive;
+  color: blue;
+  font-weight: bold;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: #8c8b8b;
+}
+
+#root {
+  width: calc(100% - 100px);
+}
+
+.speedometer {
+  text-align: center;
 }
