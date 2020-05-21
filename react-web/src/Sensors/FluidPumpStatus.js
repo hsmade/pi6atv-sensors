@@ -31,7 +31,7 @@ class FluidPumpStatus extends Component {
         }
 
         return ([
-            <tr>
+            <tr key={"pump"}>
                 <td>
                     <img src={"fan.png"} alt={"fan"} height={32}/>
                 </td>
@@ -55,7 +55,7 @@ class FluidPumpStatus extends Component {
                 </td>
             </tr>,
             // <tr/>,
-            // <tr>
+            // <tr key={"power"}>
             //     <td>
             //     </td>
             //     <td>

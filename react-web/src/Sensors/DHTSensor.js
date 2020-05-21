@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class DHTSensor extends Component {
     render() {
         return ([
-            <tr>
+            <tr key={"temp"}>
                 <td>
                     <img src={"thermometer.png"} height={32} alt={"thermometer"}/>
                 </td>
@@ -23,7 +23,7 @@ class DHTSensor extends Component {
                     </span>
                 </td>
             </tr>,
-            <tr>
+            <tr key={"hum"}>
                 <td>
                     <img src={"humidity.png"} height={32} alt={"humidity"}/>
                 </td>

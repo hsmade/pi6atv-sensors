@@ -11,9 +11,11 @@ class Speedometer extends Component {
                 minValue={this.props.sensor.min}
                 value={this.props.sensor.value}
                 needleColor="blue"
-                startColor="green"
-                endColor="red"
-                segments={10}
+                // startColor="green"
+                // endColor="red"
+                segments={20}
+                maxSegmentLabels={10}
+                segmentColors={["red","red","red","red","red","red","red","red","red","red","red","red","orange","orange","green","green","orange","orange","red","red",]}
                 textColor="blue"
                 labelFontSize="26px"
                 valueTextFontSize="32px"

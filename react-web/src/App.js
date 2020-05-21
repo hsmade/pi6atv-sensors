@@ -53,7 +53,7 @@ class App extends Component {
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
             const sensor = sensors.rpm[key]
-            fans.push(<FanStatus sensor={{
+            fans.push(<FanStatus key={key} sensor={{
                 name: sensor.name,
                 value: sensor.value,
                 min: sensor.min,
@@ -69,21 +69,21 @@ class App extends Component {
             // sensor.voltage = sensors.power[sensor.name].value.voltage
             // sensor.current = sensors.power[sensor.name].value.current
             // sensor.power = sensors.power[sensor.name].value.power
-            flow.push(<FluidPumpStatus sensor={sensor}/>)
-            flow.push(<FluidDetection sensor={sensors.reverse_status["Fluid detection"]}/>)
+            flow.push(<FluidPumpStatus key={key+"-s"} sensor={sensor}/>)
+            flow.push(<FluidDetection key={key+"-d"} sensor={sensors.reverse_status["Fluid detection"]}/>)
         }
 
         let temperatures = []
         for (let key of Object.keys(sensors.temperature).sort()) {
-            temperatures.push(<GaugeSensor sensor={sensors.temperature[key]}/>)
+            temperatures.push(<GaugeSensor key={key} sensor={sensors.temperature[key]}/>)
         }
         for (let key of Object.keys(sensors.dht22).sort()) {
-            temperatures.push(<DHTSensor sensor={sensors.dht22[key]}/>)
+            temperatures.push(<DHTSensor key={key} sensor={sensors.dht22[key]}/>)
         }
 
         let psus = []
         for (let key of Object.keys(sensors.power).sort()) {
-            psus.push(<PowerSensor sensor={sensors.power[key]} status={sensors.status[key]}/>)
+            psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key]}/>)
         }
 
         return (
@@ -92,7 +92,7 @@ class App extends Component {
 
                       <div class={"speedometer"}>
                         <Speedometer sensor={{"value": 15, "max":20, "min": 0}}/>
-                          // PA (power (GPI-26), temp) -> in de dial
+                          {/*PA (power (GPI-26), temp) -> in de dial*/}
                       </div>
 
                       <div style={{position:"absolute", top:0, left:0}} id={"air cooling"}>
