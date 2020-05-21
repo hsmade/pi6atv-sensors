@@ -6,8 +6,8 @@ from .FlowSensor import FLowSensor
 
 # all gpio_pin numbers are the GPIO numbers, not the board pin numbers
 sensor_config = [
-    BooleanSensor("Main power supply", 6),
-    BooleanSensor("PA power supply", 13),
+    BooleanSensor("Mains", 6),
+    BooleanSensor("PA", 13),
     BooleanSensor("Fluid pump", 19),
     BooleanSensor(name="@40 °C", gpio_pin=23),
     BooleanSensor(name="@50 °C", gpio_pin=24),
@@ -21,9 +21,9 @@ sensor_config = [
     DS18B20TemperatureSensor("Outside", "28-0417c4897aff"),
     DS18B20TemperatureSensor("Mixer", "28-3c01a8164f17"),
     DHT22TemperatureSensor("Room (dht22)", 16),
-    INA260Sensor("Main power supply", 0x40),
-    INA260Sensor("PA power supply", 0x41),
-    # INA260Sensor("Mixer power supply", 0x41),
+    INA260Sensor("Mains", 0x40),
+    INA260Sensor("PA", 0x41),
+    # INA260Sensor("Mixer, 0x41),
     INA260Sensor("Fluid pump", 0x45),
     FLowSensor("Fluid pump", 7),
     ReverseBooleanSensor("Fluid detection", 12),

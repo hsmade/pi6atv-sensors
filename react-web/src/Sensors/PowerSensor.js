@@ -18,10 +18,23 @@ class PowerSensor extends Component {
             power_sign = "kW"
             power_value = power_value.toFixed(1)
         }
+
+        let statusIcon = "switch-off.png"
+        if (this.props.status) {
+            statusIcon = "switch-on.png"
+        }
         return (
             <tr>
                 <td>
                     <img src={"electricity.png"} height={32} alt={"electricity"}/>
+                </td>
+                <td>
+                    <img src={statusIcon} alt={statusIcon} height={20}/>
+                </td>
+                <td>
+                    <span className="label">
+                        {this.props.sensor.name}
+                    </span>
                 </td>
                 <td align={"right"}>
                     <span class="digit">

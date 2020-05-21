@@ -47,8 +47,8 @@ class App extends Component {
         for (let sensor of this.state.sensors) {
             sensors[sensor.type][sensor.name] = sensor
         }
-        console.log("input:",this.state.sensors)
-        console.log("sensors:",sensors)
+        // console.log("input:",this.state.sensors)
+        // console.log("sensors:",sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
@@ -66,9 +66,9 @@ class App extends Component {
         for (let key of Object.keys(sensors.flow).sort()) {
             const sensor = sensors.flow[key]
             sensor.status = sensors.status[sensor.name].value
-            sensor.voltage = sensors.power[sensor.name].value.voltage
-            sensor.current = sensors.power[sensor.name].value.current
-            sensor.power = sensors.power[sensor.name].value.power
+            // sensor.voltage = sensors.power[sensor.name].value.voltage
+            // sensor.current = sensors.power[sensor.name].value.current
+            // sensor.power = sensors.power[sensor.name].value.power
             flow.push(<FluidPumpStatus sensor={sensor}/>)
             flow.push(<FluidDetection sensor={sensors.reverse_status["Fluid detection"]}/>)
         }
@@ -83,7 +83,7 @@ class App extends Component {
 
         let psus = []
         for (let key of Object.keys(sensors.power).sort()) {
-            psus.push(<PowerSensor sensor={sensors.power[key]}/>)
+            psus.push(<PowerSensor sensor={sensors.power[key]} status={sensors.status[key]}/>)
         }
 
         return (

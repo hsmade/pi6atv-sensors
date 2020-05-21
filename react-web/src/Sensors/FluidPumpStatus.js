@@ -54,34 +54,34 @@ class FluidPumpStatus extends Component {
                     </span>
                 </td>
             </tr>,
-            <tr/>,
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <img src={"electricity.png"} alt={"fan"} height={20}/>
-                </td>
-                <td colSpan={3}>
-                    <span className={"digit"}>
-                        {sensor.voltage.toFixed(1)}
-                    </span>
-                    <span className={"label"}>
-                        &nbsp;V&nbsp;&nbsp;
-                    </span>
-                    <span className={"digit"}>
-                        {(sensor.current/1000).toFixed(1)}
-                    </span>
-                    <span className={"label"}>
-                        &nbsp;A&nbsp;&nbsp;
-                    </span>
-                    <span className={"digit"}>
-                        {(sensor.power/1000).toFixed(1)}
-                    </span>
-                    <span className={"label"}>
-                        &nbsp;W
-                    </span>
-                </td>
-            </tr>
+            // <tr/>,
+            // <tr>
+            //     <td>
+            //     </td>
+            //     <td>
+            //         <img src={"electricity.png"} alt={"fan"} height={20}/>
+            //     </td>
+            //     <td colSpan={3}>
+            //         <span className={"digit"}>
+            //             {sensor.voltage.toFixed(1)}
+            //         </span>
+            //         <span className={"label"}>
+            //             &nbsp;V&nbsp;&nbsp;
+            //         </span>
+            //         <span className={"digit"}>
+            //             {(sensor.current/1000).toFixed(1)}
+            //         </span>
+            //         <span className={"label"}>
+            //             &nbsp;A&nbsp;&nbsp;
+            //         </span>
+            //         <span className={"digit"}>
+            //             {(sensor.power/1000).toFixed(1)}
+            //         </span>
+            //         <span className={"label"}>
+            //             &nbsp;W
+            //         </span>
+            //     </td>
+            // </tr>
         ])
     }
 }
