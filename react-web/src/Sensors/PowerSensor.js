@@ -19,35 +19,35 @@ class PowerSensor extends Component {
             power_value = power_value.toFixed(1)
         }
         return (
-            <div>
-                <p>
+            <tr>
+                <td>
                     <img src={"electricity.png"} height={32} alt={"electricity"}/>
-                    &nbsp;
+                </td>
+                <td align={"right"}>
                     <span class="digit">
                         <b>{this.props.sensor.value.voltage.toFixed(1)}</b>
                     </span>
-                    &nbsp;
                     <span class="label">
-                        V
+                        &nbsp;V&nbsp;&nbsp;
                     </span>
-                    &nbsp;
+                </td>
+                <td>
                     <span className="digit">
                     <b>{current_value.toFixed(1)}</b>
                     </span>
-                    &nbsp;
                     <span class="label">
-                        {current_sign}
+                        &nbsp;{current_sign}&nbsp;&nbsp;
                     </span>
-                    &nbsp;
+                </td>
+                <td>
                     <span className="digit">
                         <b>{power_value}</b>
                     </span>
-                        &nbsp;
                     <span class="label">
-                        {power_sign}
+                        &nbsp;{power_sign}&nbsp;&nbsp;
                     </span>
-                </p>
-            </div>
+                </td>
+            </tr>
         );
     }
 }

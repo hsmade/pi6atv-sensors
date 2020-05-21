@@ -14,23 +14,26 @@ class GaugeSensor extends Component {
             value = value.toFixed(1)
         }
         return (
-            <div>
-                <p>
+            <tr>
+                <td>
                     <img src={icon} height={32} alt={icon}/>
-                    &nbsp;
-                    <span class="digit">
-                        <b>{value}</b>
-                    </span>
-                    &nbsp;
-                    <span class="label">
-                        {sign}
-                    </span>
-                    &nbsp;
+                </td>
+                <td>
                     <span className="label">
                         {this.props.sensor.name}
                     </span>
-                </p>
-            </div>
+                </td>
+                <td>
+                    <span class="digit">
+                        <b>{value}</b>
+                    </span>
+                </td>
+                <td>
+                    <span class="label">
+                        {sign}
+                    </span>
+                </td>
+            </tr>
         );
     }
 }

@@ -26,6 +26,8 @@ class FluidPumpStatus extends Component {
 
         if (!sensor.status || sensor.value === -1) {
             sensor.value = "--"
+        } else {
+            sensor.value = sensor.value.toFixed(1)
         }
 
         return ([
@@ -43,7 +45,7 @@ class FluidPumpStatus extends Component {
                 </td>
                 <td align={"right"}>
                     <span class={"digit"} style={{color: statusColor}}>
-                        {sensor.value.toString().padStart(4)}
+                        {sensor.value}
                     </span>
                 </td>
                 <td>
@@ -52,35 +54,31 @@ class FluidPumpStatus extends Component {
                     </span>
                 </td>
             </tr>,
+            <tr/>,
             <tr>
                 <td>
-                    <img src={"electricity.png"} alt={"fan"} height={32}/>
                 </td>
                 <td>
-
+                    <img src={"electricity.png"} alt={"fan"} height={20}/>
                 </td>
-                <td>
+                <td colSpan={3}>
                     <span className={"digit"}>
-                        {sensor.voltage}
+                        {sensor.voltage.toFixed(1)}
                     </span>
                     <span className={"label"}>
-                        V
+                        &nbsp;V&nbsp;&nbsp;
                     </span>
-                </td>
-                <td>
                     <span className={"digit"}>
                         {(sensor.current/1000).toFixed(1)}
                     </span>
                     <span className={"label"}>
-                        A
+                        &nbsp;A&nbsp;&nbsp;
                     </span>
-                </td>
-                <td>
                     <span className={"digit"}>
                         {(sensor.power/1000).toFixed(1)}
                     </span>
                     <span className={"label"}>
-                        W
+                        &nbsp;W
                     </span>
                 </td>
             </tr>

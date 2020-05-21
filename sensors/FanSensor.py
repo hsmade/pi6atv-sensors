@@ -73,7 +73,6 @@ class FanSensor(BaseSensor):
             "type": self.type,
             "min": self.minimum,
             "max": self.maximum,
-            "redFrom": self.red_from,
             "value": self.read(),
             "prometheus_data": self.to_openmetrics(),
         }

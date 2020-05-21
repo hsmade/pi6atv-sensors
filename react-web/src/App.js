@@ -3,10 +3,13 @@ import './App.css';
 // import BooleanSensor from "./Sensors/BooleanSensor";
 // import GaugeSensor from "./Sensors/GaugeSensor";
 // import PowerSensor from "./Sensors/PowerSensor";
-// import DHTSensor from "./Sensors/DHTSenssor";
+import DHTSensor from "./Sensors/DHTSensor";
 import Speedometer from "./Sensors/Speedometer";
 import FanStatus from "./Sensors/FanStatus";
 import FluidPumpStatus from "./Sensors/FluidPumpStatus";
+import FluidDetection from "./Sensors/FluidDetection";
+import GaugeSensor from "./Sensors/GaugeSensor";
+import PowerSensor from "./Sensors/PowerSensor";
 
 
 class App extends Component {
@@ -38,18 +41,18 @@ class App extends Component {
             power: {},
             dht22: {},
             temperature: {},
+            reverse_status: {},
         }
 
-        // console.log("state:", this.state)
         for (let sensor of this.state.sensors) {
             sensors[sensor.type][sensor.name] = sensor
         }
-        // console.log("sensors:",sensors)
+        console.log("input:",this.state.sensors)
+        console.log("sensors:",sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
             const sensor = sensors.rpm[key]
-            // console.log("KEY:", sensor)
             fans.push(<FanStatus sensor={{
                 name: sensor.name,
                 value: sensor.value,
@@ -60,7 +63,6 @@ class App extends Component {
         }
 
         let flow = []
-        console.log(sensors)
         for (let key of Object.keys(sensors.flow).sort()) {
             const sensor = sensors.flow[key]
             sensor.status = sensors.status[sensor.name].value
@@ -68,48 +70,21 @@ class App extends Component {
             sensor.current = sensors.power[sensor.name].value.current
             sensor.power = sensors.power[sensor.name].value.power
             flow.push(<FluidPumpStatus sensor={sensor}/>)
+            flow.push(<FluidDetection sensor={sensors.reverse_status["Fluid detection"]}/>)
         }
 
+        let temperatures = []
+        for (let key of Object.keys(sensors.temperature).sort()) {
+            temperatures.push(<GaugeSensor sensor={sensors.temperature[key]}/>)
+        }
+        for (let key of Object.keys(sensors.dht22).sort()) {
+            temperatures.push(<DHTSensor sensor={sensors.dht22[key]}/>)
+        }
 
-
-        // console.log(fans)
-        // const components = sensors.map(sensor => {
-        //     switch (sensor.type) {
-        //         case "status":
-        //             return {name: sensor.name, type: sensor.type, component: <BooleanSensor sensor={sensor}/>}
-        //         case "rpm":
-        //         case "temperature":
-        //         case "flow":
-        //             return {name: sensor.name, type: sensor.type, component: <GaugeSensor sensor={sensor}/>}
-        //         case "power":
-        //             return {name: sensor.name, type: sensor.type, component: <PowerSensor sensor={sensor}/>}
-        //         case "dht22":
-        //             return {name: sensor.name, type: sensor.type, component: <DHTSensor sensor={sensor}/>}
-        //         default:
-        //             return {name: sensor.name, type: sensor.type, component: <p>{sensor.name} ({sensor.type})</p>}
-        //     }
-        // })
-        // const fan1 = {
-        //     name: "@40 °C",
-        //     status: true,
-        //     value: 2000,
-        //     min: 1900,
-        //     max: 2100,
-        // }
-        // const fan2 = {
-        //     name: "@50 °C",
-        //     status: true,
-        //     value: 2200,
-        //     min: 1900,
-        //     max: 2100,
-        // }
-        // const fan3 = {
-        //     name: "@60 °C",
-        //     status: false,
-        //     value: 1999,
-        //     min: 1900,
-        //     max: 2100,
-        // }
+        let psus = []
+        for (let key of Object.keys(sensors.power).sort()) {
+            psus.push(<PowerSensor sensor={sensors.power[key]}/>)
+        }
 
         return (
             <div className="App">
@@ -117,72 +92,45 @@ class App extends Component {
 
                       <div class={"speedometer"}>
                         <Speedometer sensor={{"value": 15, "max":20, "min": 0}}/>
+                          // PA (power (GPI-26), temp) -> in de dial
                       </div>
 
-                      <div style={{position:"absolute", top:0, left:0}} id={"cooling"}>
-                          <span class={"label"}>Cooling</span>
+                      <div style={{position:"absolute", top:0, left:0}} id={"air cooling"}>
                           <table cellSpacing={"5px"}>
                               <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>Air Cooling</span><hr/></td></tr>
                               {fans}
-                              <tr><td colSpan={5}><hr/></td></tr>
+                              <tr/>
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <div style={{position:"absolute", bottom:0, left:0}} id={"water cooling"}>
+                          <table cellSpacing={"5px"}>
+                              <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>Water Cooling</span><hr/></td></tr>
                               {flow}
                               </tbody>
                           </table>
                       </div>
 
-                      <div id={"PA"}/>
-                      <div id={"power supplies"} />
-                      <div id={"temperatures"}/>
+                      <div style={{position:"absolute", top:0, right:0}} id={"temperatures"}>
+                          <table cellSpacing={"5px"}>
+                              <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>Temperatures</span><hr/></td></tr>
+                              {temperatures}
+                              </tbody>
+                          </table>
+                      </div>
 
-
-                      {/*<div style={{position:"absolute", bottom:100, left:120, textAlign:"left", fontSize:"22px"}}>*/}
-                      {/*    {*/}
-                      {/*        components.filter((value, index, array) => {*/}
-                      {/*        return ["PA", "Mounting plate", "Fan1", "Fan2", "Fan3"].includes(value.name)*/}
-                      {/*    }).map(sensor => sensor.component)*/}
-                      {/*    }*/}
-                      {/*</div>*/}
-                      {/*<div style={{position:"absolute", bottom:400, left:350, textAlign:"center", fontSize:"22px"}}>*/}
-                      {/*    {*/}
-                      {/*        components.filter((value, index, array) => {*/}
-                      {/*        return ["PA power supply","Main power supply"].includes(value.name)*/}
-                      {/*    }).map(sensor => sensor.component)*/}
-                      {/*    }*/}
-                      {/*</div>*/}
-                      {/*<div style={{position:"absolute", bottom:100, left:-300, textAlign:"left", fontSize:"22px"}}>*/}
-                      {/*    {*/}
-                      {/*        components.filter((value, index, array) => {*/}
-                      {/*        return value.type === "status"*/}
-                      {/*    }).map(sensor => sensor.component)*/}
-                      {/*    }*/}
-                      {/*</div>*/}
-                      {/*<div style={{position:"absolute", bottom:100, right:-350, textAlign:"left", fontSize:"22px"}}>*/}
-                      {/*    {*/}
-                      {/*        components.filter((value, index, array) => {*/}
-                      {/*            console.log(value)*/}
-                      {/*        return value.type === "temperature"*/}
-                      {/*    }).map(sensor => sensor.component)*/}
-                      {/*    }*/}
-                      {/*</div>*/}
-                      {/*<div style={{position:"absolute", top:0, right:-170, textAlign:"left", fontSize:"22px"}}>*/}
-                      {/*    {*/}
-                      {/*        components.filter((value, index, array) => {*/}
-                      {/*            console.log(value)*/}
-                      {/*        return value.type === "dht22"*/}
-                      {/*    }).map(sensor => sensor.component)*/}
-                      {/*    }*/}
-                      {/*</div>*/}
-                      {/*<div style={{position:"absolute", top:0, left:-300, textAlign:"left", fontSize:"22px"}}>*/}
-                      {/*    /!*{*!/*/}
-                      {/*    /!*    components.filter((value, index, array) => {*!/*/}
-                      {/*    /!*        console.log(value)*!/*/}
-                      {/*    /!*    return value.type === "flow" || (value.type === "power" && !["PA power supply","Main power supply"].includes(value.name))*!/*/}
-                      {/*    /!*}).map(sensor => sensor.component)*!/*/}
-                      {/*    /!*}*!/*/}
-                      {/*    <FanStatus sensor={fan1}/>*/}
-                      {/*    <FanStatus sensor={fan2}/>*/}
-                      {/*    <FanStatus sensor={fan3}/>*/}
-                      {/*</div>*/}
+                      <div style={{position:"absolute", bottom:0, right:"50%"}} id={"psus"}>
+                          <table cellSpacing={"5px"}>
+                              <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>PSUs</span><hr/></td></tr>
+                              {psus}
+                              </tbody>
+                          </table>
+                      </div>
                   </div>
             </div>
         );

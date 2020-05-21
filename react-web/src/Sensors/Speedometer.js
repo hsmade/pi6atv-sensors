@@ -5,7 +5,7 @@ class Speedometer extends Component {
 
     render() {
         return (
-            <div style={{width: "100%", height: "600px"}}>
+            <div style={{width: "100%", height: "100%"}}>
             <ReactSpeedometer
                 maxValue={this.props.sensor.max}
                 minValue={this.props.sensor.min}
