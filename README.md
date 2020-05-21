@@ -39,3 +39,4 @@ Copy the build directory to /opt/repeater-sensors/web
 * add back main PSU power
 * show data, when the sensor is disabled (now shows -- on purpose)
 * return null value when sensor is down
+d* add prometheus metric for error state of sensors
