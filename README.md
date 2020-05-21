@@ -38,3 +38,4 @@ Copy the build directory to /opt/repeater-sensors/web
 * change dial colors to reflect expected power at 15W
 * add back main PSU power
 * show data, when the sensor is disabled (now shows -- on purpose)
+* return null value when sensor is down
