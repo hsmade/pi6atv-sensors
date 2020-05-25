@@ -16,7 +16,7 @@ class GaugeSensor extends Component {
         return (
             <tr>
                 <td>
-                    <img src={icon} height={32} alt={icon}/>
+                    <img src={icon} height={this.props.height/25} alt={icon}/>
                 </td>
                 <td>
                     <span className="label">
@@ -24,12 +24,12 @@ class GaugeSensor extends Component {
                     </span>
                 </td>
                 <td>
-                    <span class="digit">
+                    <span className="digit">
                         <b>{value}</b>
                     </span>
                 </td>
                 <td>
-                    <span class="label">
+                    <span className="label">
                         {sign}
                     </span>
                 </td>

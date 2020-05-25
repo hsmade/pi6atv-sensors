@@ -11,7 +11,7 @@ class FluidDetection extends Component {
         return (
             <tr>
                 <td>
-                    <img src={"water.png"} alt={"water"} height={32}/>
+                    <img src={"water.png"} alt={"water"} height={this.props.height/25}/>
                 </td>
                 <td colSpan={4}>
                 <span className={"label"} style={{color: color}}>{text}</span>

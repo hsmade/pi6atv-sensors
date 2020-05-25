@@ -1,21 +1,11 @@
 import React, {Component} from 'react';
 
-/*
- Properties:
-   sensor:
-     name: string
-     value: number
-     status: bool
-     min: number
-     max: number
- */
-
 class FanStatus extends Component {
     render() {
         const sensor = this.props.sensor
 
         let statusIcon = "switch-off.png"
-        if (sensor.status) {
+        if (this.props.status) {
             statusIcon = "switch-on.png"
         }
 
@@ -24,25 +14,25 @@ class FanStatus extends Component {
             statusColor = "red"
         }
 
-        if (!sensor.status || sensor.value === -1) {
+        if (!this.props.status || sensor.value === -1) {
             sensor.value = "--"
         }
 
         return (
             <tr>
                 <td>
-                    <img src={"fan.png"} alt={"fan"} height={32}/>
+                    <img src={"fan.png"} alt={"fan"} height={this.props.height/25}/>
                 </td>
                 <td>
-                    <img src={statusIcon} alt={statusIcon} height={20}/>
+                    <img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>
                 </td>
                 <td>
-                    <span class={"label"}>
+                    <span className={"label"}>
                         {sensor.name}:
                     </span>
                 </td>
                 <td align={"right"}>
-                    <span class={"digit"} style={{color: statusColor}}>
+                    <span className={"digit"} style={{color: statusColor}}>
                         {sensor.value.toString().padStart(4)}
                     </span>
                 </td>

@@ -2,7 +2,6 @@ import ReactSpeedometer from "react-d3-speedometer"
 import React, {Component} from 'react';
 
 class Speedometer extends Component {
-
     render() {
         return (
             <div style={{width: "100%", height: "100%"}}>
@@ -11,23 +10,24 @@ class Speedometer extends Component {
                 minValue={this.props.sensor.min}
                 value={this.props.sensor.value}
                 needleColor="blue"
+                // dimensionUnit="%"
                 // startColor="green"
                 // endColor="red"
                 segments={20}
                 maxSegmentLabels={10}
                 segmentColors={["red","red","red","red","red","red","red","red","red","red","red","red","orange","orange","green","green","orange","orange","red","red",]}
                 textColor="blue"
-                labelFontSize="26px"
-                valueTextFontSize="32px"
+                labelFontSize="1.2vw"
+                valueTextFontSize="2vw"
                 ringWidth={1}
                 // paddingHorizontal={17}
-                paddingVertical={17}
+                paddingVertical={this.props.height/50}
                 // dimensionUnit={"em"}
-                width={900}
+                width={this.props.width * 0.5}
                 // fluidWidth={true}
-                height={600}
-                currentValueText={"PA: #{value}W"}
-                currentValuePlaceholderStyle={"#{value}W"}
+                height={this.props.height * 0.8}
+                currentValueText={"PA Output: #{value} W"}
+                currentValuePlaceholderStyle={"#{value}"}
             />
             </div>
         )

@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-// import BooleanSensor from "./Sensors/BooleanSensor";
-// import GaugeSensor from "./Sensors/GaugeSensor";
-// import PowerSensor from "./Sensors/PowerSensor";
 import DHTSensor from "./Sensors/DHTSensor";
 import Speedometer from "./Sensors/Speedometer";
 import FanStatus from "./Sensors/FanStatus";
@@ -18,15 +15,28 @@ class App extends Component {
 
         this.state = {
             sensors: [],
+            width: window.innerWidth,
+            height: window.innerHeight
         };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ sensors: this.state.sensors, width: window.innerWidth, height: window.innerHeight });
     }
 
     componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
         try {
             setInterval(async () => {
                 const res = await fetch('/sensors.json');
                 const data = await res.json();
-                this.setState({ sensors: data })
+                this.setState({sensors: data})
             }, 1000);
         } catch(e) {
             console.log(e);
@@ -44,59 +54,41 @@ class App extends Component {
             reverse_status: {},
         }
 
+        // list -> hashmap
         for (let sensor of this.state.sensors) {
             sensors[sensor.type][sensor.name] = sensor
         }
-        // console.log("input:",this.state.sensors)
-        // console.log("sensors:",sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
-            const sensor = sensors.rpm[key]
-            fans.push(<FanStatus key={key} sensor={{
-                name: sensor.name,
-                value: sensor.value,
-                min: sensor.min,
-                max: sensor.max,
-                status: sensors.status[sensor.name].value
-            }}/>)
+            fans.push(<FanStatus key={key} sensor={sensors.rpm[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
         }
 
         let flow = []
         for (let key of Object.keys(sensors.flow).sort()) {
-            const sensor = sensors.flow[key]
-            sensor.status = sensors.status[sensor.name].value
-            // sensor.voltage = sensors.power[sensor.name].value.voltage
-            // sensor.current = sensors.power[sensor.name].value.current
-            // sensor.power = sensors.power[sensor.name].value.power
-            flow.push(<FluidPumpStatus key={key+"-s"} sensor={sensor}/>)
-            flow.push(<FluidDetection key={key+"-d"} sensor={sensors.reverse_status["Fluid detection"]}/>)
+            flow.push(<FluidPumpStatus key={key+"-s"} sensor={sensors.flow[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+            flow.push(<FluidDetection key={key+"-d"} sensor={sensors.reverse_status["Fluid detection"]} height={this.state.height} width={this.state.width}/>)
         }
 
         let temperatures = []
         for (let key of Object.keys(sensors.temperature).sort()) {
-            temperatures.push(<GaugeSensor key={key} sensor={sensors.temperature[key]}/>)
+            temperatures.push(<GaugeSensor key={key} sensor={sensors.temperature[key]} height={this.state.height} width={this.state.width}/>)
         }
         for (let key of Object.keys(sensors.dht22).sort()) {
-            temperatures.push(<DHTSensor key={key} sensor={sensors.dht22[key]}/>)
+            temperatures.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
         }
 
         let psus = []
         for (let key of Object.keys(sensors.power).sort()) {
-            psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key]}/>)
+            psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key]} height={this.state.height} width={this.state.width}/>)
         }
 
         return (
             <div className="App">
                   <div style={{position:"relative"}}>
 
-                      <div class={"speedometer"}>
-                        <Speedometer sensor={{"value": 15, "max":20, "min": 0}}/>
-                          {/*PA (power (GPI-26), temp) -> in de dial*/}
-                      </div>
-
-                      <div style={{position:"absolute", top:0, left:0}} id={"air cooling"}>
-                          <table cellSpacing={"5px"}>
+                      <div className={"top-right"}>
+                          <table cellSpacing={"0.008vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Air Cooling</span><hr/></td></tr>
                               {fans}
@@ -105,8 +97,8 @@ class App extends Component {
                           </table>
                       </div>
 
-                      <div style={{position:"absolute", bottom:0, left:0}} id={"water cooling"}>
-                          <table cellSpacing={"5px"}>
+                      <div className={"top-left"}>
+                          <table cellSpacing={"0.008vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Water Cooling</span><hr/></td></tr>
                               {flow}
@@ -114,8 +106,8 @@ class App extends Component {
                           </table>
                       </div>
 
-                      <div style={{position:"absolute", top:0, right:0}} id={"temperatures"}>
-                          <table cellSpacing={"5px"}>
+                      <div className={"bottom-left"}>
+                          <table cellSpacing={"0.008vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Temperatures</span><hr/></td></tr>
                               {temperatures}
@@ -123,14 +115,20 @@ class App extends Component {
                           </table>
                       </div>
 
-                      <div style={{position:"absolute", bottom:0, right:"50%"}} id={"psus"}>
-                          <table cellSpacing={"5px"}>
+                      <div className={"bottom-right"}>
+                          <table cellSpacing={"0.008vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>PSUs</span><hr/></td></tr>
+                              <tr><td colSpan={6}><span className={"label"}>PSUs</span><hr/></td></tr>
                               {psus}
                               </tbody>
                           </table>
                       </div>
+
+                      <div className={"speedometer"}>
+                          <Speedometer sensor={{"value": 15, "max": 20, "min": 0}} height={this.state.height} width={this.state.width}/>
+                          {/*PA (power (GPI-26), temp) -> in de dial*/}
+                      </div>
+
                   </div>
             </div>
         );
