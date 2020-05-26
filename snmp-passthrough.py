@@ -34,9 +34,9 @@ def update():
             PP.add_int("0.{}.0".format(index), sensor.get("value", {}).get("power", -1) * 1000, "{}:{}".format(sensor.get("name"), "power"))
             PP.add_str("1.{}.0".format(index), "power")
             PP.add_int("0.{}.1".format(index), sensor.get("value", {}).get("current", -1) * 1000, "{}:{}".format(sensor.get("name"), "current"))
-            PP.add_str("1.{}.0".format(index), "current")
+            PP.add_str("1.{}.1".format(index), "current")
             PP.add_int("0.{}.2".format(index), sensor.get("value", {}).get("voltage", -1) * 1000, "{}:{}".format(sensor.get("name"), "voltage"))
-            PP.add_str("1.{}.0".format(index), "voltage")
+            PP.add_str("1.{}.2".format(index), "voltage")
             continue
 
 
