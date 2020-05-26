@@ -1,9 +1,0 @@
-[Unit]
-Description=repeater sensors snmp passthrough
-
-[Service]
-ExecStart=/opt/repeater-sensors/venv/bin/python -u snmp-passthrough.py
-WorkingDirectory=/opt/repeater-sensors
-
-[Install]
-WantedBy=multi-user.target
