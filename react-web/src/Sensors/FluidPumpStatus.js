@@ -17,7 +17,6 @@ class FluidPumpStatus extends Component {
         if (!this.props.status || sensor.value === -1) {
             sensor.value = "--"
         } else if (typeof(sensor.value) === "number") {
-            console.log('FLUID volume:', sensor.value)
             sensor.value = sensor.value.toFixed(1)
         }
 
