@@ -29,6 +29,7 @@ case "$1" in
       systemctl daemon-reload
       systemctl start scraper
       systemctl reload nginx
+      systemctl reload snmpd
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
