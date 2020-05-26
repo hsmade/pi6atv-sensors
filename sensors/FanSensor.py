@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 from .BaseSensor import BaseSensor
+from collections import deque
 import logging
 
 logging.basicConfig(level="DEBUG")
@@ -25,7 +26,7 @@ class FanSensor(BaseSensor):
         self.minimum = minimum
         self.maximum = maximum
         self.timer = time.time()
-        self.rpms = []
+        self.rpms = deque(maxlen=samples)
 
     def read(self) -> int:
         """
@@ -33,7 +34,7 @@ class FanSensor(BaseSensor):
         :return: int
         """
         start = time.time()
-        self.rpms = []
+        self.rpms = deque(maxlen=self.samples)
         self.timer = start
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)

@@ -34,7 +34,6 @@ Copy the build directory to /opt/repeater-sensors/web
 
 # TODO
 * let python sensors be fault tolerant, even on startup
-* return null value when sensor is down
 * add prometheus metric for error state of sensors
 * make voltages 2.1 digits
 * fix redraw on resize for dial
