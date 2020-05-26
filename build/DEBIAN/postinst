@@ -28,6 +28,7 @@ case "$1" in
       echo "Starting services"
       systemctl daemon-reload
       systemctl start scraper
+      systemctl reload nginx
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
