@@ -38,7 +38,6 @@ Copy the build directory to /opt/repeater-sensors/web
 * make voltages 2.1 digits
 * fix redraw on resize for dial
 * fix fluid pump sensor?
-* more padding between table cells
 * establish max and min values for fans
 * implement PA power output sensor and wire to dial
 * allow to override the config
