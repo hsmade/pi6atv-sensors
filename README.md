@@ -35,4 +35,15 @@ Copy the build directory to /opt/repeater-sensors/web
 # TODO
 * let python sensors be fault tolerant, even on startup
 * return null value when sensor is down
-d* add prometheus metric for error state of sensors
+* add prometheus metric for error state of sensors
+* on resize: ```TypeError: e.value.toFixed is not a function
+                    at a.value (FluidPumpStatus.js:20)```
+* make voltages 2.1 digits
+* align all digits to right
+* fix redraw on resize for dial
+* fix fluid pump sensor?
+* make 'min' lowercase for fluid pump sensor
+* more padding between table cells
+* establish max and min values for fans
+* implement PA power output sensor and wire to dial
+
