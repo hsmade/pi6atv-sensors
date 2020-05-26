@@ -82,11 +82,8 @@ class App extends Component {
 
         let psus = []
         for (let key of Object.keys(sensors.power).sort()) {
-            console.log("Key:",key)
-            console.log("statuss:",sensors.status[key])
             psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
         }
-        console.log(psus)
 
         return (
             <div className="App">
