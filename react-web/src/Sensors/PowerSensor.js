@@ -12,7 +12,7 @@ class PowerSensor extends Component {
             return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"digit lowercase"}>&nbsp;k</span>]
         }
 
-        return <span className="digit">{value.toFixed(1)}</span>
+        return <span className="digit">{value.toFixed(1)}&nbsp;</span>
     }
 
     render() {
@@ -39,13 +39,13 @@ class PowerSensor extends Component {
                         V&nbsp;&nbsp;
                     </span>
                 </td>
-                <td>
+                <td align={"right"}>
                     {this.sign(this.props.sensor.value.current/1000)}
                     <span className="label">
                         A&nbsp;&nbsp;
                     </span>
                 </td>
-                <td>
+                <td align={"right"}>
                         {this.sign(this.props.sensor.value.power/1000)}
                     <span className="label">
                         W&nbsp;&nbsp;

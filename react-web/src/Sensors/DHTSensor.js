@@ -12,7 +12,7 @@ class DHTSensor extends Component {
                         {this.props.sensor.name}
                     </span>
                 </td>
-                <td>
+                <td align={"right"}>
                     <span className={"digit"}>
                         <b>{this.props.sensor.value.temperature.toFixed(1)}</b>
                     </span>
@@ -32,7 +32,7 @@ class DHTSensor extends Component {
                         {this.props.sensor.name}
                     </span>
                 </td>
-                <td>
+                <td align={"right"}>
                     <span className={"digit"}>
                         <b>{this.props.sensor.value.humidity.toFixed(1)}</b>
                     </span>

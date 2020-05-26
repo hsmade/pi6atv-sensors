@@ -16,7 +16,8 @@ class FluidPumpStatus extends Component {
 
         if (!this.props.status || sensor.value === -1) {
             sensor.value = "--"
-        } else {
+        } else if (typeof(sensor.value) === "number") {
+            console.log('FLUID volume:', sensor.value)
             sensor.value = sensor.value.toFixed(1)
         }
 
@@ -40,7 +41,10 @@ class FluidPumpStatus extends Component {
                 </td>
                 <td>
                     <span className={"label"}>
-                        L/min
+                        &nbsp;L/
+                    </span>
+                    <span className={"label lowercase"}>
+                       min
                     </span>
                 </td>
             </tr>,

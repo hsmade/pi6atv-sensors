@@ -23,7 +23,7 @@ class GaugeSensor extends Component {
                         {this.props.sensor.name}
                     </span>
                 </td>
-                <td>
+                <td align={"right"}>
                     <span className="digit">
                         <b>{value}</b>
                     </span>
