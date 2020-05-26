@@ -76,8 +76,7 @@ class DHT22TemperatureSensor(BaseSensor):
             return None
         return {"temperature": temperature, "humidity": humidity}
 
-    def to_openmetrics(self):
-        data = self.read()
+    def to_openmetrics(self, data):
         if not data:
             return ""
         result = 'temperature{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data.get("temperature"))

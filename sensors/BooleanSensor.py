@@ -26,8 +26,7 @@ class BooleanSensor(BaseSensor):
         # logging.debug("{} has value: {}".format(self.name, value))
         return value != 0
 
-    def to_openmetrics(self):
-        bool_value = self.read()
+    def to_openmetrics(self, bool_value):
         value = 1 if bool_value else 0
         return '{type}{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=value)
 
@@ -54,7 +53,6 @@ class ReverseBooleanSensor(BaseSensor):
         value = GPIO.input(self.gpio_pin)
         return value != 1
 
-    def to_openmetrics(self):
-        bool_value = self.read()
+    def to_openmetrics(self, bool_value):
         value = 1 if bool_value else 0
         return '{type}{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=value)

@@ -48,12 +48,13 @@ class FLowSensor(BaseSensor):
             self.pulses += 1
 
     def to_dict(self):
+        value = self.read()
         return {
             "name": self.name,
             "type": self.type,
             "min": self.minimum,
             "max": self.maximum,
             "redFrom": self.red_from,
-            "value": self.read(),
-            "prometheus_data": self.to_openmetrics(),
+            "value": value,
+            "prometheus_data": self.to_openmetrics(value),
         }

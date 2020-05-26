@@ -11,15 +11,15 @@ class BaseSensor:
         return None
 
     def to_dict(self):
+        value = self.read()
         return {
             "name": self.name,
             "type": self.type,
-            "value": self.read(),
-            "prometheus_data": self.to_openmetrics(),
+            "value": value,
+            "prometheus_data": self.to_openmetrics(value),
         }
 
-    def to_openmetrics(self):
-        data = self.read()
-        if type(data).__name__ not in ["float", "int"]:
+    def to_openmetrics(self, value):
+        if type(value).__name__ not in ["float", "int"]:
             return
-        return '{type}{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=self.read())
+        return '{type}{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=value)

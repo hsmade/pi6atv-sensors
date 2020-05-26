@@ -26,8 +26,7 @@ class INA260Sensor(BaseSensor):
         ina260.averaging_count = adafruit_ina260.AveragingCount.COUNT_4
         return {"power": ina260.power, "current": ina260.current, "voltage": ina260.voltage}
 
-    def to_openmetrics(self):
-        data = self.read()
+    def to_openmetrics(self, data):
         result = 'power{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data['power'])
         result += 'voltage{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data['voltage'])
         result += 'current{{name="{name}", class="{class_name}"}} {value}\n'.format(type=self.type, class_name=type(self).__name__.lower(), name=self.name, value=data['current'])

@@ -9,6 +9,7 @@ sensor_config = [
     BooleanSensor("Mains", 6),
     BooleanSensor("PA", 13),
     BooleanSensor("Fluid pump", 19),
+    BooleanSensor("Mixer", 20),
     BooleanSensor(name="@40 °C", gpio_pin=23),
     BooleanSensor(name="@50 °C", gpio_pin=24),
     BooleanSensor(name="@60 °C", gpio_pin=25),
