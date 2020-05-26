@@ -88,7 +88,7 @@ class App extends Component {
                   <div style={{position:"relative"}}>
 
                       <div className={"top-right"}>
-                          <table cellSpacing={"0.008vw"}>
+                          <table cellSpacing={"1vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Air Cooling</span><hr/></td></tr>
                               {fans}
@@ -98,7 +98,7 @@ class App extends Component {
                       </div>
 
                       <div className={"top-left"}>
-                          <table cellSpacing={"0.008vw"}>
+                          <table cellSpacing={"1vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Water Cooling</span><hr/></td></tr>
                               {flow}
@@ -107,7 +107,7 @@ class App extends Component {
                       </div>
 
                       <div className={"bottom-left"}>
-                          <table cellSpacing={"0.008vw"}>
+                          <table cellSpacing={"1vw"}>
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Temperatures</span><hr/></td></tr>
                               {temperatures}
@@ -116,7 +116,7 @@ class App extends Component {
                       </div>
 
                       <div className={"bottom-right"}>
-                          <table cellSpacing={"0.008vw"}>
+                          <table cellSpacing={"1vw"}>
                               <tbody>
                               <tr><td colSpan={6}><span className={"label"}>PSUs</span><hr/></td></tr>
                               {psus}
