@@ -43,16 +43,15 @@ class ReverseBooleanSensor(BaseSensor):
     def __init__(self, name, gpio_pin: int):
         super().__init__(name)
         self.gpio_pin = gpio_pin
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def read(self) -> bool:
         """
         reads from the sensor and returns the state
         :return: bool
         """
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         value = GPIO.input(self.gpio_pin)
-        # logging.debug("{} has value: {}".format(self.name, value))
         return value != 1
 
     def to_openmetrics(self):

@@ -41,4 +41,5 @@ Copy the build directory to /opt/repeater-sensors/web
 * more padding between table cells
 * establish max and min values for fans
 * implement PA power output sensor and wire to dial
+* allow to override the config
 
