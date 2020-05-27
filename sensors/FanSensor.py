@@ -18,15 +18,14 @@ class FanSensor(BaseSensor):
     PULSE = 2       # Noctua fans puts out two pluses per revolution
     type = "rpm"
 
-    def __init__(self, name, gpio_pin: int, samples=10, timeout=2, minimum=0, maximum=65535):
+    def __init__(self, name, gpio_pin: int, timeout=2, minimum=0, maximum=65535):
         super().__init__(name)
         self.gpio_pin = gpio_pin
-        self.samples = samples
         self.timeout = timeout
         self.minimum = minimum
         self.maximum = maximum
         self.timer = time.time()
-        self.rpms = deque(maxlen=samples)
+        self.filtered_ticks = 0
 
     def read(self) -> int:
         """
@@ -34,39 +33,30 @@ class FanSensor(BaseSensor):
         :return: int
         """
         start = time.time()
-        self.rpms = deque(maxlen=self.samples)
         self.timer = start
+        self.filtered_ticks = 0
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
         GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
 
         time.sleep(self.timeout)
-
         GPIO.cleanup()
+        time_diff = time.time() - start
+        rpm = (self.filtered_ticks / self.PULSE / time_diff) * 60
 
-        if len(self.rpms) < 1:
-            logging.error("Did not get any data from fan {}".format(self.name))
+        if self.filtered_ticks < 1:
+            logging.error("Fan {} Did not register any pulses".format(self.name))
             return -1
 
-        try:
-            average = sum(self.rpms) / len(self.rpms)
-            return int(average)
-        except Exception as e:
-            logging.error("Failed to calculate average for fan {}: {}".format(self.name, e))
-            return -1
+        return int(rpm)
 
     def _handle_event(self, _):
         time_delta = time.time() - self.timer
+        self.timer = time.time()
         if time_delta < 0.005:
             return  # Reject spuriously short pulses
-
-        frequency = 1 / time_delta
-        rpm = (frequency / self.PULSE) * 60
-        # logging.debug("got event for fan: {}, td={} rpm={}".format(self.name, time_delta, rpm))
-        self.rpms.append(rpm)
-        # logging.debug("fan: {} _handle_event: rpms: {}".format(self.name, len(self.rpms)))
-        self.timer = time.time()
+        self.filtered_ticks += 1
 
     def to_dict(self):
         value = self.read()
