@@ -24,7 +24,7 @@ sensor_config = [
     DHT22TemperatureSensor("Room (dht22)", 16),
     INA260Sensor("Mains", 0x40),
     INA260Sensor("PA", 0x41),
-    INA260Sensor("Mixer", 0x41),
+    INA260Sensor("Mixer", 0x44),
     INA260Sensor("Fluid pump", 0x45),
     FLowSensor("Fluid pump", 7),
     ReverseBooleanSensor("Fluid detection", 12),
