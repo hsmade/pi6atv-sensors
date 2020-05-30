@@ -46,7 +46,7 @@ class FanSensor(BaseSensor):
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
             return -1
 
-        GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
+        GPIO.cleanup()
         time_diff = time.time() - start
         logging.debug("Fan {}: cleaning up".format(self.name))
 

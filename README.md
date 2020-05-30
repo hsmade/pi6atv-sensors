@@ -33,7 +33,6 @@ When changes have been done, they need to be compiled:
 Copy the build directory to /opt/repeater-sensors/web
 
 # TODO
-* let python sensors be fault tolerant, even on startup
 * add prometheus metric for error state of sensors
 * make voltages 2.1 digits
 * fix redraw on resize for dial

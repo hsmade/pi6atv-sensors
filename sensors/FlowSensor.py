@@ -30,16 +30,22 @@ class FLowSensor(BaseSensor):
         samples the GPIO for the given amount of seconds and returns the Flow in L/min
         :return: float
         """
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
-        self.pulses = 0
-        self.timer = time.time() + self.timeout
-        GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
+        try:
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setwarnings(False)
+            GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
+            self.pulses = 0
+            self.timer = time.time() + self.timeout
+            GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
 
-        time.sleep(self.timeout)
-        result = (self.pulses * (60/self.timeout) * 2.25 / 1000)
+            time.sleep(self.timeout)
+        except Exception as e:
+            logging.error("Flow {} failed reading from sensor: {}".format(self.name, e))
+            GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
+            return -1
+
         GPIO.cleanup()
+        result = (self.pulses * (60/self.timeout) * 2.25 / 1000)
 
         return result
 
