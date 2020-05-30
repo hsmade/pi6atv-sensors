@@ -19,6 +19,11 @@ processes = list()
 logging.basicConfig(level="DEBUG")
 
 
+def reset_dict_storage(d):
+    for key, _ in d.items():
+        d[key] = None
+
+
 def scraper(sensor, dict_storage):
     while True:
         try:
@@ -28,6 +33,7 @@ def scraper(sensor, dict_storage):
                 dict_storage[key] = value
         except Exception as e:
             logging.error("Failed to load data for sensor {}: {}".format(sensor.name, e))
+            reset_dict_storage(dict_storage)
         sleep(1)
 
 
