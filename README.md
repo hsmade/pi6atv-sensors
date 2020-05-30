@@ -1,4 +1,4 @@
-# ssensor scripts for pi6atv
+# sensor scripts for pi6atv
 
 ## SNMP integration
 Configure snmpd with the following:
