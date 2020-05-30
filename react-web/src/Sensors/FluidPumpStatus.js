@@ -26,7 +26,7 @@ class FluidPumpStatus extends Component {
                     <img src={"fan.png"} alt={"fan"} height={this.props.height/25}/>
                 </td>
                 <td>
-                    <img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>
+                    &nbsp;<img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>&nbsp;
                 </td>
                 <td>
                     <span className={"label"}>

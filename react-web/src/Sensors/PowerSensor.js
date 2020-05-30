@@ -26,7 +26,7 @@ class PowerSensor extends Component {
                     <img src={"electricity.png"} height={this.props.height/25} alt={"electricity"}/>
                 </td>
                 <td>
-                    <img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>
+                    &nbsp;<img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>&nbsp;
                 </td>
                 <td>
                     <span className="label">
