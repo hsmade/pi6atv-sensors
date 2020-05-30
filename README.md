@@ -41,4 +41,4 @@ Copy the build directory to /opt/repeater-sensors/web
 * implement PA power output sensor and wire to dial
 * allow to locally override the config
 * psus:  mains, daaronder de pomp, dan de PA en als laatste de mixer
-
+* configure and implement min/max for values. Out of spec = yellow
