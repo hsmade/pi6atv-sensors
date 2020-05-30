@@ -36,8 +36,8 @@ Copy the build directory to /opt/repeater-sensors/web
 * add prometheus metric for error state of sensors
 * make voltages 2.1 digits
 * fix redraw on resize for dial
-* fix fluid pump sensor?
+* fix fluid flow sensor?
 * establish max and min values for fans
 * implement PA power output sensor and wire to dial
-* allow to override the config
+* allow to locally override the config
 
