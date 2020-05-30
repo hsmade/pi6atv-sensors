@@ -4,12 +4,12 @@ class PowerSensor extends Component {
     sign(value) {
         if (value < 1) {
             value = (value * 1000).toFixed(0)
-            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"digit lowercase"}>&nbsp;m</span>]
+            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;m</span>]
         }
 
         if (value > 1000) {
             value = (value / 1000).toFixed(0)
-            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"digit lowercase"}>&nbsp;k</span>]
+            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;k</span>]
         }
 
         return <span className="digit">{value.toFixed(1)}&nbsp;</span>

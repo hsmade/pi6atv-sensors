@@ -80,6 +80,7 @@ class App extends Component {
             temperatures.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
         }
 
+        // FIXME:  mains, daaronder de pomp, dan de PA en als laatste de mixer
         let psus = []
         for (let key of Object.keys(sensors.power).sort()) {
             psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)

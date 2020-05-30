@@ -9,7 +9,7 @@ class FluidPumpStatus extends Component {
             statusIcon = "switch-on.png"
         }
 
-        let statusColor = "blue"
+        let statusColor = "green"
         if ((sensor.value > sensor.max || sensor.value < sensor.min) && sensor.value !== -1) {
             statusColor = "red"
         }

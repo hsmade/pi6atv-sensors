@@ -24,6 +24,9 @@ class GaugeSensor extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
                     <span className="digit">
                         <b>{value}</b>
                     </span>

@@ -6,7 +6,7 @@ class FluidDetection extends Component {
         let color = "red"
         if (!this.props.sensor.value) {
             text = "No water detected"
-            color = "blue"
+            color = "green"
         }
         return (
             <tr>

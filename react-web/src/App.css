@@ -29,13 +29,13 @@ svg:not(:root) {
 
 .digit {
   font-family: 'digital-7-monoitalic', monospace;
-  color: blue;
+  color: green;
   font-weight: bold;
 }
 
 .label {
   font-family: 'digital-7-italic', cursive;
-  color: blue;
+  color: darkorange;
   font-weight: bold;
 }
 

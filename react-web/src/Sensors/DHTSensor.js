@@ -25,7 +25,7 @@ class DHTSensor extends Component {
             </tr>,
             <tr key={"hum"}>
                 <td>
-                    <img src={"humidity.png"} height={this.props.height/25} alt={"humidity"}/>
+                    <img src={"humidity.png"} height={this.props.height/30} alt={"humidity"}/>
                 </td>
                 <td>
                     <span className={"label"}>
