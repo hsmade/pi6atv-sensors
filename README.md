@@ -40,5 +40,8 @@ Copy the build directory to /opt/repeater-sensors/web
 * establish max and min values for fans
 * implement PA power output sensor and wire to dial
 * allow to locally override the config
-* psus:  mains, daaronder de pomp, dan de PA en als laatste de mixer
+* psus: order should be mains, pump, PA, MX
 * configure and implement min/max for values. Out of spec = yellow
+* configure fancontrol, GPI-7
+* lighten background color
+* Fan sensor stops ater some time with `Fan 50 °C failed reading from sensor: Failed to add edge detection`

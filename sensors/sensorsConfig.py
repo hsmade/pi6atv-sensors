@@ -26,6 +26,6 @@ sensor_config = [
     INA260Sensor("PA", 0x41, max_current=8000, min_current=5000),
     INA260Sensor("MX", 0x44, max_current=700, min_current=500),
     INA260Sensor("Pump", 0x45, max_current=1900, min_current=250),
-    FLowSensor("Pump", 7),
+    FLowSensor("Pump", 7),  # to be moved
     ReverseBooleanSensor("Fluid detection", 12),
 ]
