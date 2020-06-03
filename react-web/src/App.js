@@ -88,7 +88,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                  <div style={{position:"relative"}}>
+                  <div style={{position:"relative"}} className={"container"}>
 
                       <div className={"top-right"}>
                           <table cellSpacing={"1vw"}>
