@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 
 class FluidDetection extends Component {
     render() {
-        let text = "Water detected!"
-        let color = "red"
-        if (!this.props.sensor.value) {
-            text = "No water detected"
-            color = "green"
+        let text = "No water detected"
+        let style = {}
+        if (this.props.sensor.value) {
+            text = "Water detected!"
+            style = {color: "red"}
         }
         return (
             <tr>
@@ -14,7 +14,7 @@ class FluidDetection extends Component {
                     <img src={"water.png"} alt={"water"} height={this.props.height/25}/>
                 </td>
                 <td colSpan={4}>
-                <span className={"label"} style={{color: color}}>{text}</span>
+                <span className={"label"} style={style}>{text}</span>
                 </td>
             </tr>
         )

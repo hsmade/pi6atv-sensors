@@ -9,9 +9,9 @@ class FluidPumpStatus extends Component {
             statusIcon = "switch-on.png"
         }
 
-        let statusColor = "green"
+        let style = {}
         if ((sensor.value > sensor.max || sensor.value < sensor.min) && sensor.value !== -1) {
-            statusColor = "red"
+            style = {color: "red"}
         }
 
         if (!this.props.status || sensor.value === -1) {
@@ -34,7 +34,7 @@ class FluidPumpStatus extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
-                    <span className={"digit"} style={{color: statusColor}}>
+                    <span className={"digit"} style={style}>
                         {sensor.value}
                     </span>
                 </td>
