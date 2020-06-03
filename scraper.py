@@ -1,19 +1,11 @@
 from multiprocessing import Manager, Process
 from sensors import sensor_config
-import ctypes
 from time import sleep
 import json
 from shutil import move
 import logging
 
 sensor_values = list()
-
-sensor_type_to_data_type = {
-    "temperature": ctypes.c_float,
-    "RPM": ctypes.c_int,
-    "bool": ctypes.c_bool,
-}
-
 processes = list()
 
 logging.basicConfig(level="DEBUG")

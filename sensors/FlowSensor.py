@@ -41,9 +41,11 @@ class FLowSensor(BaseSensor):
             time.sleep(self.timeout)
         except Exception as e:
             logging.error("Flow {} failed reading from sensor: {}".format(self.name, e))
+            GPIO.remove_event_detect(self.gpio_pin)
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
             return -1
 
+        GPIO.remove_event_detect(self.gpio_pin)
         GPIO.cleanup()
         result = (self.pulses * (60/self.timeout) * 2.25 / 1000)
 

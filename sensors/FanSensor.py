@@ -43,9 +43,11 @@ class FanSensor(BaseSensor):
             time.sleep(self.timeout)
         except Exception as e:
             logging.error("Fan {} failed reading from sensor: {}".format(self.name, e))
+            GPIO.remove_event_detect(self.gpio_pin)
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
             return -1
 
+        GPIO.remove_event_detect(self.gpio_pin)
         GPIO.cleanup()
         time_diff = time.time() - start
         logging.debug("Fan {}: cleaning up".format(self.name))
