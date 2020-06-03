@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 
 class PowerSensor extends Component {
-    sign(value) {
+    valueFormat(value, min, max) {
+        let classNames = "digit"
+        if (value < min || value > max) {
+            classNames += " out-of-spec"
+        }
+
         if (value < 1) {
             value = (value * 1000).toFixed(0)
-            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;m</span>]
+            return [<span key={"value"} className={classNames}>{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;m</span>]
         }
 
         if (value > 1000) {
             value = (value / 1000).toFixed(0)
-            return [<span key={"value"} className="digit">{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;k</span>]
+            return [<span key={"value"} className={classNames}>{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;k</span>]
         }
 
-        return <span className="digit">{value.toFixed(1)}&nbsp;</span>
+        return <span className={classNames}>{value.toFixed(1)}&nbsp;</span>
     }
 
     render() {
@@ -34,19 +39,19 @@ class PowerSensor extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
-                        {this.sign(this.props.sensor.value.voltage)}
+                        {this.valueFormat(this.props.sensor.value.voltage, this.props.sensor.value.min_voltage, this.props.sensor.value.max_voltage)}
                     <span className="label">
                         V&nbsp;&nbsp;
                     </span>
                 </td>
                 <td align={"right"}>
-                    {this.sign(this.props.sensor.value.current/1000)}
+                    {this.valueFormat(this.props.sensor.value.current/1000, this.props.sensor.value.min_current, this.props.sensor.value.max_current)}
                     <span className="label">
                         A&nbsp;&nbsp;
                     </span>
                 </td>
                 <td align={"right"}>
-                        {this.sign(this.props.sensor.value.power/1000)}
+                        {this.valueFormat(this.props.sensor.value.power/1000)}
                     <span className="label">
                         W&nbsp;&nbsp;
                     </span>

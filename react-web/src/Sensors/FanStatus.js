@@ -9,9 +9,9 @@ class FanStatus extends Component {
             statusIcon = "switch-on.png"
         }
 
-        let statusColor = "green"
+        let valueClasses = "digit"
         if ((sensor.value > sensor.max || sensor.value < sensor.min) && sensor.value !== -1) {
-            statusColor = "red"
+            valueClasses += " out-of-spec"
         }
 
         if (!this.props.status || sensor.value === -1) {
@@ -32,7 +32,7 @@ class FanStatus extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
-                    <span className={"digit"} style={{color: statusColor}}>
+                    <span className={valueClasses}>
                         {sensor.value.toString().padStart(4)}
                     </span>
                 </td>

@@ -39,6 +39,10 @@ svg:not(:root) {
   font-weight: bold;
 }
 
+.out-of-spec {
+  color: yellow
+}
+
 .lowercase {
   font-size: 1vw;
 }
