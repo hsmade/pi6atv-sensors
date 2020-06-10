@@ -23,9 +23,9 @@ sensor_config = [
     DS18B20TemperatureSensor("MX", "28-3c01a8164f17"),
     DHT22TemperatureSensor("RM", 16),
     INA260Sensor("Mains", 0x40),
-    INA260Sensor("PA", 0x41, max_current=8000, min_current=5000),
-    INA260Sensor("MX", 0x44, max_current=700, min_current=500),
-    INA260Sensor("Pump", 0x45, max_current=1900, min_current=250),
+    INA260Sensor("PA", 0x41, max_current=8, min_current=5),
+    INA260Sensor("MX", 0x44, max_current=0.7, min_current=0.5),
+    INA260Sensor("Pump", 0x45, max_current=1.9, min_current=0.25),
     FLowSensor("Pump", 7),  # to be moved
     ReverseBooleanSensor("Fluid detection", 12),
 ]

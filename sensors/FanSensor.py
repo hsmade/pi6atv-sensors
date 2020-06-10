@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 from .BaseSensor import BaseSensor
-from collections import deque
 import logging
+import os
 
 logging.basicConfig(level="DEBUG")
 
@@ -31,26 +31,33 @@ class FanSensor(BaseSensor):
         samples the GPIO for the given amount of seconds and returns the RPM
         :return: int
         """
+        logging.debug("Fan {}: PID: {}".format(self.name, os.getpid()))
         start = time.time()
         try:
             self.timer = start
             self.filtered_ticks = 0
+            logging.debug("Fan {}: -- setmode".format(self.name))
             GPIO.setmode(GPIO.BCM)
+            # logging.debug("Fan {}: -- setwarnings".format(self.name))
             GPIO.setwarnings(False)
+            # logging.debug("Fan {}: -- setup".format(self.name))
             GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
+            # logging.debug("Fan {}: -- remove_event_detect".format(self.name))
+            GPIO.remove_event_detect(self.gpio_pin)
+            # logging.debug("Fan {}: -- add_event_detect".format(self.name))
             GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
 
+            logging.debug("Fan {}: -- sleep".format(self.name))
             time.sleep(self.timeout)
         except Exception as e:
             logging.error("Fan {} failed reading from sensor: {}".format(self.name, e))
-            GPIO.remove_event_detect(self.gpio_pin)
+            # logging.debug("Fan {}: -- cleanup".format(self.name))
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
             return -1
 
-        GPIO.remove_event_detect(self.gpio_pin)
+        logging.debug("Fan {}: -- cleanup".format(self.name))
         GPIO.cleanup()
         time_diff = time.time() - start
-        logging.debug("Fan {}: cleaning up".format(self.name))
 
         if self.filtered_ticks < 1:
             logging.error("Fan {} Did not register any pulses".format(self.name))
