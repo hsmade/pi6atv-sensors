@@ -30,7 +30,7 @@ build/DEBIAN/changelog:
 
 prepare-package: react-web/build build/DEBIAN
 	mkdir -p build/opt/repeater-sensors
-	cp -r sensors *.py README.md build/opt/repeater-sensors/
+	cp -r sensors *.py README.md requirements.txt build/opt/repeater-sensors/
 	cp -r react-web/build build/opt/repeater-sensors/web
 	sed -e "s/Version:.*/Version: $(VERSION)/" -i build/DEBIAN/control
 
