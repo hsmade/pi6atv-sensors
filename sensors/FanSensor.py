@@ -3,6 +3,7 @@ import time
 from .BaseSensor import BaseSensor
 import logging
 import os
+from multiprocessing import Queue, Process
 
 logging.basicConfig(level="DEBUG")
 
@@ -27,6 +28,14 @@ class FanSensor(BaseSensor):
         self.filtered_ticks = 0
 
     def read(self) -> int:
+        ret = Queue()
+
+        p = Process(target=self.read, args=(ret, ))
+        p.start()
+        p.join()
+        return ret.get()
+
+    def do_read(self, queue) -> int:
         """
         samples the GPIO for the given amount of seconds and returns the RPM
         :return: int
@@ -53,6 +62,7 @@ class FanSensor(BaseSensor):
             logging.error("Fan {} failed reading from sensor: {}".format(self.name, e))
             # logging.debug("Fan {}: -- cleanup".format(self.name))
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
+            queue.put(-1)
             return -1
 
         logging.debug("Fan {}: -- cleanup".format(self.name))
@@ -61,11 +71,13 @@ class FanSensor(BaseSensor):
 
         if self.filtered_ticks < 1:
             logging.error("Fan {} Did not register any pulses".format(self.name))
+            queue.put(-1)
             return -1
 
         logging.debug("Fan {}: calculating rpm".format(self.name))
         rpm = (self.filtered_ticks / self.PULSE / time_diff) * 60
 
+        queue.put(int(rpm))
         return int(rpm)
 
     def _handle_event(self, _):

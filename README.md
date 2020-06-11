@@ -51,3 +51,7 @@ Copy the build directory to /opt/repeater-sensors/web
 * psus: order should be mains, pump, PA, MX
 * configure and implement min/max for values. Out of spec = yellow
 * configure fancontrol, GPI-7
+* from https://www.satsignal.eu/raspberry-pi/monitoring.html#snmp add:
+  * Adding SNMP support for CPU temperature monitoring
+  * Adding SNMP support for general remote monitoring
+* fix pass_persist in snmpd
