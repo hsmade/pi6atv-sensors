@@ -15,7 +15,7 @@ class FanSensor(BaseSensor):
     :param gpio_pin: the GPIO pin to read from
     :param timeout: the maximum time to wait for the amount of samples to come in
     """
-    PULSE = 2       # Noctua fans puts out two pluses per revolution
+    PULSE = 2 # Noctua fans puts out two pluses per revolution
     type = "rpm"
 
     def __init__(self, name, gpio_pin: int, timeout=2, minimum=0, maximum=65535):
@@ -30,7 +30,7 @@ class FanSensor(BaseSensor):
     def read(self) -> int:
         ret = Queue()
 
-        p = Process(target=self.read, args=(ret, ))
+        p = Process(target=self.do_read, args=(ret, ))
         p.start()
         p.join()
         return ret.get()
