@@ -81,7 +81,7 @@ class App extends Component {
 
         let temphum = []
         for (let key of Object.keys(sensors.dht22).sort()) {
-            if (sensors.dht22[key] != null) {
+            if (sensors.dht22[key].value != null) {
                 temphum.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
             }
         }
