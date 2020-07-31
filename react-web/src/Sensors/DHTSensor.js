@@ -13,6 +13,9 @@ class DHTSensor extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
                     <span className={"digit"}>
                         <b>{this.props.sensor.value.temperature.toFixed(1)}</b>
                     </span>

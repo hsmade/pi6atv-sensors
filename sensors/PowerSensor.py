@@ -20,7 +20,6 @@ class INA260Sensor(BaseSensor):
         self.max_voltage = max_voltage
         self.sort = sort
 
-
     def read(self) -> dict:
         """
         returns a dict with power, current and voltage as keys and int values
@@ -34,6 +33,16 @@ class INA260Sensor(BaseSensor):
             "power": ina260.power, "current": ina260.current, "voltage": ina260.voltage,
             "min_current": self.min_current, "max_current": self.max_current,
             "min_voltage": self.min_voltage, "max_voltage": self.max_voltage,
+        }
+
+    def to_dict(self):
+        value = self.read()
+        return {
+            "name": self.name,
+            "type": self.type,
+            "value": value,
+            "sort": self.sort,
+            "prometheus_data": self.to_openmetrics(value),
         }
 
     def to_openmetrics(self, data):

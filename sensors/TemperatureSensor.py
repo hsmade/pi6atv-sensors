@@ -36,6 +36,16 @@ class DS18B20TemperatureSensor(BaseSensor):
         logging.error("failed to read from sensor {}, tried {} times".format(self.path, self.retries))
         return None
 
+    def to_dict(self):
+        value = self.read()
+        return {
+            "name": self.name,
+            "type": self.type,
+            "value": value,
+            "sort": self.sort,
+            "prometheus_data": self.to_openmetrics(value),
+        }
+
     def read(self) -> Union[float, None]:
         """
         reads from the sensor and returns the state
