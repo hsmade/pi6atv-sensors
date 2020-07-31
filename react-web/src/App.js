@@ -76,15 +76,22 @@ class App extends Component {
         for (let key of Object.keys(sensors.temperature).sort()) {
             temperatures.push(<GaugeSensor key={key} sensor={sensors.temperature[key]} height={this.state.height} width={this.state.width}/>)
         }
+
+        let temphum = []
         for (let key of Object.keys(sensors.dht22).sort()) {
-            temperatures.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
+            temphum.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
         }
 
-        // FIXME:  mains, daaronder de pomp, dan de PA en als laatste de mixer
+        // FIXME:  mains, daaronder de pomp, mixer, pa
         let psus = []
-        for (let key of Object.keys(sensors.power).sort()) {
-            psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
-        }
+            psus.push(<PowerSensor key={"MAINS"} sensor={sensors.power["MAINS"]} status={sensors.status["MAINS"].value} height={this.state.height} width={this.state.width}/>)
+            psus.push(<PowerSensor key={"PUMP"} sensor={sensors.power["PUMP"]} status={sensors.status["PUMP"].value} height={this.state.height} width={this.state.width}/>)
+            psus.push(<PowerSensor key={"MX"} sensor={sensors.power["MX"]} status={sensors.status["MX"].value} height={this.state.height} width={this.state.width}/>)
+            psus.push(<PowerSensor key={"PA"} sensor={sensors.power["PA"]} status={sensors.status["PA"].value} height={this.state.height} width={this.state.width}/>)
+
+        // for (let key of Object.keys(sensors.power).sort()) {
+        //     psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+        // }
 
         return (
             <div className="App">
@@ -105,6 +112,15 @@ class App extends Component {
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Water Cooling</span><hr/></td></tr>
                               {flow}
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <div className={"mid-left"}>
+                          <table cellSpacing={"1vw"}>
+                              <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>Thermometer</span><hr/></td></tr>
+                              {temphum}
                               </tbody>
                           </table>
                       </div>
