@@ -54,4 +54,4 @@ Copy the build directory to /opt/repeater-sensors/web
 * from https://www.satsignal.eu/raspberry-pi/monitoring.html#snmp add:
   * Adding SNMP support for CPU temperature monitoring
   * Adding SNMP support for general remote monitoring
-* fix pass_persist in snmpd
+* ~~fix pass_persist in snmpd~~
