@@ -74,7 +74,7 @@ class App extends Component {
         }
 
         let temperatures = []
-        for (let key of Object.keys(sensors.temperature).sort()) {
+        for (let key of Object.keys(sensors.temperature).sort((a, b) => (a.sort > b.sort) ? 1 : -1)) {
             temperatures.push(<GaugeSensor key={key} sensor={sensors.temperature[key]} height={this.state.height} width={this.state.width}/>)
         }
 
@@ -83,20 +83,19 @@ class App extends Component {
             temphum.push(<DHTSensor key={key} sensor={sensors.dht22[key]} height={this.state.height} width={this.state.width}/>)
         }
 
-        // FIXME:  mains, daaronder de pomp, mixer, pa
         let psus = []
-        try {
-            psus.push(<PowerSensor key={"Mains"} sensor={sensors.power["Mains"]} status={sensors.status["Mains"].value} height={this.state.height} width={this.state.width}/>)
-            psus.push(<PowerSensor key={"Pump"} sensor={sensors.power["Pump"]} status={sensors.status["Pump"].value} height={this.state.height} width={this.state.width}/>)
-            psus.push(<PowerSensor key={"MX"} sensor={sensors.power["MX"]} status={sensors.status["MX"].value} height={this.state.height} width={this.state.width}/>)
-            psus.push(<PowerSensor key={"PA"} sensor={sensors.power["PA"]} status={sensors.status["PA"].value} height={this.state.height} width={this.state.width}/>)
-        } catch (e) {
-         console.log("no power sensors (yet): ", sensors.power)
-        }
-
-        // for (let key of Object.keys(sensors.power).sort()) {
-        //     psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+        // try {
+        //     psus.push(<PowerSensor key={"Mains"} sensor={sensors.power["Mains"]} status={sensors.status["Mains"].value} height={this.state.height} width={this.state.width}/>)
+        //     psus.push(<PowerSensor key={"Pump"} sensor={sensors.power["Pump"]} status={sensors.status["Pump"].value} height={this.state.height} width={this.state.width}/>)
+        //     psus.push(<PowerSensor key={"MX"} sensor={sensors.power["MX"]} status={sensors.status["MX"].value} height={this.state.height} width={this.state.width}/>)
+        //     psus.push(<PowerSensor key={"PA"} sensor={sensors.power["PA"]} status={sensors.status["PA"].value} height={this.state.height} width={this.state.width}/>)
+        // } catch (e) {
+        //  console.log("no power sensors (yet): ", sensors.power)
         // }
+
+        for (let key of Object.keys(sensors.power).sort((a, b) => (a.sort > b.sort) ? 1 : -1)) {
+            psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+        }
 
         let PA = []
         try {

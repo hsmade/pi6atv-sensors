@@ -16,10 +16,11 @@ class DS18B20TemperatureSensor(BaseSensor):
     type = "temperature"
     PATH = "/sys/bus/w1/devices/{}/w1_slave"
 
-    def __init__(self, name, path: str, retries=10):
+    def __init__(self, name, path: str, retries=10, sort=0):
         super().__init__(name)
         self.path = path
         self.retries = retries
+        self.sort = sort
 
     def _read_from_sensor(self) -> Union[str, None]:
         tries = 0
