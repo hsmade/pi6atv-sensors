@@ -23,10 +23,43 @@ class PASensor(BaseSensor):
         :param value:
         :return: float
         """
+        mapping = {
+            # voltage: power
+            0.09: 0.1,
+            0.1: 0.2,
+            0.25: 0.3,
+            0.2: 0.4,
+            0.3: 0.5,
+            0.5: 1,
+            0.6: 1.5,
+            0.7: 2,
+            0.8: 2.5,
+            0.9: 3,
+            1: 3.5,
+            1.1: 4,
+            1.2: 4.5,
+            1.3: 5,
+            1.4: 5.5,
+            1.55: 6,
+            1.6: 6.5,
+            1.65: 7,
+            1.7: 7.5,
+            1.8: 8,
+            1.9: 8.5,
+            2: 9,
+            2.11: 9.5,
+            2.2: 10,
+            2.3: 10.5,
+            2.4: 11,
+        }
         # FIXME implement
-        return value
+        result = 0
+        for volt, power in mapping.items():
+            if value > volt:
+                result = volt
+        return result
 
-    def read(self) -> bool:
+    def read(self) -> float:
         """
         reads from the sensor and returns the state
         :return: bool
