@@ -85,14 +85,26 @@ class App extends Component {
 
         // FIXME:  mains, daaronder de pomp, mixer, pa
         let psus = []
-            psus.push(<PowerSensor key={"MAINS"} sensor={sensors.power["MAINS"]} status={sensors.status["MAINS"].value} height={this.state.height} width={this.state.width}/>)
-            psus.push(<PowerSensor key={"PUMP"} sensor={sensors.power["PUMP"]} status={sensors.status["PUMP"].value} height={this.state.height} width={this.state.width}/>)
+        try {
+            psus.push(<PowerSensor key={"Mains"} sensor={sensors.power["Mains"]} status={sensors.status["Mains"].value} height={this.state.height} width={this.state.width}/>)
+            psus.push(<PowerSensor key={"Pump"} sensor={sensors.power["Pump"]} status={sensors.status["Pump"].value} height={this.state.height} width={this.state.width}/>)
             psus.push(<PowerSensor key={"MX"} sensor={sensors.power["MX"]} status={sensors.status["MX"].value} height={this.state.height} width={this.state.width}/>)
             psus.push(<PowerSensor key={"PA"} sensor={sensors.power["PA"]} status={sensors.status["PA"].value} height={this.state.height} width={this.state.width}/>)
+        } catch (e) {
+         console.log("no power sensors (yet): ", sensors.power)
+        }
 
         // for (let key of Object.keys(sensors.power).sort()) {
         //     psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
         // }
+
+        let PA = []
+        try {
+            PA.push(<Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>
+            )
+        } catch (e) {
+            console.log("no PA sensors (yet): ", sensors.pa_power)
+        }
 
         return (
             <div className="App">
@@ -145,7 +157,7 @@ class App extends Component {
                       </div>
 
                       <div className={"speedometer"}>
-                          <Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>
+                          {PA}
                       </div>
 
                   </div>
