@@ -52,6 +52,7 @@ class App extends Component {
             dht22: {},
             temperature: {},
             reverse_status: {},
+            pa_power: {},
         }
 
         // list -> hashmap
@@ -144,8 +145,7 @@ class App extends Component {
                       </div>
 
                       <div className={"speedometer"}>
-                          <Speedometer sensor={{"value": 15, "max": 20, "min": 0}} height={this.state.height} width={this.state.width}/>
-                          {/*PA (power (GPI-26), temp) -> in de dial*/}
+                          <Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>
                       </div>
 
                   </div>

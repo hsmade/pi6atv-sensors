@@ -3,6 +3,7 @@ from .FanSensor import FanSensor
 from .PowerSensor import INA260Sensor
 from .TemperatureSensor import DS18B20TemperatureSensor, DHT22TemperatureSensor
 from .FlowSensor import FLowSensor
+from .PAsensor import PASensor
 
 # all gpio_pin numbers are the GPIO numbers, not the board pin numbers
 sensor_config = [
@@ -28,4 +29,5 @@ sensor_config = [
     INA260Sensor("Pump", 0x45, max_current=1.9, min_current=0.25),
     FLowSensor("Pump", 12),
     ReverseBooleanSensor("Fluid detection", 15),
+    PASensor("PA", 26, maximum=20, minimum=0),
 ]
