@@ -2,6 +2,8 @@ import RPi.GPIO as GPIO
 from .BaseSensor import BaseSensor
 import logging
 
+LOG = logging.getLogger(__name__)
+
 
 class PASensor(BaseSensor):
     """
@@ -67,7 +69,7 @@ class PASensor(BaseSensor):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         value = GPIO.input(self.gpio_pin)
-        logging.debug("{} has value: {}".format(self.name, value))
+        LOG.debug("{} has value: {}".format(self.name, value))
         return self.map(value)
 
     def to_openmetrics(self, bool_value):

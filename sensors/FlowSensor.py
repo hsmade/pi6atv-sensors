@@ -3,7 +3,7 @@ import time
 from .BaseSensor import BaseSensor
 import logging
 
-logging.basicConfig(level="DEBUG")
+LOG = logging.getLogger(__name__)
 
 
 class FLowSensor(BaseSensor):
@@ -40,7 +40,7 @@ class FLowSensor(BaseSensor):
 
             time.sleep(self.timeout)
         except Exception as e:
-            logging.error("Flow {} failed reading from sensor: {}".format(self.name, e))
+            LOG.error("Flow {} failed reading from sensor: {}".format(self.name, e))
             GPIO.remove_event_detect(self.gpio_pin)
             GPIO.cleanup()  # at least do the cleanup on failure, or we'll keep failing
             return -1

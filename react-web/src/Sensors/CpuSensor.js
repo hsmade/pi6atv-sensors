@@ -25,7 +25,7 @@ class CpuSensor extends Component {
                 </td>
                 <td align={"right"}>
                     <span className={valueClasses}>
-                        {sensor.value.temp.toString().padStart(7)}
+                        {sensor.value.temp.toFixed(1)}
                     </span>
                 </td>
                 <td>

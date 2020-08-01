@@ -5,6 +5,8 @@ from typing import Union
 import Adafruit_DHT
 from .BaseSensor import BaseSensor
 
+LOG = logging.getLogger(__name__)
+
 
 class DS18B20TemperatureSensor(BaseSensor):
     """
@@ -28,12 +30,12 @@ class DS18B20TemperatureSensor(BaseSensor):
             tries -= 1
             with open(self.PATH.format(self.path), "r") as w1:
                 data = w1.read()
-                logging.info("Got data: {} from sensor {}".format(data, self.path))
+                LOG.info("Got data: {} from sensor {}".format(data, self.path))
             if "YES" in data and not data.endswith("t=0\n"):
                 return data
-            logging.debug("waiting for valid data from sensor {}".format(self.path))
+            LOG.debug("waiting for valid data from sensor {}".format(self.path))
             sleep(0.2)
-        logging.error("failed to read from sensor {}, tried {} times".format(self.path, self.retries))
+        LOG.error("failed to read from sensor {}, tried {} times".format(self.path, self.retries))
         return None
 
     def to_dict(self):
@@ -53,13 +55,13 @@ class DS18B20TemperatureSensor(BaseSensor):
         """
         data = self._read_from_sensor()
         if not data:
-            logging.error("did not receive any data from sensor {}".format(self.path))
+            LOG.error("did not receive any data from sensor {}".format(self.path))
             return None
 
         try:
             return float(re.search("t=([0-9]+)$", data).group(1)) / 1000.0
         except Exception as e:
-            logging.error("caught exception when reading from sensor {}: {}".format(self.path, e))
+            LOG.error("caught exception when reading from sensor {}: {}".format(self.path, e))
             return None
 
 
@@ -82,9 +84,10 @@ class DHT22TemperatureSensor(BaseSensor):
         :return:
         """
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, self.gpio_pin)
-        if not humidity or not temperature:
-            logging.error("failed to read data from DHT22 on pin {}".format(self.gpio_pin))
+        if not humidity or not temperature or humidity > 100:
+            LOG.error("failed to read data from DHT22 on pin {}: t={} h={}".format(self.gpio_pin, temperature, humidity))
             return None
+        sleep(2)
         return {"temperature": temperature, "humidity": humidity}
 
     def to_openmetrics(self, data):
