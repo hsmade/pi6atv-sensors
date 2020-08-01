@@ -30,6 +30,7 @@ case "$1" in
       systemctl start scraper
       systemctl reload nginx
       systemctl restart snmpd
+      grep -q 'dtoverlay=dht11,gpiopin=16' /boot/config.txt || echo 'dtoverlay=dht11,gpiopin=16' >> /boot/config.txt
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

@@ -45,7 +45,7 @@ Copy the build directory to /opt/repeater-sensors/web
 * test/fix flow sensor
 * test PA power sensor + mapping
 
-* implement fancontrol for cpu on gpio 8 + show on page
+* ~~implement fancontrol for cpu on gpio 8 + show on page~~
 * establish max and min values for fans
 * configure and implement min/max for values. Out of spec = yellow
 

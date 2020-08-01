@@ -2,7 +2,6 @@ import re
 import logging
 from time import sleep
 from typing import Union
-import Adafruit_DHT
 from .BaseSensor import BaseSensor
 
 LOG = logging.getLogger(__name__)
@@ -69,25 +68,40 @@ class DHT22TemperatureSensor(BaseSensor):
     """
         DHT22 temperature sensor
 
-        :param gpio_pin: the pin to read from
+        :param path: the device path to read from
     """
 
     type = "dht22"
 
-    def __init__(self, name, gpio_pin: int):
+    def __init__(self, name, path: str):
         super().__init__(name)
-        self.gpio_pin = gpio_pin
+        if not path.endswith("/"):
+            path = path + "/"
+        self.path = path
 
     def read(self) -> Union[dict, None]:
         """
         returns a dict with the keys temperature and humidity and floats as values or None in case of failure
         :return:
         """
-        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, self.gpio_pin)
-        if not humidity or not temperature or humidity > 100:
-            LOG.error("failed to read data from DHT22 on pin {}: t={} h={}".format(self.gpio_pin, temperature, humidity))
-            return None
-        sleep(2)
+        humidity, temperature = [-255, -255]
+        for attempt in range(1, 4):
+            try:
+                with open(self.path + "in_temp_input") as dev:
+                    temperature = int(dev.read()) / 1000
+            except:
+                LOG.error("failed to read temperature data from DHT22 on path {}: t={} attempt={}".format(self.path, temperature, attempt))
+            else:
+                continue
+        for attempt in range(1, 4):
+            try:
+                with open(self.path + "in_humidityrelative_input") as dev:
+                    humidity = int(dev.read()) / 1000
+            except:
+                LOG.error("failed to read humidity data from DHT22 on path {}: h={} attempt={}".format(self.path, humidity, attempt))
+            else:
+                continue
+
         return {"temperature": temperature, "humidity": humidity}
 
     def to_openmetrics(self, data):
