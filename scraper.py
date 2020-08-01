@@ -54,7 +54,7 @@ def main():
         move("/dev/shm/sensors.json.new", "/dev/shm/sensors.json")
 
         with open("/dev/shm/sensors.prometheus.new", "w") as prom_file:
-            prom_file.write(prom_data)
+            prom_file.write(prom_data.encode("ascii", "ignore").decode("ascii", "ignore"))
         move("/dev/shm/sensors.prometheus.new", "/dev/shm/sensors.prometheus")
 
         sleep(1)
