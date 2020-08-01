@@ -52,7 +52,6 @@ class PASensor(BaseSensor):
             2.3: 10.5,
             2.4: 11,
         }
-        # FIXME implement
         result = 0
         for volt, power in mapping.items():
             if value > volt:
@@ -64,6 +63,7 @@ class PASensor(BaseSensor):
         reads from the sensor and returns the state
         :return: bool
         """
+        # FIXME: implement with ADC
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         value = GPIO.input(self.gpio_pin)

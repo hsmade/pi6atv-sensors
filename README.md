@@ -41,17 +41,17 @@ When changes have been done, they need to be compiled:
 Copy the build directory to /opt/repeater-sensors/web
 
 # TODO
+* test fans
+* test/fix flow sensor
+* test PA power sensor + mapping
+
+* implement fancontrol for cpu on gpio 8 + show on page
+* establish max and min values for fans
+* configure and implement min/max for values. Out of spec = yellow
+
 * add prometheus metric for error state of sensors
 * make voltages 2.1 digits
 * fix redraw on resize for dial
-* fix fluid flow sensor?
-* establish max and min values for fans
-* implement PA power output sensor and wire to dial
 * allow to locally override the config
-* psus: order should be mains, pump, PA, MX
-* configure and implement min/max for values. Out of spec = yellow
 * configure fancontrol, GPI-7
-* from https://www.satsignal.eu/raspberry-pi/monitoring.html#snmp add:
-  * Adding SNMP support for CPU temperature monitoring
-  * Adding SNMP support for general remote monitoring
 * ~~fix pass_persist in snmpd~~
