@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class CpuSensor extends Component {
     render() {
         const sensor = this.props.sensor
-        console.log("cpusensor", sensor)
+        // console.log("cpusensor", sensor)
 
         let statusIcon = "switch-off.png"
         if (sensor.value.fan) {
@@ -23,19 +23,24 @@ class CpuSensor extends Component {
                 <td>
                     &nbsp;<img src={statusIcon} alt={statusIcon} height={this.props.height/35}/>&nbsp;
                 </td>
-                <td>
-                    <span className={"label"}>
-                        {sensor.name}:
-                    </span>
-                </td>
                 <td align={"right"}>
                     <span className={valueClasses}>
-                        {sensor.value.temp.toString().padStart(4)}
+                        {sensor.value.temp.toString().padStart(7)}
                     </span>
                 </td>
                 <td>
                     <span className={"label"}>
                         °C
+                    </span>
+                </td>
+                <td align={"right"}>
+                    <span className={valueClasses}>
+                        {sensor.value.rpm.toString().padStart(4)}
+                    </span>
+                </td>
+                <td>
+                    <span className={"label"}>
+                        RPM
                     </span>
                 </td>
             </tr>

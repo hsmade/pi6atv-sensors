@@ -65,11 +65,13 @@ class App extends Component {
                 }
             }
         }
-        console.log(this.state.sensors, sensors)
+        // console.log(this.state.sensors, sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
-            fans.push(<FanStatus key={key} sensor={sensors.rpm[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+            if (key !== "Cpu") {
+                fans.push(<FanStatus key={key} sensor={sensors.rpm[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
+            }
         }
 
         let flow = []
@@ -92,6 +94,11 @@ class App extends Component {
 
         let cpu = []
         for (let key of Object.keys(sensors.temp_fan)) {
+            if (sensors.rpm[key]) {
+                sensors.temp_fan[key].value.rpm = sensors.rpm[key].value
+            } else {
+                sensors.temp_fan[key].value.rpm = -1
+            }
             cpu.push(<CpuSensor key={key} sensor={sensors.temp_fan[key]} height={this.state.height} width={this.state.width}/>)
         }
 
@@ -142,7 +149,7 @@ class App extends Component {
                       <div className={"mid-right"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>Cpu</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>RPi Cpu</span><hr/></td></tr>
                               {cpu}
                               </tbody>
                           </table>

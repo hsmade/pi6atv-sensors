@@ -18,6 +18,7 @@ sensor_config = [
     FanSensor(name="40 °C", gpio_pin=17, minimum=1500, maximum=2100),
     FanSensor(name="50 °C", gpio_pin=27, minimum=1500, maximum=2100),
     FanSensor(name="60 °C", gpio_pin=22, minimum=1500, maximum=2100),
+    FanSensor(name="Cpu",   gpio_pin=7,  minimum=1500, maximum=2100),
     DS18B20TemperatureSensor("MX", "28-01186e81daff", sort=3),
     DS18B20TemperatureSensor("RM", "28-0417c475edff", sort=1),
     DS18B20TemperatureSensor("Out", "28-0417c4897aff", sort=5),
