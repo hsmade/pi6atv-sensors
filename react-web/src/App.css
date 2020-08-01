@@ -71,6 +71,15 @@ hr {
   border-radius: 16px;
 }
 
+.mid-right {
+  position:absolute;
+  top:40%;
+  right:0;
+  border-bottom: 1px solid darkblue;
+  border-right: 1px solid darkblue;
+  border-radius: 16px;
+}
+
 .bottom-left {
   position:absolute;
   bottom:0;

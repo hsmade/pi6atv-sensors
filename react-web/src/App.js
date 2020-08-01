@@ -7,6 +7,7 @@ import FluidPumpStatus from "./Sensors/FluidPumpStatus";
 import FluidDetection from "./Sensors/FluidDetection";
 import GaugeSensor from "./Sensors/GaugeSensor";
 import PowerSensor from "./Sensors/PowerSensor";
+import CpuSensor from "./Sensors/CpuSensor";
 
 
 class App extends Component {
@@ -53,6 +54,7 @@ class App extends Component {
             temperature: {},
             reverse_status: {},
             pa_power: {},
+            temp_fan: {},
         }
 
         // list -> hashmap
@@ -63,7 +65,7 @@ class App extends Component {
                 }
             }
         }
-        // console.log(sensors)
+        console.log(this.state.sensors, sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort()) {
@@ -88,6 +90,11 @@ class App extends Component {
             }
         }
 
+        let cpu = []
+        for (let key of Object.keys(sensors.temp_fan)) {
+            cpu.push(<CpuSensor key={key} sensor={sensors.temp_fan[key]} height={this.state.height} width={this.state.width}/>)
+        }
+
         let psus = []
         for (let key of Object.keys(sensors.power).sort((a, b) => (sensors.power[a].sort > sensors.power[b].sort) ? 1 : -1)) {
             psus.push(<PowerSensor key={key} sensor={sensors.power[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
@@ -95,8 +102,7 @@ class App extends Component {
 
         let PA = []
         try {
-            PA.push(<Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>
-            )
+            PA.push(<Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>)
         } catch (e) {
             console.log("no PA sensors (yet): ", sensors.pa_power)
         }
@@ -129,6 +135,15 @@ class App extends Component {
                               <tbody>
                               <tr><td colSpan={5}><span className={"label"}>Thermometer</span><hr/></td></tr>
                               {temphum}
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <div className={"mid-right"}>
+                          <table cellSpacing={"1vw"}>
+                              <tbody>
+                              <tr><td colSpan={5}><span className={"label"}>Cpu</span><hr/></td></tr>
+                              {cpu}
                               </tbody>
                           </table>
                       </div>

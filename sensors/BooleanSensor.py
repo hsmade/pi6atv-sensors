@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 from .BaseSensor import BaseSensor
-import logging
 
 
 class BooleanSensor(BaseSensor):
