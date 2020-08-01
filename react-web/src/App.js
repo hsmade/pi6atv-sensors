@@ -58,7 +58,9 @@ class App extends Component {
         // list -> hashmap
         for (let sensor of this.state.sensors) {
             if (Object.keys(sensor).length) { // guard against empty objects
-                sensors[sensor.type][sensor.name] = sensor
+                if (sensor.type != null && sensor.name != null) {
+                    sensors[sensor.type][sensor.name] = sensor
+                }
             }
         }
         // console.log(sensors)
