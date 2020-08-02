@@ -5,7 +5,7 @@ class Speedometer extends Component {
     render() {
         let textColor="green"
         if (this.props.sensor.value <= 12) {
-            textColor="yellow"
+            textColor="orange"
         }
         if (this.props.sensor.value > this.props.sensor.max) {
             textColor="red"
@@ -34,7 +34,7 @@ class Speedometer extends Component {
                 height={this.props.height * 0.8}
                 currentValueText={"PA Output: #{value} W"}
                 currentValuePlaceholderStyle={"#{value}"}
-                needleColor={"yellow"}
+                needleColor={textColor}
             />
             </div>
         )

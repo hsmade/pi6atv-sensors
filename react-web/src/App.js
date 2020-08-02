@@ -45,6 +45,12 @@ class App extends Component {
     }
 
     render() {
+        // dirty hack for bright theme
+        if (window.location.hash === "#white") {
+            document.body.style = "background-color: white;"
+
+        }
+
         let sensors = {
             rpm: {},
             status: {},

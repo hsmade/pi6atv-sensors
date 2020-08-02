@@ -22,7 +22,7 @@ sensor_config = [
     DS18B20TemperatureSensor("MX", "28-01186e81daff", sort=3),
     DS18B20TemperatureSensor("RM", "28-0417c475edff", sort=1),
     DS18B20TemperatureSensor("Out", "28-0417c4897aff", sort=5),
-    DS18B20TemperatureSensor("MP", "28-3c01a8164f17", sort=2),
+    DS18B20TemperatureSensor("MP", "28-0173ca070002", sort=2),
     DS18B20TemperatureSensor("PA", "28-0417013af9ff", sort=4),
     DHT22TemperatureSensor("RM", "/sys/bus/iio/devices/iio:device0/"),
     INA260Sensor("Mains", 0x40, sort=1),
