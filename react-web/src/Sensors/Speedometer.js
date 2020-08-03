@@ -27,7 +27,7 @@ class Speedometer extends Component {
             textColor="red"
         }
 
-        console.log("speedometer:", this.props.sensor.value, this.state.value, textColor)
+        // console.log("speedometer:", this.props.sensor.value, this.state.value, textColor)
 
         return (
             <div style={{width: "100%", height: "100%"}}>

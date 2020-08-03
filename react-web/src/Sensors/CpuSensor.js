@@ -14,6 +14,9 @@ class CpuSensor extends Component {
         if ((sensor.value.temp > sensor.max) && sensor.value.temp !== -1) {
             valueClasses += " out-of-spec"
         }
+        if (sensor.value.rpm === -1) {
+            sensor.value.rpm = "--"
+        }
 
         return (
             <tr>

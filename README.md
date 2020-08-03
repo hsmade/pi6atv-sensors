@@ -44,7 +44,7 @@ Copy the build directory to /opt/repeater-sensors/web
 * test fans
 * test/fix flow sensor
 * ~~test PA power sensor + mapping~~
-* cache value for PA power
+* ~~cache value for PA power~~
 
 * ~~implement fancontrol for cpu on gpio 8 + show on page~~
 * establish max and min values for fans
