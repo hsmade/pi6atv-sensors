@@ -11,7 +11,7 @@ class INA260Sensor(BaseSensor):
     """
     type = "power"
 
-    def __init__(self, name, address=0x040, min_current=-1, max_current=99999, min_voltage=11500, max_voltage=12500, sort=0):
+    def __init__(self, name, address=0x040, min_current=-1, max_current=99999, min_voltage=11.5, max_voltage=12.5, sort=0):
         super().__init__(name)
         self.address = address
         self.min_current = min_current

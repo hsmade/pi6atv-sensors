@@ -21,6 +21,7 @@ class PowerSensor extends Component {
     }
 
     render() {
+        console.log(this.props.sensor)
         let statusIcon = "switch-off.png"
         if (this.props.status) {
             statusIcon = "switch-on.png"
