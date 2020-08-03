@@ -1,6 +1,18 @@
+.light-theme{
+  /* Set the 'light' theme */
+  --background-color: white;
+  --oos-color: orange;
+}
+
+.dark-theme{
+  /* Set the 'dark' theme */
+  --background-color: black;
+  --oos-color: yellow;
+}
+
 body {
   text-align: left;
-  background-color: black;
+  background-color: var(--background-color, black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +52,7 @@ svg:not(:root) {
 }
 
 .out-of-spec {
-  color: yellow
+  color: var(--oos-color);
 }
 
 .lowercase {
