@@ -19,9 +19,9 @@ class Speedometer extends Component {
                 // dimensionUnit="%"
                 // startColor="green"
                 // endColor="red"
-                segments={20}
-                maxSegmentLabels={10}
-                segmentColors={["red","red","red","red","red","red","red","red","red","red","red","red","orange","orange","green","green","orange","orange","red","red",]}
+                segments={14}
+                maxSegmentLabels={14}
+                segmentColors={["red","red","red","red","red","red","red","red","orange","orange","green","green","orange","orange","red","red",]}
                 textColor={textColor}
                 labelFontSize="1.2vw"
                 valueTextFontSize="2vw"
@@ -34,6 +34,7 @@ class Speedometer extends Component {
                 height={this.props.height * 0.8}
                 currentValueText={"PA Output: #{value} W"}
                 currentValuePlaceholderStyle={"#{value}"}
+                valueFormat={" >4"}
                 needleColor={textColor}
             />
             </div>

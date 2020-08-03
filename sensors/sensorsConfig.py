@@ -31,6 +31,6 @@ sensor_config = [
     INA260Sensor("Pump", 0x45, max_current=1.9, min_current=0.25, sort=2),
     FLowSensor("Pump", 12),
     ReverseBooleanSensor("Fluid detection", 15),
-    PASensor("PA", 26, maximum=20, minimum=0),
+    PASensor("PA", 0x08, maximum=14, minimum=0),
     CpuTempSensor("Cpu", path="/sys/class/thermal/thermal_zone0/temp", fan=8, maximum=70),
 ]
