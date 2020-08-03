@@ -2,15 +2,34 @@ import ReactSpeedometer from "react-d3-speedometer"
 import React, {Component} from 'react';
 
 class Speedometer extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: 0,
+        };
+    }
+
     render() {
+        if (this.props.sensor.value < 0) {
+            this.props.sensor.value = this.state.value
+        } else {
+            this.state.value = this.props.sensor.value
+        }
         let textColor="green"
-        if (this.props.sensor.value <= 12) {
+        if (this.props.sensor.value > 12) {
             textColor="orange"
         }
-        if (this.props.sensor.value > this.props.sensor.max) {
+        if (this.props.sensor.value < 10) {
+            textColor="orange"
+        }
+        if (this.props.sensor.value < 8) {
             textColor="red"
         }
-            return (
+
+        console.log("speedometer:", this.props.sensor.value, this.state.value, textColor)
+
+        return (
             <div style={{width: "100%", height: "100%"}}>
             <ReactSpeedometer
                 maxValue={this.props.sensor.max}
@@ -36,6 +55,8 @@ class Speedometer extends Component {
                 currentValuePlaceholderStyle={"#{value}"}
                 valueFormat={" >4"}
                 needleColor={textColor}
+                forceRender={true}
+                needleTransitionDuration={0}
             />
             </div>
         )
