@@ -47,12 +47,12 @@ Copy the build directory to /opt/repeater-sensors/web
 * ~~cache value for PA power~~
 
 * ~~implement fancontrol for cpu on gpio 8 + show on page~~
-* establish max and min values for fans
-* configure and implement min/max for values. Out of spec = yellow
+* find max and min values for fans
+* ~~configure and implement min/max for values. Out of spec = yellow~~
 
 * add prometheus metric for error state of sensors
-* make voltages 2.1 digits
+* ~~make voltages 2.1 digits~~
 * fix redraw on resize for dial
 * allow to locally override the config
-* configure fancontrol, GPI-7
+* ~~configure fancontrol, GPI-7~~
 * ~~fix pass_persist in snmpd~~
