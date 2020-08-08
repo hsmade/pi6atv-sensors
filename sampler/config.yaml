@@ -1,0 +1,107 @@
+sensors:
+  - name: 40 °C
+    gpio: 17
+    type: fanRPM
+    minumum: 1500
+    maximum: 2100
+  - name: 50 °C
+    gpio: 27
+    type: fanRPM
+    minumum: 1500
+    maximum: 2100
+  - name: 60 °C
+    gpio: 22
+    type: fanRPM
+    minumum: 1500
+    maximum: 2100
+  - name: Mains
+    gpio: 6
+    type: status
+  - name: PA
+    gpio: 13
+    type: status
+  - name: Pump
+    gpio: 19
+    type: status
+  - name: MX
+    gpio: 20
+    type: status
+  - name: 40 °C
+    gpio: 23
+    type: status
+  - name: 50 °C
+    gpio: 24
+    type: status
+  - name: 60 °C
+    gpio: 25
+    type: status
+  - name: Door closed
+    gpio: 26
+    type: status
+  - name: Cpu
+    gpio: 7
+    type: fanRPM
+    minumum: 2500
+    maximum: 3100
+  - name: RM
+    w1_address: 28-0417c475edff
+    type: DS18B20
+    sort: 1
+  - name: MP
+    w1_address: 28-0173ca070002
+    type: DS18B20
+    sort: 2
+  - name: MX
+    w1_address: 28-01186e81daff
+    type: DS18B20
+    sort: 3
+  - name: PA
+    w1_address: 28-0417013af9ff
+    type: DS18B20
+    sort: 4
+  - name: Out
+    w1_address: 28-0417c4897aff
+    type: DS18B20
+    sort: 5
+  - name: RM
+    gpio: 16
+    type: DHT22
+  - name: Mains
+    i2c_address: 0x40
+    type: INA260
+    sort: 1
+  - name: Pump
+    i2c_address: 0x40
+    type: INA260
+    sort: 2
+    current_minimum: 250
+    current_maximum: 1900
+  - name: MX
+    i2c_address: 0x40
+    type: INA260
+    sort: 3
+    current_minimum: 500
+    current_maximum: 700
+  - name: PA
+    i2c_address: 0x40
+    type: INA260
+    sort: 4
+    current_minimum: 5000
+    current_maximum: 8000
+  - name: Pump
+    gpio: 12
+    type: Flow
+  - name: Fluid detection
+    gpio: 15
+    type: reverse-status
+  - name: PA
+    i2c_address: 0x08
+    type: PA
+    minimum: 11
+    maximum: 13
+  - name: Cpu
+    type: cpuFan
+    path: /sys/class/thermal/thermal_zone0/temp
+    control_gpio: 8
+    maximum: 85
+    switch: 55

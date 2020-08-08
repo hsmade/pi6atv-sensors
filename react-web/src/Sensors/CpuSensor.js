@@ -33,7 +33,7 @@ class CpuSensor extends Component {
                 </td>
                 <td>
                     <span className={"label"}>
-                        °C
+                        °C:&nbsp;
                     </span>
                 </td>
                 <td align={"right"}>

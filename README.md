@@ -41,7 +41,7 @@ When changes have been done, they need to be compiled:
 Copy the build directory to /opt/repeater-sensors/web
 
 # TODO
-* test fans
+* ~~test fans~~
 * test/fix flow sensor
 * ~~test PA power sensor + mapping~~
 * ~~cache value for PA power~~

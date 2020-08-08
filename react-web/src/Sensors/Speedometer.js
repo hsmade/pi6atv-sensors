@@ -40,7 +40,7 @@ class Speedometer extends Component {
                 // endColor="red"
                 segments={14}
                 maxSegmentLabels={14}
-                segmentColors={["red","red","red","red","red","red","red","red","orange","orange","green","green","orange","orange","red","red",]}
+                segmentColors={["red","red","red","red","red","red","red","red","red", "orange","orange","green","green","orange","orange","red",]}
                 textColor={textColor}
                 labelFontSize="1.2vw"
                 valueTextFontSize="2vw"

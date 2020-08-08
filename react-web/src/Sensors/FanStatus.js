@@ -28,7 +28,7 @@ class FanStatus extends Component {
                 </td>
                 <td>
                     <span className={"label"}>
-                        {sensor.name}:
+                        {sensor.name}:&nbsp;
                     </span>
                 </td>
                 <td align={"right"}>

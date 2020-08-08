@@ -33,5 +33,5 @@ sensor_config = [
     FLowSensor("Pump", 12),
     ReverseBooleanSensor("Fluid detection", 15),
     PASensor("PA", 0x08, maximum=14, minimum=0),
-    CpuTempSensor("Cpu", path="/sys/class/thermal/thermal_zone0/temp", fan=8, maximum=70),
+    CpuTempSensor("Cpu", path="/sys/class/thermal/thermal_zone0/temp", fan=8, maximum=55),
 ]
