@@ -8,6 +8,7 @@ import FluidDetection from "./Sensors/FluidDetection";
 import GaugeSensor from "./Sensors/GaugeSensor";
 import PowerSensor from "./Sensors/PowerSensor";
 import CpuSensor from "./Sensors/CpuSensor";
+import CabinetDoorSensor from "./Sensors/CabinetDoorSensor";
 
 
 class App extends Component {
@@ -72,7 +73,7 @@ class App extends Component {
                 }
             }
         }
-        // console.log(this.state.sensors, sensors)
+        console.log(sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort((a, b) => (sensors.rpm[a].sort > sensors.rpm[b].sort) ? 1 : -1)) {
@@ -119,6 +120,15 @@ class App extends Component {
             PA.push(<Speedometer sensor={{"value": sensors.pa_power["PA"].value, "max": sensors.pa_power["PA"].max, "min": sensors.pa_power["PA"].min}} height={this.state.height} width={this.state.width}/>)
         } catch (e) {
             console.log("no PA sensors (yet): ", sensors.pa_power)
+        }
+
+        let door = []
+        try {
+            if (sensors.status["Door closed"] !== undefined) {
+                door.push(<CabinetDoorSensor sensor={sensors.status["Door closed"]}/>)
+            }
+        } catch (e) {
+            console.log("no Door sensors (yet): ", sensors.status)
         }
 
         return (
@@ -182,6 +192,10 @@ class App extends Component {
 
                       <div className={"speedometer"}>
                           {PA}
+                      </div>
+
+                      <div className={"cabinet-door"}>
+                          {door}
                       </div>
 
                   </div>

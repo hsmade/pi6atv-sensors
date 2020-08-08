@@ -133,3 +133,15 @@ hr {
   text-align: center;
   /*vertical-align: center;*/
 }
+
+.cabinet-door {
+  text-align: center;
+  font-family: 'digital-7-monoitalic', monospace;
+  color: green;
+  font-weight: bold;
+  font-size: 2vw;
+}
+
+.red {
+  color: red;
+}
