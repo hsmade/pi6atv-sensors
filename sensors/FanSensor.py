@@ -18,12 +18,13 @@ class FanSensor(BaseSensor):
     PULSE = 2  # Noctua fans puts out two pluses per revolution
     type = "rpm"
 
-    def __init__(self, name, gpio_pin: int, timeout=2, minimum=0, maximum=65535):
+    def __init__(self, name, gpio_pin: int, timeout=2, minimum=0, maximum=65535, sort=1):
         super().__init__(name)
         self.gpio_pin = gpio_pin
         self.timeout = timeout
         self.minimum = minimum
         self.maximum = maximum
+        self.sort = sort
         self.timer = time.time()
         self.filtered_ticks = 0
 
@@ -96,5 +97,6 @@ class FanSensor(BaseSensor):
             "min": self.minimum,
             "max": self.maximum,
             "value": value,
+            "sort": self.sort,
             "prometheus_data": self.to_openmetrics(value),
         }

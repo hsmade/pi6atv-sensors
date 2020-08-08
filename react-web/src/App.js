@@ -75,7 +75,7 @@ class App extends Component {
         // console.log(this.state.sensors, sensors)
 
         let fans = []
-        for (let key of Object.keys(sensors.rpm).sort()) {
+        for (let key of Object.keys(sensors.rpm).sort((a, b) => (sensors.rpm[a].sort > sensors.rpm[b].sort) ? 1 : -1)) {
             if (key !== "Cpu") {
                 fans.push(<FanStatus key={key} sensor={sensors.rpm[key]} status={sensors.status[key].value} height={this.state.height} width={this.state.width}/>)
             }
@@ -128,7 +128,7 @@ class App extends Component {
                       <div className={"top-right"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>Air Cooling</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>liquid cooling</span><hr/></td></tr>
                               {fans}
                               <tr/>
                               </tbody>
@@ -138,7 +138,7 @@ class App extends Component {
                       <div className={"top-left"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>Water Cooling</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>liquid pump &ge; 40 °C</span><hr/></td></tr>
                               {flow}
                               </tbody>
                           </table>
@@ -165,7 +165,7 @@ class App extends Component {
                       <div className={"bottom-left"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>Temperatures</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>Environment</span><hr/></td></tr>
                               {temperatures}
                               </tbody>
                           </table>

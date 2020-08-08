@@ -56,3 +56,7 @@ Copy the build directory to /opt/repeater-sensors/web
 * allow to locally override the config
 * ~~configure fancontrol, GPI-7~~
 * ~~fix pass_persist in snmpd~~
+* cabinet open/closed +red/green on previous pa gpio, below PA power txt
+* make sorting for fans, 60-50-40
+* ~~water cooling -> liquid pump~~
+* ~~air cooling -> liquid cooling~~
