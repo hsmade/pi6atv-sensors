@@ -3,9 +3,11 @@ module github.com/hsmade/pi6atv-sensors/sampler
 go 1.13
 
 require (
-	github.com/bashtian/jsonutils v0.0.0-20170422180242-5bf643ef4d9b // indirect
+	github.com/d2r2/go-dht v0.0.0-20200119175940-4ba96621a218
+	github.com/d2r2/go-logger v0.0.0-20181221090742-9998a510495e // indirect
+	github.com/d2r2/go-shell v0.0.0-20191113051817-7664ea33645f // indirect
 	github.com/pkg/errors v0.9.1
-	gopkg.in/yaml.v1 v1.0.0-20140924161607-9f9df34309c0 // indirect
+	github.com/sirupsen/logrus v1.6.0
 	gopkg.in/yaml.v2 v2.3.0
 	periph.io/x/periph v3.6.4+incompatible
 )

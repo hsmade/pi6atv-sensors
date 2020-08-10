@@ -3,8 +3,6 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
-
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 
@@ -30,8 +28,6 @@ func ParseConfig(filename string) (*Config, error) {
 		return nil, errors.Wrap(err, "parsing config file")
 	}
 
-	log.Printf("Config: \n\n%v\n\n", configFile)
-
 	var conf Config
 	for _, sensorConfig := range configFile.Sensors {
 		var sensor sensors.Sensor
@@ -43,15 +39,15 @@ func ParseConfig(filename string) (*Config, error) {
 		case "DS18B20":
 			sensor = sensors.NewDS18B20(sensorConfig)
 		case "DHT22":
-			sensor = sensors.NewFakeSensor(sensorConfig)
+			sensor = sensors.NewDHT22(sensorConfig)
 		case "INA260":
 			sensor = sensors.NewFakeSensor(sensorConfig)
 		case "Flow":
-			sensor = sensors.NewFakeSensor(sensorConfig)
+			sensor = sensors.NewFlow(sensorConfig)
 		case "PA":
 			sensor = sensors.NewFakeSensor(sensorConfig)
 		case "cpuFan":
-			sensor = sensors.NewFakeSensor(sensorConfig)
+			sensor = sensors.NewCpuTemp(sensorConfig)
 		case "reverse-status":
 			sensor = sensors.NewReverseStatus(sensorConfig)
 		default:

@@ -104,4 +104,4 @@ sensors:
     path: /sys/class/thermal/thermal_zone0/temp
     control_gpio: 8
     maximum: 85
-    switch: 55
+    switch_point: 55
