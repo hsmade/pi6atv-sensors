@@ -9,15 +9,15 @@ import (
 	"periph.io/x/periph/conn/gpio/gpioreg"
 )
 
-type FanRPM struct {
+type FanRPMSensor struct {
 	Config SensorConfig
 	Value  int
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
 
-func NewFanRPM(sensorConfig SensorConfig) *FanRPM {
-	S := FanRPM{
+func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
+	S := FanRPMSensor{
 		Config: sensorConfig,
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
@@ -34,7 +34,7 @@ func NewFanRPM(sensorConfig SensorConfig) *FanRPM {
 	return &S
 }
 
-func (S *FanRPM) Sense() {
+func (S *FanRPMSensor) Sense() {
 	fanTicks := 0
 
 	go func() {
@@ -54,6 +54,6 @@ func (S *FanRPM) Sense() {
 	}
 }
 
-func (S *FanRPM) GetPrometheusMetrics() []byte {
+func (S *FanRPMSensor) GetPrometheusMetrics() []byte {
 	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n", "rpm", S.Config.Name, S.Value))
 }

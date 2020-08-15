@@ -2,60 +2,73 @@ package sensors
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"periph.io/x/periph/conn/i2c"
-	"periph.io/x/periph/conn/i2c/i2creg"
+
+	"github.com/hsmade/pi6atv-sensors/sampler/ina260"
 )
 
-type INA260 struct {
+type INA260Sensor struct {
 	Config  SensorConfig
 	Power   float64
 	Current float64
 	Voltage float64
-	port    *i2c.Dev
+	dev    *ina260.Ina260
 	logger  *logrus.Entry
 }
 
-func NewINA260(sensorConfig SensorConfig) *INA260 {
-	bus, err := i2creg.Open("")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	S := INA260{
+func NewINA260Sensor(sensorConfig SensorConfig) *INA260Sensor {
+	S := INA260Sensor{
 		Config: sensorConfig,
-		port:   &i2c.Dev{Addr: sensorConfig.I2cAddress, Bus: bus},
+		dev: ina260.NewIna260(sensorConfig.I2cAddress),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 
+	err := S.dev.Begin()
+	if err != nil {
+		S.logger.WithError(err).Fatal("Failed to initialize sensor")
+	}
 	return &S
 }
 
-func (S *INA260) read() (float64, float64, float64, error) {
+func (S *INA260Sensor) read() (float64, float64, float64, error) {
+
 	return 0, 0, 0, nil
 }
 
-func (S *INA260) Sense() {
+func (S *INA260Sensor) Sense() {
 	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
 		case _ = <-ticker.C:
-			power, current, voltage, err := S.read()
+			power, err := S.dev.ReadPower()
 			if err != nil {
-				S.logger.WithError(err).Error("Failed to get data from sensor")
+				S.logger.WithError(err).Error("Failed to get power from sensor")
+			} else {
+				S.Power = power
 			}
-			S.Power = power
-			S.Current = current
-			S.Voltage = voltage
-			//S.logger.Debugf("%s: %v\n", S.Config.Name, S.Value)
+
+			current, err := S.dev.ReadCurrent()
+			if err != nil {
+				S.logger.WithError(err).Error("Failed to get current from sensor")
+			} else {
+				S.Current = current
+			}
+
+			voltage, err := S.dev.ReadVoltage()
+			if err != nil {
+				S.logger.WithError(err).Error("Failed to get voltage from sensor")
+			} else {
+				S.Voltage = voltage
+			}
+
+			S.logger.Debugf("%s: %f, %f, %f\n", S.Config.Name, S.Power, S.Voltage, S.Current)
 		}
 	}
 }
 
-func (S *INA260) GetPrometheusMetrics() []byte {
+func (S *INA260Sensor) GetPrometheusMetrics() []byte {
 	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n%s{name=\"%s\"} %d\n%s{name=\"%s\"} %d\n",
 		"power", S.Config.Name, S.Power,
 		"current", S.Config.Name, S.Current,

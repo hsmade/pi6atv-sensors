@@ -33,23 +33,23 @@ func ParseConfig(filename string) (*Config, error) {
 		var sensor sensors.Sensor
 		switch sensorConfig.Type {
 		case "fanRPM":
-			sensor = sensors.NewFanRPM(sensorConfig)
+			sensor = sensors.NewFanRPMSensor(sensorConfig)
 		case "status":
-			sensor = sensors.NewStatus(sensorConfig)
-		case "DS18B20":
-			sensor = sensors.NewDS18B20(sensorConfig)
-		case "DHT22":
-			sensor = sensors.NewDHT22(sensorConfig)
-		case "INA260":
-			sensor = sensors.NewINA260(sensorConfig)
+			sensor = sensors.NewStatusSensor(sensorConfig)
+		case "DS18B20Sensor":
+			sensor = sensors.NewDS18B20Sensor(sensorConfig)
+		case "DHT22Sensor":
+			sensor = sensors.NewDHT22Sensor(sensorConfig)
+		case "INA260Sensor":
+			sensor = sensors.NewINA260Sensor(sensorConfig)
 		case "Flow":
-			sensor = sensors.NewFlow(sensorConfig)
+			sensor = sensors.NewFlowSensor(sensorConfig)
 		case "PA":
 			sensor = sensors.NewFakeSensor(sensorConfig)
 		case "cpuFan":
-			sensor = sensors.NewCpuTemp(sensorConfig)
+			sensor = sensors.NewCpuTempSensor(sensorConfig)
 		case "reverse-status":
-			sensor = sensors.NewReverseStatus(sensorConfig)
+			sensor = sensors.NewInverseStatusSensor(sensorConfig)
 		default:
 			return nil, errors.New(fmt.Sprintf("Can't find a mapping for sensor type: %s", sensorConfig.Type))
 		}

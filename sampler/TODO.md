@@ -6,9 +6,9 @@
   * ~~refactor, cleanup~~
 * ~~fanRPMSensor~~
 * ~~FlowSensor~~
-* INA260Sensor
-  * INA260 library
-  * everything
+* ~~INA260Sensor~~
+  * ~~INA260 library~~
+  * ~~everything~~
 * PAPowerSensor
   * everything
 * ~~reverseStatusSensor~~

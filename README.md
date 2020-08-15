@@ -62,3 +62,8 @@ Copy the build directory to /opt/repeater-sensors/web
 * ~~air cooling -> liquid cooling~~
 * fix font on iphone
 * check scaling / placement on phones
+* set colors for PA power:
+ 0 t/m 8 = rood
+8 t/m 10 = geel (oranje)
+10 t/m 13,5 = groen
+13,5 t/m .... geel (oranje)

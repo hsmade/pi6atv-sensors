@@ -9,15 +9,15 @@ import (
 	"periph.io/x/periph/conn/gpio/gpioreg"
 )
 
-type Status struct {
+type StatusSensor struct {
 	Config SensorConfig
 	Value  bool
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
 
-func NewStatus(sensorConfig SensorConfig) *Status {
-	S := Status{
+func NewStatusSensor(sensorConfig SensorConfig) *StatusSensor {
+	S := StatusSensor{
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		Config: sensorConfig,
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
@@ -34,7 +34,7 @@ func NewStatus(sensorConfig SensorConfig) *Status {
 	return &S
 }
 
-func (S *Status) Sense() {
+func (S *StatusSensor) Sense() {
 	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
@@ -45,7 +45,7 @@ func (S *Status) Sense() {
 	}
 }
 
-func (S *Status) GetPrometheusMetrics() []byte {
+func (S *StatusSensor) GetPrometheusMetrics() []byte {
 	value := 0
 	if S.Value {
 		value = 1

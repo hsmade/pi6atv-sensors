@@ -9,15 +9,15 @@ import (
 	"periph.io/x/periph/conn/gpio/gpioreg"
 )
 
-type FLow struct {
+type FlowSensor struct {
 	Config SensorConfig
 	Value  float64
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
 
-func NewFlow(sensorConfig SensorConfig) *FLow {
-	S := FLow{
+func NewFlowSensor(sensorConfig SensorConfig) *FlowSensor {
+	S := FlowSensor{
 		Config: sensorConfig,
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
@@ -34,7 +34,7 @@ func NewFlow(sensorConfig SensorConfig) *FLow {
 	return &S
 }
 
-func (S *FLow) Sense() {
+func (S *FlowSensor) Sense() {
 	fanTicks := 0
 
 	go func() {
@@ -54,6 +54,6 @@ func (S *FLow) Sense() {
 	}
 }
 
-func (S *FLow) GetPrometheusMetrics() []byte {
+func (S *FlowSensor) GetPrometheusMetrics() []byte {
 	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", "flow", S.Config.Name, S.Value))
 }

@@ -12,20 +12,20 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type DS18B20 struct {
+type DS18B20Sensor struct {
 	Config SensorConfig
 	Value  float64
 	logger *logrus.Entry
 }
 
-func NewDS18B20(sensorConfig SensorConfig) *DS18B20 {
-	return &DS18B20{
+func NewDS18B20Sensor(sensorConfig SensorConfig) *DS18B20Sensor {
+	return &DS18B20Sensor{
 		Config: sensorConfig,
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 }
 
-func (S *DS18B20) read() (float64, error) {
+func (S *DS18B20Sensor) read() (float64, error) {
 	data, err := ioutil.ReadFile(fmt.Sprintf("/sys/bus/w1/devices/%s/w1_slave", S.Config.W1Address))
 	if err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("Failed to read from %s", S.Config.W1Address))
@@ -49,7 +49,7 @@ func (S *DS18B20) read() (float64, error) {
 	return value / 1000, nil
 }
 
-func (S *DS18B20) Sense() {
+func (S *DS18B20Sensor) Sense() {
 	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
@@ -64,6 +64,6 @@ func (S *DS18B20) Sense() {
 	}
 }
 
-func (S *DS18B20) GetPrometheusMetrics() []byte {
+func (S *DS18B20Sensor) GetPrometheusMetrics() []byte {
 	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", "temperature", S.Config.Name, S.Value))
 }

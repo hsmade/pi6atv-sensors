@@ -11,7 +11,7 @@ import (
 	"periph.io/x/periph/conn/gpio/gpioreg"
 )
 
-type CpuTemp struct {
+type CpuTempSensor struct {
 	Config      SensorConfig
 	Value       float64
 	FanStatus   bool
@@ -19,8 +19,8 @@ type CpuTemp struct {
 	logger      *logrus.Entry
 }
 
-func NewCpuTemp(sensorConfig SensorConfig) *CpuTemp {
-	S := CpuTemp{
+func NewCpuTempSensor(sensorConfig SensorConfig) *CpuTempSensor {
+	S := CpuTempSensor{
 		Config:      sensorConfig,
 		controlPort: gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.ControlGpio)),
 		logger:      logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
@@ -33,7 +33,7 @@ func NewCpuTemp(sensorConfig SensorConfig) *CpuTemp {
 	return &S
 }
 
-func (S *CpuTemp) switchFan(status bool) error {
+func (S *CpuTempSensor) switchFan(status bool) error {
 	err := S.controlPort.Out(gpio.Level(status))
 	if err != nil {
 		return err
@@ -42,7 +42,7 @@ func (S *CpuTemp) switchFan(status bool) error {
 	return nil
 }
 
-func (S *CpuTemp) readTemperature() (float64, error) {
+func (S *CpuTempSensor) readTemperature() (float64, error) {
 	data, err := ioutil.ReadFile(S.Config.Path)
 	if err != nil {
 		return 0, err
@@ -56,7 +56,7 @@ func (S *CpuTemp) readTemperature() (float64, error) {
 	return value / 1000, nil
 }
 
-func (S *CpuTemp) Sense() {
+func (S *CpuTempSensor) Sense() {
 	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
@@ -82,7 +82,7 @@ func (S *CpuTemp) Sense() {
 	}
 }
 
-func (S *CpuTemp) GetPrometheusMetrics() []byte {
+func (S *CpuTempSensor) GetPrometheusMetrics() []byte {
 	fanStatus := 0
 	if S.FanStatus {
 		fanStatus = 1

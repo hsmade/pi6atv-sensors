@@ -9,15 +9,15 @@ import (
 	"periph.io/x/periph/conn/gpio/gpioreg"
 )
 
-type ReverseStatus struct {
+type InverseStatusSensor struct {
 	Config SensorConfig
 	Value  bool
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
 
-func NewReverseStatus(sensorConfig SensorConfig) *ReverseStatus {
-	S := ReverseStatus{
+func NewInverseStatusSensor(sensorConfig SensorConfig) *InverseStatusSensor {
+	S := InverseStatusSensor{
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		Config: sensorConfig,
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
@@ -34,7 +34,7 @@ func NewReverseStatus(sensorConfig SensorConfig) *ReverseStatus {
 	return &S
 }
 
-func (S *ReverseStatus) Sense() {
+func (S *InverseStatusSensor) Sense() {
 	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
@@ -46,7 +46,7 @@ func (S *ReverseStatus) Sense() {
 }
 
 //'{type}{{name="{name}", class="{class_name}"}} {value}\n
-func (S *ReverseStatus) GetPrometheusMetrics() []byte {
+func (S *InverseStatusSensor) GetPrometheusMetrics() []byte {
 	value := 0
 	if S.Value {
 		value = 1
