@@ -36,11 +36,11 @@ func ParseConfig(filename string) (*Config, error) {
 			sensor = sensors.NewFanRPMSensor(sensorConfig)
 		case "status":
 			sensor = sensors.NewStatusSensor(sensorConfig)
-		case "DS18B20Sensor":
+		case "DS18B20":
 			sensor = sensors.NewDS18B20Sensor(sensorConfig)
-		case "DHT22Sensor":
+		case "DHT22":
 			sensor = sensors.NewDHT22Sensor(sensorConfig)
-		case "INA260Sensor":
+		case "INA260":
 			sensor = sensors.NewINA260Sensor(sensorConfig)
 		case "Flow":
 			sensor = sensors.NewFlowSensor(sensorConfig)
