@@ -13,8 +13,9 @@
   * everything
 * ~~reverseStatusSensor~~
 * ~~statusSensor~~
-* ~~DHT sensor~~
+* DHT sensor
   * ~~everything~~
+  * rewrite to use different module, this one is broken
 
 # Overal
 * ~~prom metric lines~~

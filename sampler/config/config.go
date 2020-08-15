@@ -2,9 +2,9 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
 
 	"github.com/hsmade/pi6atv-sensors/sampler/sensors"
 )
@@ -41,7 +41,7 @@ func ParseConfig(filename string) (*Config, error) {
 		case "DHT22":
 			sensor = sensors.NewDHT22(sensorConfig)
 		case "INA260":
-			sensor = sensors.NewFakeSensor(sensorConfig)
+			sensor = sensors.NewINA260(sensorConfig)
 		case "Flow":
 			sensor = sensors.NewFlow(sensorConfig)
 		case "PA":

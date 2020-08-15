@@ -36,7 +36,7 @@ sensors:
     gpio: 25
     type: status
   - name: Door closed
-    gpio: 26
+    gpio: 9
     type: status
   - name: Cpu
     gpio: 7
@@ -63,6 +63,10 @@ sensors:
     w1_address: 28-0417c4897aff
     type: DS18B20
     sort: 5
+  - name: PSUs
+    w1_address: 28-0417018ae3ff
+    type: DS18B20
+    sort: 6
   - name: RM
     gpio: 16
     type: DHT22

@@ -5,7 +5,7 @@ type SensorConfig struct {
 	Name           string
 	Gpio           int     `yaml:"gpio,omitempty"`
 	W1Address      string  `yaml:"w1_address,omitempty"`
-	I2cAddress     string  `yaml:"i2c_address,omitempty"`
+	I2cAddress     uint16  `yaml:"i2c_address,omitempty"`
 	Path           string  `yaml:"path,omitempty"`
 	ControlGpio    int     `yaml:"control_gpio,omitempty"`
 	Type           string  `yaml:"type"`
