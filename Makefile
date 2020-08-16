@@ -33,7 +33,7 @@ scraper/scraper:
 
 prepare-package: scraper/scraper react-web/build build/DEBIAN
 	mkdir -p build/opt/repeater-sensors
-	cp -r snmp-passthrough.py README.md requirements.txt scraper/scraper build/opt/repeater-sensors/
+	cp -r snmp-passthrough.py README.md requirements.txt scraper/scraper scraper/config.yaml build/opt/repeater-sensors/
 	cp -r react-web/build build/opt/repeater-sensors/web
 	sed -e "s/Version:.*/Version: $(VERSION)/" -i build/DEBIAN/control
 

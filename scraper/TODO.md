@@ -32,4 +32,4 @@
 * ~~adjust travis to build go and package it~~
 * ~~adjust start script to use go binary~~
 * remove python code (scraper + sensors)
-* fix spec for voltage (ignore if no min / max)
+* ~~fix spec for voltage (ignore if no min / max)~~
