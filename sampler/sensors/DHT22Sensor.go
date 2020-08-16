@@ -39,13 +39,17 @@ func (S *DHT22Sensor) Sense() {
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to read from DHT22Sensor")
 			}
-			S.Value.Temperature = temperature
+			if temperature != 0 {
+				S.Value.Temperature = temperature
+			}
 
 			humidity, err := S.device.Humidity()
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to read from DHT22Sensor")
 			}
-			S.Value.Humidity = humidity
+			if humidity != 0 {
+				S.Value.Humidity = humidity
+			}
 
 			S.logger.Debugf("%s: %fC / %f%%\n", S.Config.Name, S.Value.Temperature, S.Value.Humidity)
 		}
