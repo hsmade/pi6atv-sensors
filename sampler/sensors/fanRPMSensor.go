@@ -11,7 +11,9 @@ import (
 
 type FanRPMSensor struct {
 	Config SensorConfig
-	Value  int
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value  int `json:"value"`
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
@@ -19,6 +21,8 @@ type FanRPMSensor struct {
 func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
 	S := FanRPMSensor{
 		Config: sensorConfig,
+		Name: sensorConfig.Name,
+		Type: "rpm",
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
@@ -55,5 +59,5 @@ func (S *FanRPMSensor) Sense() {
 }
 
 func (S *FanRPMSensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n", "rpm", S.Config.Name, S.Value))
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n", S.Type, S.Config.Name, S.Value))
 }

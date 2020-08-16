@@ -11,7 +11,9 @@ import (
 
 type FlowSensor struct {
 	Config SensorConfig
-	Value  float64
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value  float64 `json:"value"`
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
@@ -19,6 +21,8 @@ type FlowSensor struct {
 func NewFlowSensor(sensorConfig SensorConfig) *FlowSensor {
 	S := FlowSensor{
 		Config: sensorConfig,
+		Name: sensorConfig.Name,
+		Type: "flow",
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
@@ -55,5 +59,5 @@ func (S *FlowSensor) Sense() {
 }
 
 func (S *FlowSensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", "flow", S.Config.Name, S.Value))
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", S.Type, S.Config.Name, S.Value))
 }

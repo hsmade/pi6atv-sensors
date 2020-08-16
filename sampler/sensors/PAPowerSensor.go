@@ -10,7 +10,9 @@ import (
 
 type PaPowerSensor struct {
 	Config SensorConfig
-	Value  float64
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value  float64 `json:"value"`
 	device *i2c.Device
 	logger *logrus.Entry
 }
@@ -18,6 +20,8 @@ type PaPowerSensor struct {
 func NewPaPowerSensor(sensorConfig SensorConfig) *PaPowerSensor {
 	S := PaPowerSensor{
 		Config: sensorConfig,
+		Name: sensorConfig.Name,
+		Type: "pa_power",
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 
@@ -42,7 +46,7 @@ func (S *PaPowerSensor) Sense() {
 			}
 
 			S.Value = S.mapValue(int(buffer[0]))
-			S.logger.Debugf("%s: raw: %d, value:\n", S.Config.Name, int(buffer[0]), S.Value)
+			S.logger.Debugf("%s: raw: %d, value: %f\n", S.Config.Name, int(buffer[0]), S.Value)
 		}
 	}
 }
@@ -96,5 +100,5 @@ func (S *PaPowerSensor) mapValue(data int) float64 {
 }
 
 func (S *PaPowerSensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", "pa_power", S.Config.Name, S.Value))
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", S.Type, S.Config.Name, S.Value))
 }

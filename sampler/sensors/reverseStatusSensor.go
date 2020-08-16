@@ -11,7 +11,9 @@ import (
 
 type InverseStatusSensor struct {
 	Config SensorConfig
-	Value  bool
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value  bool `json:"value"`
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
@@ -19,6 +21,8 @@ type InverseStatusSensor struct {
 func NewInverseStatusSensor(sensorConfig SensorConfig) *InverseStatusSensor {
 	S := InverseStatusSensor{
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
+		Name: sensorConfig.Name,
+		Type: "reverse_status",
 		Config: sensorConfig,
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
@@ -51,5 +55,5 @@ func (S *InverseStatusSensor) GetPrometheusMetrics() []byte {
 	if S.Value {
 		value = 1
 	}
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n", "status", S.Config.Name, value))
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n", S.Type, S.Config.Name, value))
 }

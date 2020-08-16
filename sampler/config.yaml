@@ -75,19 +75,19 @@ sensors:
     type: INA260
     sort: 1
   - name: Pump
-    i2c_address: 0x40
+    i2c_address: 0x45
     type: INA260
     sort: 2
     current_minimum: 250
     current_maximum: 1900
   - name: MX
-    i2c_address: 0x40
+    i2c_address: 0x44
     type: INA260
     sort: 3
     current_minimum: 500
     current_maximum: 700
   - name: PA
-    i2c_address: 0x40
+    i2c_address: 0x41
     type: INA260
     sort: 4
     current_minimum: 5000

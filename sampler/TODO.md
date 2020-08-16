@@ -24,3 +24,4 @@
 * ~~check prom format against current~~
 * write new json to file, atomically
 * ~~write prom data to file, atomically~~
+* add sort

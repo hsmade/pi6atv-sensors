@@ -11,16 +11,29 @@ import (
 
 type INA260Sensor struct {
 	Config  SensorConfig
-	Power   float64
-	Current float64
-	Voltage float64
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value Value `json:"value"`
 	dev    *ina260.Ina260
 	logger  *logrus.Entry
+}
+
+type Value struct {
+	Power   float64 `json:"power"`
+	Current float64 `json:"current"`
+	Voltage float64 `json:"voltage"`
+	MinCurrent float64 `json:"min_current"`
+	MaxCurrent float64 `json:"max_current"`
+	MinVoltage float64 `json:"min_voltage"`
+	MaxVoltage float64 `json:"max_voltage"`
 }
 
 func NewINA260Sensor(sensorConfig SensorConfig) *INA260Sensor {
 	S := INA260Sensor{
 		Config: sensorConfig,
+		Name: sensorConfig.Name,
+		Type: "power",
+		Value: Value{MinCurrent: sensorConfig.CurrentMinimum, MaxCurrent: sensorConfig.CurrentMaximum, MinVoltage: sensorConfig.VoltageMinimum, MaxVoltage: sensorConfig.VoltageMaximum},
 		dev: ina260.NewIna260(sensorConfig.I2cAddress),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
@@ -46,32 +59,32 @@ func (S *INA260Sensor) Sense() {
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to get power from sensor")
 			} else {
-				S.Power = power
+				S.Value.Power = power
 			}
 
 			current, err := S.dev.ReadCurrent()
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to get current from sensor")
 			} else {
-				S.Current = current
+				S.Value.Current = current
 			}
 
 			voltage, err := S.dev.ReadVoltage()
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to get voltage from sensor")
 			} else {
-				S.Voltage = voltage
+				S.Value.Voltage = voltage
 			}
 
-			S.logger.Debugf("%s: %f, %f, %f\n", S.Config.Name, S.Power, S.Voltage, S.Current)
+			S.logger.Debugf("%s: %fW, %fV, %fmA\n", S.Config.Name, S.Value.Power, S.Value.Voltage, S.Value.Current)
 		}
 	}
 }
 
 func (S *INA260Sensor) GetPrometheusMetrics() []byte {
 	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n%s{name=\"%s\"} %f\n%s{name=\"%s\"} %f\n",
-		"power", S.Config.Name, S.Power,
-		"current", S.Config.Name, S.Current,
-		"voltage", S.Config.Name, S.Voltage,
+		"power", S.Config.Name, S.Value.Power,
+		"current", S.Config.Name, S.Value.Current,
+		"voltage", S.Config.Name, S.Value.Voltage,
 	))
 }

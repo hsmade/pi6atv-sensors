@@ -13,9 +13,13 @@ import (
 )
 
 type CpuTempSensor struct {
-	Config      SensorConfig
-	Value       float64
-	FanStatus   bool
+	Config SensorConfig
+	Name   string `json:"name"`
+	Type   string `json:"type"`
+	Value  struct {
+		Temp float64 `json:"temp"`
+		Fan  bool    `json:"fan"`
+	} `json:"value"`
 	controlPort gpio.PinIO
 	logger      *logrus.Entry
 }
@@ -23,6 +27,8 @@ type CpuTempSensor struct {
 func NewCpuTempSensor(sensorConfig SensorConfig) *CpuTempSensor {
 	S := CpuTempSensor{
 		Config:      sensorConfig,
+		Name:        sensorConfig.Name,
+		Type:        "temp_fan",
 		controlPort: gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.ControlGpio)),
 		logger:      logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
@@ -39,7 +45,7 @@ func (S *CpuTempSensor) switchFan(status bool) error {
 	if err != nil {
 		return err
 	}
-	S.FanStatus = status
+	S.Value.Fan = status
 	return nil
 }
 
@@ -66,10 +72,10 @@ func (S *CpuTempSensor) Sense() {
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to read temperature")
 			}
-			S.Value = value
-			S.logger.Debugf("%s: %f\n", S.Config.Name, S.Value)
+			S.Value.Temp = value
+			S.logger.Debugf("%s: %v\n", S.Config.Name, S.Value)
 
-			if S.Value > S.Config.SwitchPoint {
+			if S.Value.Temp > S.Config.SwitchPoint {
 				S.logger.Debug("Switching on fan")
 				err = S.switchFan(true)
 			} else {
@@ -85,11 +91,11 @@ func (S *CpuTempSensor) Sense() {
 
 func (S *CpuTempSensor) GetPrometheusMetrics() []byte {
 	fanStatus := 0
-	if S.FanStatus {
+	if S.Value.Fan {
 		fanStatus = 1
 	}
 	return []byte(fmt.Sprintf("%s{name=\"%s_temp\"} %f\n%s{name=\"%s_fan\"} %d\n",
-		"temp_fan", S.Config.Name, S.Value,
-		"temp_fan", S.Config.Name, fanStatus,
+		S.Type, S.Config.Name, S.Value.Temp,
+		S.Type, S.Config.Name, fanStatus,
 	))
 }

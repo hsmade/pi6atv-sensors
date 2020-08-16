@@ -1,6 +1,8 @@
 package ina260
 
 import (
+	"fmt"
+
 	"github.com/sirupsen/logrus"
 	"golang.org/x/exp/io/i2c"
 )
@@ -13,7 +15,7 @@ type Ina260 struct {
 func NewIna260(dev int) *Ina260 {
 	I := &Ina260{
 		logger: logrus.WithFields(logrus.Fields{
-			"address":dev,
+			"address": fmt.Sprintf("%x", dev),
 			"package": "ina260",
 		}),
 	}
@@ -58,8 +60,9 @@ func (I *Ina260) readValue(address byte) (float64, error) {
 		return 0, err
 	}
 
-	I.logger.Debugf("read from register %v: %v", address, buffer)
-	return float64(int(buffer[0]) * 256 + int(buffer[1])), nil
+	value := float64(int(buffer[0]) * 256 + int(buffer[1]))
+	I.logger.Debugf("read from register %v: %v -> %d", address, buffer, value)
+	return value, nil
 }
 
 func (I *Ina260) ReadVoltage() (float64, error) {
@@ -69,10 +72,10 @@ func (I *Ina260) ReadVoltage() (float64, error) {
 
 func (I *Ina260) ReadCurrent() (float64, error) {
 	v, err := I.readValue(0x01)
-	return v * 1.25 / 1000, err
+	return v * 1.25, err
 }
 
 func (I *Ina260) ReadPower() (float64, error) {
 	v, err := I.readValue(0x03)
-	return v * 10 / 1000, err
+	return v * 10, err
 }

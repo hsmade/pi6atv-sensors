@@ -14,13 +14,17 @@ import (
 
 type DS18B20Sensor struct {
 	Config SensorConfig
-	Value  float64
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Value  float64 `json:"value"`
 	logger *logrus.Entry
 }
 
 func NewDS18B20Sensor(sensorConfig SensorConfig) *DS18B20Sensor {
 	return &DS18B20Sensor{
 		Config: sensorConfig,
+		Name: sensorConfig.Name,
+		Type: "temperature",
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 }
@@ -65,5 +69,5 @@ func (S *DS18B20Sensor) Sense() {
 }
 
 func (S *DS18B20Sensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", "temperature", S.Config.Name, S.Value))
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n", S.Type, S.Config.Name, S.Value))
 }

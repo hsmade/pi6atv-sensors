@@ -24,6 +24,7 @@ func init() {
 
 func main() {
 	logrus.SetReportCaller(true)
+	logrus.SetLevel(logrus.DebugLevel)
 
 	conf, err := config.ParseConfig("config.yaml")
 	if err != nil {
@@ -41,7 +42,7 @@ func main() {
 	for {
 		select {
 		case _ = <-ticker.C:
-			resultJson, _ := json.Marshal(conf)
+			resultJson, _ := json.Marshal(conf.Sensors)
 			err := ioutil.WriteFile("/dev/shm/sensors.json.new", resultJson, 644)
 			if err != nil {
 				logrus.WithError(err).Error("Failed to write sensors.json.new")
