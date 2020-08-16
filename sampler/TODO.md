@@ -20,10 +20,12 @@
 # Overal
 * ~~prom metric lines~~
 * ~~restart sensor threads when they fail~~
-* check json format against current
+* ~~check json format against current~~
 * ~~check prom format against current~~
-* write new json to file, atomically
+* ~~write new json to file, atomically~~
 * ~~write prom data to file, atomically~~
 * ~~add sort~~
 * ~~ina: support negatives~~
 * ~~max for pa?~~
+* test dht
+* test cpu fan
