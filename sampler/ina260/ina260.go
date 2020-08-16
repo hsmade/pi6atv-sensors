@@ -72,7 +72,7 @@ func (I *Ina260) ReadVoltage() (float64, error) {
 
 func (I *Ina260) ReadCurrent() (float64, error) {
 	v, err := I.readValue(0x01)
-	return v * 1.25, err
+	return float64(int16(v)) * 1.25, err
 }
 
 func (I *Ina260) ReadPower() (float64, error) {

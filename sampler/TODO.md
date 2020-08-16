@@ -25,5 +25,5 @@
 * write new json to file, atomically
 * ~~write prom data to file, atomically~~
 * ~~add sort~~
-* ina: support negatives
+* ~~ina: support negatives~~
 * ~~max for pa?~~
