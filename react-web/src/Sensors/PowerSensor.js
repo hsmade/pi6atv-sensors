@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class PowerSensor extends Component {
     valueFormat(value, min, max) {
         let classNames = "digit"
-        if (value < min || value > max) {
+        if ((min > 0 && value < min) || (max > 0 && value > max)) {
             classNames += " out-of-spec"
         }
 

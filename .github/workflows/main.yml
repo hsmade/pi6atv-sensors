@@ -20,4 +20,4 @@ jobs:
           go-version: '^1.15'
 
       - name: build debian package
-        run: make build-deps build-package
+        run: make build-deps prepare-package

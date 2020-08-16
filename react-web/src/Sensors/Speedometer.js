@@ -10,15 +10,15 @@ class Speedometer extends Component {
         };
     }
 
-    render() {
-        if (this.props.sensor.value < 0) {
-            this.props.sensor.value = this.state.value
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.value < 0) { // ignore invalid values
+            return prevState
         } else {
-            this.setState({
-                value: this.props.sensor.value
-                }
-            )
+            return nextProps
         }
+    }
+
+    render() {
         let textColor="green"
         if (this.props.sensor.value > 12) {
             textColor="orange"
