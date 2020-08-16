@@ -32,7 +32,7 @@ func main() {
 	}
 
 	for _, sensor := range conf.Sensors {
-		go func(sensor sensors.Sensor){
+		go func(sensor sensors.Sensor) {
 			sensor.Sense()
 			logrus.WithField("sensor", sensor).Error("Sensor died, restarting")
 		}(sensor)

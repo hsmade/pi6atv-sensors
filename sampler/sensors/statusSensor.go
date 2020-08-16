@@ -13,7 +13,7 @@ type StatusSensor struct {
 	Config SensorConfig
 	Name   string `json:"name"`
 	Type   string `json:"type"`
-	Value  bool `json:"value"`
+	Value  bool   `json:"value"`
 	port   gpio.PinIO
 	logger *logrus.Entry
 }

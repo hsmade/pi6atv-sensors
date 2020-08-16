@@ -11,8 +11,8 @@ import (
 
 type FlowSensor struct {
 	Config SensorConfig
-	Name string `json:"name"`
-	Type string `json:"type"`
+	Name   string  `json:"name"`
+	Type   string  `json:"type"`
 	Value  float64 `json:"value"`
 	port   gpio.PinIO
 	logger *logrus.Entry
@@ -21,8 +21,8 @@ type FlowSensor struct {
 func NewFlowSensor(sensorConfig SensorConfig) *FlowSensor {
 	S := FlowSensor{
 		Config: sensorConfig,
-		Name: sensorConfig.Name,
-		Type: "flow",
+		Name:   sensorConfig.Name,
+		Type:   "flow",
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
