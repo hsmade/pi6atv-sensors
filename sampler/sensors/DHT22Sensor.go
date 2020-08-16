@@ -31,7 +31,7 @@ func NewDHT22Sensor(sensorConfig SensorConfig) *DHT22Sensor {
 }
 
 func (S *DHT22Sensor) Sense() {
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 	for {
 		select {
 		case _ = <-ticker.C:
