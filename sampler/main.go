@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"io/ioutil"
 	"log"
 	"time"
 
@@ -41,7 +41,13 @@ func main() {
 		select {
 		case _ = <-ticker.C:
 			resultJson, _ := json.Marshal(conf)
-			fmt.Println(string(resultJson))
+			ioutil.WriteFile("sensors.json.new", resultJson, 644)
+
+			var promData []byte
+			for _, sensor := range conf.Sensors {
+				promData = append(promData, sensor.GetPrometheusMetrics()...)
+			}
+			ioutil.WriteFile("sensors.prometheus.new", promData, 644)
 		}
 	}
 }

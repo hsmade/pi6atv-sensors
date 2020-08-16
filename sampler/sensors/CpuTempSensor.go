@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -48,7 +49,7 @@ func (S *CpuTempSensor) readTemperature() (float64, error) {
 		return 0, err
 	}
 
-	value, err := strconv.ParseFloat(string(data), 64)
+	value, err := strconv.ParseFloat(strings.TrimSuffix(string(data), "\n"), 64)
 	if err != nil {
 		return 0, err
 	}
@@ -87,8 +88,8 @@ func (S *CpuTempSensor) GetPrometheusMetrics() []byte {
 	if S.FanStatus {
 		fanStatus = 1
 	}
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n%s{name=\"%s\"} %d\n",
-		"temperature", S.Config.Name, S.Value,
-		"status", S.Config.Name, fanStatus,
+	return []byte(fmt.Sprintf("%s{name=\"%s_temp\"} %f\n%s{name=\"%s_fan\"} %d\n",
+		"temp_fan", S.Config.Name, S.Value,
+		"temp_fan", S.Config.Name, fanStatus,
 	))
 }

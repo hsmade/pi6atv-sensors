@@ -45,7 +45,7 @@ func ParseConfig(filename string) (*Config, error) {
 		case "Flow":
 			sensor = sensors.NewFlowSensor(sensorConfig)
 		case "PA":
-			sensor = sensors.NewFakeSensor(sensorConfig)
+			sensor = sensors.NewPaPowerSensor(sensorConfig)
 		case "cpuFan":
 			sensor = sensors.NewCpuTempSensor(sensorConfig)
 		case "reverse-status":

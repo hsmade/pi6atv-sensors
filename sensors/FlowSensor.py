@@ -31,10 +31,10 @@ class FLowSensor(BaseSensor):
         :return: float
         """
         try:
+            self.pulses = 0
             GPIO.setmode(GPIO.BCM)
             GPIO.setwarnings(False)
             GPIO.setup(self.gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull up to 3.3V
-            self.pulses = 0
             self.timer = time.time() + self.timeout
             GPIO.add_event_detect(self.gpio_pin, GPIO.RISING, self._handle_event)
 

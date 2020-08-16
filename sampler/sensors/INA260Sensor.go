@@ -69,7 +69,7 @@ func (S *INA260Sensor) Sense() {
 }
 
 func (S *INA260Sensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %d\n%s{name=\"%s\"} %d\n%s{name=\"%s\"} %d\n",
+	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n%s{name=\"%s\"} %f\n%s{name=\"%s\"} %f\n",
 		"power", S.Config.Name, S.Power,
 		"current", S.Config.Name, S.Current,
 		"voltage", S.Config.Name, S.Voltage,
