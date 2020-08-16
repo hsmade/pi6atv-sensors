@@ -2,7 +2,7 @@
 Description=repeater sensors scraper
 
 [Service]
-ExecStart=/opt/repeater-sensors/venv/bin/python scraper.py
+ExecStart=/opt/repeater-sensors/scraper
 WorkingDirectory=/opt/repeater-sensors
 
 [Install]

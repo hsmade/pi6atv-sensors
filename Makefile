@@ -28,9 +28,12 @@ build/DEBIAN/changelog:
 	  --snapshot-number="'{:%Y%m%d%H%M%S}'.format(__import__('datetime').datetime.fromtimestamp(`git log -1 --pretty=format:%at`))"; \
 	sed -i 's/UNRELEASED/unstable/' DEBIAN/changelog
 
-prepare-package: react-web/build build/DEBIAN
+scraper/scraper:
+	cd scraper; make
+
+prepare-package: scraper/scraper react-web/build build/DEBIAN
 	mkdir -p build/opt/repeater-sensors
-	cp -r sensors *.py README.md requirements.txt build/opt/repeater-sensors/
+	cp -r snmp-passthrough.py README.md requirements.txt scraper/scraper build/opt/repeater-sensors/
 	cp -r react-web/build build/opt/repeater-sensors/web
 	sed -e "s/Version:.*/Version: $(VERSION)/" -i build/DEBIAN/control
 

@@ -9,8 +9,8 @@ import (
 
 	"periph.io/x/periph/host"
 
-	"github.com/hsmade/pi6atv-sensors/sampler/config"
-	"github.com/hsmade/pi6atv-sensors/sampler/sensors"
+	"github.com/hsmade/pi6atv-sensors/scraper/config"
+	"github.com/hsmade/pi6atv-sensors/scraper/sensors"
 
 	"github.com/sirupsen/logrus"
 )

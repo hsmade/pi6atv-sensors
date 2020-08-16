@@ -6,7 +6,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 
-	"github.com/hsmade/pi6atv-sensors/sampler/sensors"
+	"github.com/hsmade/pi6atv-sensors/scraper/sensors"
 )
 
 type Config struct {

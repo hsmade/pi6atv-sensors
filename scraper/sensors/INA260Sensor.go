@@ -6,7 +6,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/hsmade/pi6atv-sensors/sampler/ina260"
+	"github.com/hsmade/pi6atv-sensors/scraper/ina260"
 )
 
 type INA260Sensor struct {

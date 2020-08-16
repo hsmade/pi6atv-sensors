@@ -53,7 +53,7 @@ func (S *FlowSensor) Sense() {
 		case _ = <-ticker.C:
 			S.Value = float64(fanTicks) * 60 * 2.25 / 1000
 			fanTicks = 0
-			S.logger.Debugf("%s: %dL/min\n", S.Config.Name, S.Value)
+			S.logger.Debugf("%s: %fL/min\n", S.Config.Name, S.Value)
 		}
 	}
 }
