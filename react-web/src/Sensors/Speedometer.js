@@ -38,9 +38,9 @@ class Speedometer extends Component {
                 // dimensionUnit="%"
                 // startColor="green"
                 // endColor="red"
-                segments={14}
+                segments={28}
                 maxSegmentLabels={14}
-                segmentColors={["red","red","red","red","red","red","red","red","red", "orange","orange","green","green","orange","orange","red",]}
+                segmentColors={["red","red","red","red","red","red","red","red","red","red","red","red","red","red","red","red","orange","orange","orange","orange","green","green","green","green","green","green","green","orange",]}
                 textColor={textColor}
                 labelFontSize="1.2vw"
                 valueTextFontSize="2vw"
