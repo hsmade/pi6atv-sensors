@@ -101,8 +101,8 @@ sensors:
   - name: PA
     i2c_address: 0x08
     type: PA
-    minimum: 11
-    maximum: 13
+    minimum: 0
+    maximum: 14
   - name: Cpu
     type: cpuFan
     path: /sys/class/thermal/thermal_zone0/temp

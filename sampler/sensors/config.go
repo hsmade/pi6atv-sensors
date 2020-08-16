@@ -9,10 +9,10 @@ type SensorConfig struct {
 	Path           string  `yaml:"path,omitempty"`
 	ControlGpio    int     `yaml:"control_gpio,omitempty"`
 	Type           string  `yaml:"type"`
-	Minimum        int     `yaml:"minimum,omitempty"`
+	Minimum        float64 `yaml:"minimum,omitempty"`
 	CurrentMinimum float64 `yaml:"current_minimum,omitempty"`
 	VoltageMinimum float64 `yaml:"voltage_minimum,omitempty"`
-	Maximum        int     `yaml:"maximum,omitempty"`
+	Maximum        float64 `yaml:"maximum,omitempty"`
 	CurrentMaximum float64 `yaml:"current_maximum,omitempty"`
 	VoltageMaximum float64 `yaml:"voltage_maximum,omitempty"`
 	Sort           int     `yaml:"sort,omitempty"`
