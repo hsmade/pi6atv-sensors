@@ -36,7 +36,7 @@ class App extends Component {
         window.addEventListener('resize', this.updateWindowDimensions);
         try {
             setInterval(async () => {
-                const res = await fetch('/sensors.json');
+                const res = await fetch('sensors.json');
                 const data = await res.json();
                 this.setState({sensors: data})
             }, 1000);
@@ -73,7 +73,7 @@ class App extends Component {
                 }
             }
         }
-        console.log(sensors)
+        // console.log(sensors)
 
         let fans = []
         for (let key of Object.keys(sensors.rpm).sort((a, b) => (sensors.rpm[a].sort > sensors.rpm[b].sort) ? 1 : -1)) {
