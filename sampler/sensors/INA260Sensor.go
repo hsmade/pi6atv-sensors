@@ -10,18 +10,19 @@ import (
 )
 
 type INA260Sensor struct {
-	Config  SensorConfig
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Value Value `json:"value"`
+	Config SensorConfig
+	Name   string `json:"name"`
+	Type   string `json:"type"`
+	Value  Value  `json:"value"`
+	Sort   int    `json:"sort"`
 	dev    *ina260.Ina260
-	logger  *logrus.Entry
+	logger *logrus.Entry
 }
 
 type Value struct {
-	Power   float64 `json:"power"`
-	Current float64 `json:"current"`
-	Voltage float64 `json:"voltage"`
+	Power      float64 `json:"power"`
+	Current    float64 `json:"current"`
+	Voltage    float64 `json:"voltage"`
 	MinCurrent float64 `json:"min_current"`
 	MaxCurrent float64 `json:"max_current"`
 	MinVoltage float64 `json:"min_voltage"`
@@ -31,10 +32,11 @@ type Value struct {
 func NewINA260Sensor(sensorConfig SensorConfig) *INA260Sensor {
 	S := INA260Sensor{
 		Config: sensorConfig,
-		Name: sensorConfig.Name,
-		Type: "power",
-		Value: Value{MinCurrent: sensorConfig.CurrentMinimum, MaxCurrent: sensorConfig.CurrentMaximum, MinVoltage: sensorConfig.VoltageMinimum, MaxVoltage: sensorConfig.VoltageMaximum},
-		dev: ina260.NewIna260(sensorConfig.I2cAddress),
+		Name:   sensorConfig.Name,
+		Type:   "power",
+		Value:  Value{MinCurrent: sensorConfig.CurrentMinimum, MaxCurrent: sensorConfig.CurrentMaximum, MinVoltage: sensorConfig.VoltageMinimum, MaxVoltage: sensorConfig.VoltageMaximum},
+		Sort:   sensorConfig.Sort,
+		dev:    ina260.NewIna260(sensorConfig.I2cAddress),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 

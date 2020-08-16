@@ -14,17 +14,19 @@ import (
 
 type DS18B20Sensor struct {
 	Config SensorConfig
-	Name string `json:"name"`
-	Type string `json:"type"`
+	Name   string  `json:"name"`
+	Type   string  `json:"type"`
 	Value  float64 `json:"value"`
+	Sort   int     `json:"sort"`
 	logger *logrus.Entry
 }
 
 func NewDS18B20Sensor(sensorConfig SensorConfig) *DS18B20Sensor {
 	return &DS18B20Sensor{
 		Config: sensorConfig,
-		Name: sensorConfig.Name,
-		Type: "temperature",
+		Name:   sensorConfig.Name,
+		Type:   "temperature",
+		Sort:   sensorConfig.Sort,
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 }

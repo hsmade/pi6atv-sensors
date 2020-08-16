@@ -11,9 +11,10 @@ import (
 
 type FanRPMSensor struct {
 	Config SensorConfig
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Value  int `json:"value"`
+	Name   string `json:"name"`
+	Type   string `json:"type"`
+	Value  int    `json:"value"`
+	Sort   int    `json:"sort"`
 	port   gpio.PinIO
 	logger *logrus.Entry
 }
@@ -21,8 +22,9 @@ type FanRPMSensor struct {
 func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
 	S := FanRPMSensor{
 		Config: sensorConfig,
-		Name: sensorConfig.Name,
-		Type: "rpm",
+		Name:   sensorConfig.Name,
+		Type:   "rpm",
+		Sort:   sensorConfig.Sort,
 		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
