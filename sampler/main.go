@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"os"
 	"time"
 
 	"periph.io/x/periph/host"
@@ -41,13 +42,27 @@ func main() {
 		select {
 		case _ = <-ticker.C:
 			resultJson, _ := json.Marshal(conf)
-			ioutil.WriteFile("sensors.json.new", resultJson, 644)
+			err := ioutil.WriteFile("/dev/shm/sensors.json.new", resultJson, 644)
+			if err != nil {
+				logrus.WithError(err).Error("Failed to write sensors.json.new")
+			}
+			err = os.Rename("/dev/shm/sensors.json.new", "/dev/shm/sensors.json")
+			if err != nil {
+				logrus.WithError(err).Error("Failed to rename sensors.json.new")
+			}
 
 			var promData []byte
 			for _, sensor := range conf.Sensors {
 				promData = append(promData, sensor.GetPrometheusMetrics()...)
 			}
-			ioutil.WriteFile("sensors.prometheus.new", promData, 644)
+			err = ioutil.WriteFile("/dev/shm/sensors.prometheus.new", promData, 644)
+			if err != nil {
+				logrus.WithError(err).Error("Failed to write sensors.prometheus.new")
+			}
+			err = os.Rename("/dev/shm/sensors.prometheus.new", "/dev/shm/sensors.prometheus")
+			if err != nil {
+				logrus.WithError(err).Error("Failed to rename sensors.prometheus.new")
+			}
 		}
 	}
 }
