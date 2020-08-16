@@ -42,12 +42,12 @@ Copy the build directory to /opt/repeater-sensors/web
 
 # TODO
 * ~~test fans~~
-* test/fix flow sensor
+* ~~test/fix flow sensor~~
 * ~~test PA power sensor + mapping~~
 * ~~cache value for PA power~~
 
 * ~~implement fancontrol for cpu on gpio 8 + show on page~~
-* find max and min values for fans
+* ~~find max and min values for fans~~
 * ~~configure and implement min/max for values. Out of spec = yellow~~
 
 * add prometheus metric for error state of sensors
@@ -62,8 +62,4 @@ Copy the build directory to /opt/repeater-sensors/web
 * ~~air cooling -> liquid cooling~~
 * fix font on iphone
 * check scaling / placement on phones
-* set colors for PA power:
- 0 t/m 8 = rood
-8 t/m 10 = geel (oranje)
-10 t/m 13,5 = groen
-13,5 t/m .... geel (oranje)
+* ~~set colors for PA power:~~
