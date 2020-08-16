@@ -33,7 +33,7 @@ class FanStatus extends Component {
                 </td>
                 <td align={"right"}>
                     <span className={valueClasses}>
-                        {sensor.value.toString().padStart(4)}
+                        {sensor.value.toString().padStart(4)}&nbsp;
                     </span>
                 </td>
                 <td>

@@ -61,7 +61,7 @@ func (I *Ina260) readValue(address byte) (float64, error) {
 	}
 
 	value := float64(int(buffer[0]) * 256 + int(buffer[1]))
-	I.logger.Debugf("read from register %v: %v -> %d", address, buffer, value)
+	I.logger.Debugf("read from register %v: %v -> %f", address, buffer, value)
 	return value, nil
 }
 
