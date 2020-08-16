@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import red from "@material-ui/core/colors/red";
-import green from "@material-ui/core/colors/green";
 
 class CabinetDoorSensor extends Component {
     render() {

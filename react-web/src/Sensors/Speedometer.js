@@ -14,7 +14,10 @@ class Speedometer extends Component {
         if (this.props.sensor.value < 0) {
             this.props.sensor.value = this.state.value
         } else {
-            this.state.value = this.props.sensor.value
+            this.setState({
+                value: this.props.sensor.value
+                }
+            )
         }
         let textColor="green"
         if (this.props.sensor.value > 12) {
