@@ -4,6 +4,7 @@ Description=repeater sensors scraper
 [Service]
 ExecStart=/opt/repeater-sensors/scraper
 WorkingDirectory=/opt/repeater-sensors
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
