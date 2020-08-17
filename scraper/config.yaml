@@ -4,16 +4,19 @@ sensors:
     type: fanRPM
     minumum: 1500
     maximum: 2100
+    sort: 3
   - name: 50 °C
     gpio: 27
     type: fanRPM
     minumum: 1500
     maximum: 2100
+    sort: 1
   - name: 60 °C
     gpio: 22
     type: fanRPM
     minumum: 1500
     maximum: 2100
+    sort: 2
   - name: Mains
     gpio: 6
     type: status

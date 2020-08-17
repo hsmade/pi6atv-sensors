@@ -166,7 +166,7 @@ class App extends Component {
                       <div className={"mid-right"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>RPi Cpu</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>RPi Cpu &ge; 55 °C</span><hr/></td></tr>
                               {cpu}
                               </tbody>
                           </table>
