@@ -57,7 +57,7 @@ func (S *DHT22Sensor) Sense() {
 }
 
 func (S *DHT22Sensor) GetPrometheusMetrics() []byte {
-	return []byte(fmt.Sprintf("%s{name=\"%s\"} %f\n%s{name=\"%s\"} %f\n",
+	return []byte(fmt.Sprintf("%s{name=\"%s\",type=\"dht22\"} %f\n%s{name=\"%s\",type=\"dht22\"} %f\n",
 		"temperature", S.Config.Name, S.Value.Temperature,
 		"humidity", S.Config.Name, S.Value.Humidity,
 	))
