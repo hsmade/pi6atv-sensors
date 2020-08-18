@@ -15,7 +15,8 @@ class FluidPumpStatus extends Component {
         }
 
         if (!this.props.status || sensor.value === -1) {
-            sensor.value = "--"
+            sensor.value = "00"
+            style = {color: "red"}
         } else if (typeof(sensor.value) === "number") {
             sensor.value = sensor.value.toFixed(1)
         }

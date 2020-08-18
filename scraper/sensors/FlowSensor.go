@@ -10,21 +10,25 @@ import (
 )
 
 type FlowSensor struct {
-	Config SensorConfig
-	Name   string  `json:"name"`
-	Type   string  `json:"type"`
-	Value  float64 `json:"value"`
-	port   gpio.PinIO
-	logger *logrus.Entry
+	Config  SensorConfig
+	Name    string  `json:"name"`
+	Type    string  `json:"type"`
+	Value   float64 `json:"value"`
+	Minimum float64 `json:"min"`
+	Maximum float64 `json:"max"`
+	port    gpio.PinIO
+	logger  *logrus.Entry
 }
 
 func NewFlowSensor(sensorConfig SensorConfig) *FlowSensor {
 	S := FlowSensor{
-		Config: sensorConfig,
-		Name:   sensorConfig.Name,
-		Type:   "flow",
-		port:   gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
-		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
+		Config:  sensorConfig,
+		Name:    sensorConfig.Name,
+		Type:    "flow",
+		Minimum: sensorConfig.Minimum,
+		Maximum: sensorConfig.Maximum,
+		port:    gpioreg.ByName(fmt.Sprintf("GPIO%d", sensorConfig.Gpio)),
+		logger:  logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 
 	if S.port == nil {

@@ -99,6 +99,8 @@ sensors:
   - name: Pump
     gpio: 12
     type: Flow
+    minimum: 5
+    maximum: 8
   - name: Fluid detection
     gpio: 15
     type: reverse-status
