@@ -18,7 +18,7 @@ def update():
             PP.add_int("0.{}".format(index), 1 if sensor.get("value") else 0, sensor.get("name"))
             PP.add_str("1.{}".format(index), sensor.get("name"))
             continue
-        if sensor.get("type") in ["rpm", "temperature", "flow"]:
+        if sensor.get("type") in ["rpm", "temperature", "flow", "pa_power"]:
             PP.add_int("0.{}".format(index), sensor.get("value", -128), sensor.get("name"))
             PP.add_str("1.{}".format(index), sensor.get("name"))
             continue
