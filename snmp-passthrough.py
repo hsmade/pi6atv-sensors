@@ -22,6 +22,13 @@ def update():
             PP.add_int("0.{}".format(index), sensor.get("value", -128), sensor.get("name"))
             PP.add_str("1.{}".format(index), sensor.get("name"))
             continue
+        if sensor.get("type") == "temp_fan":
+            PP.add_str("1.{}".format(index), sensor.get("name"))
+            PP.add_int("0.{}.0".format(index), sensor.get("value", {}).get("temp", -128) * 1000, "{}:{}".format(sensor.get("name"), "cpu-temp"))
+            PP.add_str("1.{}.0".format(index), "cpu-temp")
+            PP.add_int("0.{}.1".format(index), sensor.get("value", {}).get("fan", -1), "{}:{}".format(sensor.get("name"), "fan-status"))
+            PP.add_str("1.{}.1".format(index), "fan-status")
+            continue
         if sensor.get("type") == "dht22":
             PP.add_str("1.{}".format(index), sensor.get("name"))
             PP.add_int("0.{}.0".format(index), sensor.get("value", {}).get("temperature", -128) * 1000, "{}:{}".format(sensor.get("name"), "temperature"))
