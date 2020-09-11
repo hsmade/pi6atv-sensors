@@ -39,27 +39,3 @@ When changes have been done, they need to be compiled:
     yarn build
     
 Copy the build directory to /opt/repeater-sensors/web
-
-# TODO
-* ~~test fans~~
-* ~~test/fix flow sensor~~
-* ~~test PA power sensor + mapping~~
-* ~~cache value for PA power~~
-
-* ~~implement fancontrol for cpu on gpio 8 + show on page~~
-* ~~find max and min values for fans~~
-* ~~configure and implement min/max for values. Out of spec = yellow~~
-
-* add prometheus metric for error state of sensors
-* ~~make voltages 2.1 digits~~
-* fix redraw on resize for dial
-* allow to locally override the config
-* ~~configure fancontrol, GPI-7~~
-* ~~fix pass_persist in snmpd~~
-* ~~cabinet open/closed +red/green on previous pa gpio, below PA power txt~~
-* ~~make sorting for fans, 60-50-40~~
-* ~~water cooling -> liquid pump~~
-* ~~air cooling -> liquid cooling~~
-* fix font on iphone
-* check scaling / placement on phones
-* ~~set colors for PA power:~~
