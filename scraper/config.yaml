@@ -83,7 +83,7 @@ sensors:
     type: INA260
     sort: 2
     current_minimum: 750
-    current_maximum: 825
+    current_maximum: 950
   - name: MX
     i2c_address: 0x44
     type: INA260
@@ -100,7 +100,7 @@ sensors:
     gpio: 12
     type: Flow
     minimum: 0.2
-    maximum: 0.5
+    maximum: 0.6
   - name: Fluid detection
     gpio: 15
     type: reverse-status
