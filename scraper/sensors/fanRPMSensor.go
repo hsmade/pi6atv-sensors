@@ -46,10 +46,10 @@ func (S *FanRPMSensor) Sense() {
 
 	go func() {
 		for S.port.WaitForEdge(-1) {
-			if time.Now().Sub(lastTick).Microseconds() < 4450 {
-				lastTick = time.Now()
-				continue
-			}
+			//if time.Now().Sub(lastTick).Microseconds() < 4450 {
+			//	lastTick = time.Now()
+			//	continue
+			//}
 			lastTick = time.Now()
 			fanTicks++
 		}

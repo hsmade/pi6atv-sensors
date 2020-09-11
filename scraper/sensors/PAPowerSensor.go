@@ -2,6 +2,7 @@ package sensors
 
 import (
 	"fmt"
+	"sort"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -47,10 +48,15 @@ func (S *PaPowerSensor) Sense() {
 			err := S.device.Read(buffer)
 			if err != nil {
 				S.logger.WithError(err).Error("Failed to read from sensor")
+				continue
 			}
-
-			S.Value = S.mapValue(int(buffer[0]))
-			S.logger.Debugf("%s: raw: %d, value: %f\n", S.Config.Name, int(buffer[0]), S.Value)
+			value := S.mapValue(int(buffer[0]))
+			if value == -1 {
+				S.logger.WithError(err).Error("Failed to map value %#x, int value: %d", buffer[0], int(buffer[0]))
+				continue
+			}
+			S.Value = value
+			S.logger.Debugf("%s: raw: %#x, int value: %d, value: %f\n", S.Config.Name, buffer[0], int(buffer[0]), S.Value)
 		}
 	}
 }
@@ -91,10 +97,16 @@ func (S *PaPowerSensor) mapValue(data int) float64 {
 		178: 13.5, // 2.9
 	}
 
-	result := float64(0)
-	for volt, power := range mapping {
-		if float64(data) >= volt {
-			result = power
+	keys := make([]float64, 0, len(mapping))
+	for volt := range mapping {
+		keys = append(keys, volt)
+	}
+	sort.Float64s(keys)
+
+	result := float64(-1)
+	for _, key := range keys {
+		if float64(data) >= key {
+			result = mapping[key]
 		} else {
 			break
 		}
