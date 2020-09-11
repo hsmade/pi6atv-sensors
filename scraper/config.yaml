@@ -83,7 +83,7 @@ sensors:
     type: INA260
     sort: 2
     current_minimum: 750
-    current_maximum: 950
+    current_maximum: 1250
   - name: MX
     i2c_address: 0x44
     type: INA260
