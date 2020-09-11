@@ -46,7 +46,7 @@ class PowerSensor extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
-                    {this.valueFormat(this.props.sensor.value.current/1000, this.props.sensor.value.min_current, this.props.sensor.value.max_current)}
+                    {this.valueFormat(this.props.sensor.value.current/1000, this.props.sensor.value.min_current/1000, this.props.sensor.value.max_current/1000)}
                     <span className="label">
                         A&nbsp;&nbsp;
                     </span>

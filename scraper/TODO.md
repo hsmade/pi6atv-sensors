@@ -9,6 +9,3 @@
 
 # sensors
 * come up with new value for spurious edges
-
-# ui
-* spec values not working correctly for PSUS Amp
