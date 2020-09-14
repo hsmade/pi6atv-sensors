@@ -10,4 +10,4 @@
 # sensors
 * come up with new value for spurious edges
 * rename 60o to 55o
-* change max spec for flow to 0.7 
+* change max spec for flow to 1
