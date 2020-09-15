@@ -11,7 +11,7 @@ sensors:
     minumum: 1500
     maximum: 2100
     sort: 1
-  - name: 60 °C
+  - name: 55 °C
     gpio: 22
     type: fanRPM
     minumum: 1500
@@ -35,7 +35,7 @@ sensors:
   - name: 50 °C
     gpio: 24
     type: status
-  - name: 60 °C
+  - name: 55 °C
     gpio: 25
     type: status
   - name: Door closed
@@ -100,7 +100,7 @@ sensors:
     gpio: 12
     type: Flow
     minimum: 0.2
-    maximum: 0.6
+    maximum: 1
   - name: Fluid detection
     gpio: 15
     type: reverse-status
