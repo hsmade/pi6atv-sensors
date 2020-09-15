@@ -13,4 +13,4 @@
 * change max spec for flow to 1
 
 # ui
-* fix width of Watt in PSU table
+* fix width of Watt in PSU table and rpi cpu rpm
