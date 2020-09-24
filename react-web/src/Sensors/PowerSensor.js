@@ -12,11 +12,14 @@ class PowerSensor extends Component {
             return [<span key={"value"} className={classNames}>{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;m</span>]
         }
 
-        if (value > 1000) {
+        if (value >= 1000) {
             value = (value / 1000).toFixed(0)
             return [<span key={"value"} className={classNames}>{value}</span>,<span key={"sign"} className={"label lowercase"}>&nbsp;k</span>]
         }
 
+        if (value >= 100) {
+            return <span className={classNames}>{value.toFixed(1).toString().padStart(4, " ")}&nbsp;</span>
+        }
         return <span className={classNames}>{value.toFixed(1)}&nbsp;</span>
     }
 
@@ -52,7 +55,7 @@ class PowerSensor extends Component {
                     </span>
                 </td>
                 <td align={"right"}>
-                        {this.valueFormat(this.props.sensor.value.power/1000)}
+                    {this.valueFormat(this.props.sensor.value.power/1000)}
                     <span className="label">
                         W&nbsp;&nbsp;
                     </span>

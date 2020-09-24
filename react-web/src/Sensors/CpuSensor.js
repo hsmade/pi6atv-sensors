@@ -38,7 +38,7 @@ class CpuSensor extends Component {
                 </td>
                 <td align={"right"}>
                     <span className={valueClasses}>
-                        {sensor.value.rpm.toString().padStart(4)}&nbsp;
+                        {sensor.value.rpm.toString().padStart(4, " ")}&nbsp;
                     </span>
                 </td>
                 <td>

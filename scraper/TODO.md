@@ -9,6 +9,3 @@
 
 # sensors
 * come up with new value for spurious edges
-
-# ui
-* fix width of Watt in PSU table and rpi cpu rpm
