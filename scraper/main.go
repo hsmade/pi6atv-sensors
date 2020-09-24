@@ -24,7 +24,11 @@ func init() {
 
 func main() {
 	logrus.SetReportCaller(true)
-	logrus.SetLevel(logrus.DebugLevel)
+	if os.Getenv("DEBUG") != "" {
+		logrus.SetLevel(logrus.DebugLevel)
+	} else {
+		logrus.SetLevel(logrus.InfoLevel)
+	}
 
 	conf, err := config.ParseConfig("config.yaml")
 	if err != nil {

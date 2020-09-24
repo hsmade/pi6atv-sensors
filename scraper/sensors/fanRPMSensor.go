@@ -42,7 +42,7 @@ func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
 
 func (S *FanRPMSensor) Sense() {
 	fanTicks := 0
-	lastTick := time.Now()
+	//lastTick := time.Now()
 
 	go func() {
 		for S.port.WaitForEdge(-1) {
@@ -50,7 +50,7 @@ func (S *FanRPMSensor) Sense() {
 			//	lastTick = time.Now()
 			//	continue
 			//}
-			lastTick = time.Now()
+			//lastTick = time.Now()
 			fanTicks++
 		}
 	}()
