@@ -20,17 +20,34 @@ set -e
 
 case "$1" in
     configure)
-      echo "Adding sensors to snmp"
-      grep -q .1.3.6.1.4.1.8072.2.255 /etc/snmp/snmpd.local.conf 2> /dev/null || echo pass_persist .1.3.6.1.4.1.8072.2.255 /opt/repeater-sensors/venv/bin/python -u /opt/repeater-sensors/snmp-passthrough.py > /etc/snmp/snmpd.local.conf
+      if ! grep -q .1.3.6.1.4.1.8072.2.255 /etc/snmp/snmpd.local.conf 2> /dev/null
+      then
+        echo "Adding sensors to snmp"
+        echo pass_persist .1.3.6.1.4.1.8072.2.255 /opt/repeater-sensors/venv/bin/python -u /opt/repeater-sensors/snmp-passthrough.py > /etc/snmp/snmpd.local.conf
+      fi
+
       echo "Creating virtualenv"
       virtualenv -p python3 /opt/repeater-sensors/venv
       /opt/repeater-sensors/venv/bin/pip install -r /opt/repeater-sensors/requirements.txt
-      echo "Starting services"
+      echo "(re)Starting services"
       systemctl daemon-reload
-      systemctl start scraper
+      systemctl restart scraper
       systemctl reload nginx
       systemctl restart snmpd
-      grep -q 'dtoverlay=dht11,gpiopin=16' /boot/config.txt || echo 'dtoverlay=dht11,gpiopin=16' >> /boot/config.txt
+
+      if ! grep -q 'dtoverlay=dht11,gpiopin=16' /boot/config.txt
+      then
+        echo "adding dht11 dtoverlay, if it's not there yet"
+        echo 'dtoverlay=dht11,gpiopin=16' >> /boot/config.txt
+        echo PLEASE REBOOT
+      fi
+
+      if ! grep -q "tmpfs	/var/log" /etc/fstab
+      then
+        echo "Adding tmpfs entries for /var/log"
+        echo "tmpfs	/var/log	tmpfs	defaults,noatime,nosuid,nodev,noexec,mode=0755	0	0" >> /etc/fstab
+        echo "tmpfs	/var/log/nginx	tmpfs	defaults,noatime,nosuid,nodev,noexec,mode=0755	0	0" >> /etc/fstab
+      fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
