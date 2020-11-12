@@ -2,9 +2,12 @@ package sensors
 
 import (
 	"fmt"
+	"io/ioutil"
+	"strconv"
+	"strings"
 	"time"
 
-	"github.com/morus12/dht22"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,7 +19,6 @@ type DHT22Sensor struct {
 		Temperature float32 `json:"temperature"`
 		Humidity    float32 `json:"humidity"`
 	} `json:"value"`
-	device *dht22.DHT22
 	logger *logrus.Entry
 }
 
@@ -25,27 +27,26 @@ func NewDHT22Sensor(sensorConfig SensorConfig) *DHT22Sensor {
 		Config: sensorConfig,
 		Name:   sensorConfig.Name,
 		Type:   "dht22",
-		device: dht22.New(fmt.Sprintf("GPIO_%d", sensorConfig.Gpio)),
 		logger: logrus.WithFields(logrus.Fields{"sensorName": sensorConfig.Name, "sensorType": sensorConfig.Type}),
 	}
 }
 
 func (S *DHT22Sensor) Sense() {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(15 * time.Second)
 	for {
 		select {
 		case _ = <-ticker.C:
-			temperature, err := S.device.Temperature()
+			temperature, err := getValue(S.Config.Path + "/in_temp_input")
 			if err != nil {
-				S.logger.WithError(err).Error("Failed to read from DHT22Sensor")
+				S.logger.WithError(err).Error("Failed to read temperature from DHT22Sensor")
 			}
 			if temperature != 0 {
 				S.Value.Temperature = temperature
 			}
 
-			humidity, err := S.device.Humidity()
+			humidity, err := getValue(S.Config.Path + "/in_humidityrelative_input")
 			if err != nil {
-				S.logger.WithError(err).Error("Failed to read from DHT22Sensor")
+				S.logger.WithError(err).Error("Failed to read humidity from DHT22Sensor")
 			}
 			if humidity != 0 {
 				S.Value.Humidity = humidity
@@ -54,6 +55,19 @@ func (S *DHT22Sensor) Sense() {
 			S.logger.Debugf("%s: %fC / %f%%\n", S.Config.Name, S.Value.Temperature, S.Value.Humidity)
 		}
 	}
+}
+
+func getValue(path string) (float32, error) {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return 0, errors.Wrap(err, "Failed to read temperature from DHT22Sensor")
+	}
+	value, err := strconv.ParseInt(strings.Trim(string(data), "\n"), 10, 64)
+	if err != nil {
+		return 0, errors.Wrap(err, "Failed to parse temperature from DHT22Sensor")
+	}
+
+	return float32(value) / 1000, nil
 }
 
 func (S *DHT22Sensor) GetPrometheusMetrics() []byte {

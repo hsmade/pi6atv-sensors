@@ -71,7 +71,7 @@ sensors:
     type: DS18B20
     sort: 6
   - name: RM
-    gpio: 16
+    path: /sys/bus/iio/devices/iio:device0
     type: DHT22
   - name: Mains
     i2c_address: 0x40
