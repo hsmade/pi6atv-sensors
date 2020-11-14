@@ -157,7 +157,7 @@ class App extends Component {
                       <div className={"mid-left"}>
                           <table cellSpacing={"1vw"}>
                               <tbody>
-                              <tr><td colSpan={5}><span className={"label"}>Thermometer</span><hr/></td></tr>
+                              <tr><td colSpan={5}><span className={"label"}>CABINET HUMIDITY</span><hr/></td></tr>
                               {temphum}
                               </tbody>
                           </table>
