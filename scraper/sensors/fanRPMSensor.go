@@ -10,13 +10,14 @@ import (
 )
 
 type FanRPMSensor struct {
-	Config SensorConfig
-	Name   string `json:"name"`
-	Type   string `json:"type"`
-	Value  int    `json:"value"`
-	Sort   int    `json:"sort"`
-	port   gpio.PinIO
-	logger *logrus.Entry
+	Config   SensorConfig
+	Name     string `json:"name"`
+	Type     string `json:"type"`
+	Value    int    `json:"value"`
+	Sort     int    `json:"sort"`
+	port     gpio.PinIO
+	fanTicks int64
+	logger   *logrus.Entry
 }
 
 func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
@@ -41,17 +42,12 @@ func NewFanRPMSensor(sensorConfig SensorConfig) *FanRPMSensor {
 }
 
 func (S *FanRPMSensor) Sense() {
-	fanTicks := 0
-	//lastTick := time.Now()
-
 	go func() {
-		for S.port.WaitForEdge(-1) {
-			//if time.Now().Sub(lastTick).Microseconds() < 4450 {
-			//	lastTick = time.Now()
-			//	continue
-			//}
-			//lastTick = time.Now()
-			fanTicks++
+		for {
+			triggered := S.port.WaitForEdge(1 * time.Second)
+			if triggered {
+				S.fanTicks++
+			}
 		}
 	}()
 
@@ -59,8 +55,8 @@ func (S *FanRPMSensor) Sense() {
 	for {
 		select {
 		case _ = <-ticker.C:
-			S.Value = fanTicks * 60 / 2
-			fanTicks = 0
+			S.Value = int(S.fanTicks * 60 / 2)
+			S.fanTicks = 0
 			S.logger.Debugf("%s: %dRPM\n", S.Config.Name, S.Value)
 		}
 	}
