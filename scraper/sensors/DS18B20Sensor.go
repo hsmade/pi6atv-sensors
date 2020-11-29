@@ -43,10 +43,11 @@ func (S *DS18B20Sensor) read() (float64, error) {
 	}
 
 	// parse data
-	re := regexp.MustCompile(`t=([0-9]+)\n$`)
+	// t=-1062\n\n
+	re := regexp.MustCompile(`t=([-0-9]+)\n`)
 	results := re.FindAllSubmatch(data, -1)
 	if len(results) < 1 || len(results[0]) < 2 {
-		S.logger.Fatalf("regexp failed %s\n-->%v", string(data), results)
+		return 0, errors.New(fmt.Sprintf("regexp failed %s\n-->%v", string(data), results))
 	}
 	value, err := strconv.ParseFloat(string(results[0][1]), 64)
 	if err != nil {

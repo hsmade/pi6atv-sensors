@@ -10,7 +10,7 @@ class GaugeSensor extends Component {
             default: break
         }
         let value = this.props.sensor.value
-        if (value > 0) {
+        if (value > 0 || value < 0) {
             value = value.toFixed(1)
         }
         return (
