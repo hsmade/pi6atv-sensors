@@ -52,7 +52,7 @@ func (S *PaPowerSensor) Sense() {
 			}
 			value := S.mapValue(int(buffer[0]))
 			if value == -1 {
-				S.logger.WithError(err).Errorf("Failed to map value %#x, int value: %d", buffer[0], int(buffer[0]))
+				S.logger.WithError(err).Debugf("Failed to map value %#x, int value: %d", buffer[0], int(buffer[0]))
 				continue
 			}
 			S.Value = value
