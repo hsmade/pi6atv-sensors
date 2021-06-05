@@ -1,4 +1,4 @@
-# sensor scripts for pi6atv
+# sensor scripts for pi6atv PA
 
 ## Installation
 Install the latest debian package from the releases page.
